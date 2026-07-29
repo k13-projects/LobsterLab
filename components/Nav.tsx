@@ -72,7 +72,7 @@ export default function Nav() {
             onClick={() => setOpen((v) => !v)}
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
-            className="-mr-2 p-2 text-navy lg:hidden"
+            className="-mr-2 flex h-11 w-11 items-center justify-center text-navy lg:hidden"
           >
             <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               {open ? (

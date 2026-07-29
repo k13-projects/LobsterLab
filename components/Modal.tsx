@@ -24,6 +24,7 @@ type Props = {
  */
 export default function Modal({ open, onClose, title, subtitle, children, size = "md" }: Props) {
   const panelRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
   const restoreTo = useRef<HTMLElement | null>(null);
 
   const onKeyDown = useCallback(
@@ -68,10 +69,11 @@ export default function Modal({ open, onClose, title, subtitle, children, size =
 
     document.addEventListener("keydown", onKeyDown);
 
-    // move focus into the panel
+    // always open at the top of the panel, then move focus into it
     const t = window.setTimeout(() => {
+      if (scrollRef.current) scrollRef.current.scrollTop = 0;
       const target = panelRef.current?.querySelector<HTMLElement>(FOCUSABLE);
-      (target ?? panelRef.current)?.focus();
+      (target ?? panelRef.current)?.focus({ preventScroll: true });
     }, 20);
 
     return () => {
@@ -87,53 +89,68 @@ export default function Modal({ open, onClose, title, subtitle, children, size =
 
   return createPortal(
     <div
-      className="fixed inset-0 z-[90] flex items-end justify-center overflow-y-auto overscroll-contain p-0 sm:items-center sm:p-6"
+      ref={scrollRef}
+      className="fixed inset-0 z-[90] overflow-y-auto overscroll-contain"
       role="presentation"
-      onMouseDown={(e) => {
-        if (e.target === e.currentTarget) onClose();
-      }}
     >
       <div className="fixed inset-0 bg-navy-deep/70 backdrop-blur-[2px]" aria-hidden="true" />
 
+      {/*
+        `min-h-full` on this flex wrapper is load-bearing. Centering (or
+        end-aligning) directly on the scroll container strands any overflow
+        above the scroll origin — scrollTop cannot go negative, so on a short
+        viewport the panel's header and its primary CTA become permanently
+        unreachable. Letting the wrapper grow past the viewport keeps the top
+        scrollable into view.
+      */}
       <div
-        ref={panelRef}
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="modal-title"
-        tabIndex={-1}
-        className={[
-          "relative z-10 w-full rounded-t-3xl bg-white shadow-2xl outline-none sm:rounded-3xl",
-          size === "lg" ? "sm:max-w-2xl" : "sm:max-w-lg",
-        ].join(" ")}
+        className="relative flex min-h-full items-end justify-center p-0 sm:items-center sm:p-6"
+        onMouseDown={(e) => {
+          if (e.target === e.currentTarget) onClose();
+        }}
       >
-        <div className="flex items-start justify-between gap-4 border-b border-navy/10 px-6 pb-5 pt-7 sm:px-8">
-          <div>
-            <h2
-              id="modal-title"
-              className="font-display text-2xl font-black uppercase leading-none tracking-tight text-navy sm:text-3xl"
+        <div
+          ref={panelRef}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="modal-title"
+          tabIndex={-1}
+          className={[
+            "relative z-10 my-0 w-full rounded-t-3xl bg-white shadow-2xl outline-none sm:my-auto sm:rounded-3xl",
+            size === "lg" ? "sm:max-w-2xl" : "sm:max-w-lg",
+          ].join(" ")}
+        >
+          <div className="flex items-start justify-between gap-4 border-b border-navy/10 px-6 pb-5 pt-7 sm:px-8">
+            <div>
+              <h2
+                id="modal-title"
+                className="font-display text-2xl font-black uppercase leading-none tracking-tight text-navy sm:text-3xl"
+              >
+                {title}
+              </h2>
+              {subtitle && (
+                <p className="mt-2 text-[15px] leading-snug text-navy/70">{subtitle}</p>
+              )}
+            </div>
+            <button
+              type="button"
+              onClick={onClose}
+              aria-label="Close"
+              className="-mr-1 -mt-1 shrink-0 rounded-full p-2 text-navy/50 transition hover:bg-navy/5 hover:text-navy"
             >
-              {title}
-            </h2>
-            {subtitle && <p className="mt-2 text-[15px] leading-snug text-navy/70">{subtitle}</p>}
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path
+                  d="M6 6l12 12M18 6L6 18"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </button>
           </div>
-          <button
-            type="button"
-            onClick={onClose}
-            aria-label="Close"
-            className="-mr-1 -mt-1 shrink-0 rounded-full p-2 text-navy/50 transition hover:bg-navy/5 hover:text-navy"
-          >
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path
-                d="M6 6l12 12M18 6L6 18"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
-            </svg>
-          </button>
-        </div>
 
-        <div className="px-6 pb-8 pt-6 sm:px-8">{children}</div>
+          <div className="px-6 pb-8 pt-6 sm:px-8">{children}</div>
+        </div>
       </div>
     </div>,
     document.body,

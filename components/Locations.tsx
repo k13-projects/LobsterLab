@@ -9,7 +9,9 @@ export default function Locations() {
     <section id="locations" className="bg-sand py-16 sm:py-20 lg:py-24">
       <div className="mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
         <header className="reveal mb-10 lg:mb-14">
-          <h2 className="font-display text-5xl font-medium leading-[0.95] tracking-tight text-navy sm:text-6xl lg:text-7xl">
+          {/* Caps at 6xl so it stays below the intro headline (68px) — a section
+              heading outranking the page's opening statement inverts hierarchy. */}
+          <h2 className="font-display text-5xl font-medium leading-[0.95] tracking-tight text-navy sm:text-6xl">
             Locations
           </h2>
           <p className="mt-1 font-display text-3xl font-medium italic leading-none text-orange sm:text-4xl lg:text-5xl">
