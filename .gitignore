@@ -16,6 +16,10 @@ dist/
 # Downloaded assets (pulled locally via images/download_images.sh)
 images/downloaded_assets/
 
+# Brand asset library — ~101MB of binaries (photos, EPS, PDF, PPTX).
+# Kept local, not in git. See CLAUDE.md "Brand asset library" for what's in it.
+docs/LOBSTER LAB Assets/
+
 # Logs
 npm-debug.log*
 yarn-debug.log*
