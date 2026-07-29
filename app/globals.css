@@ -1,0 +1,112 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   Lobster Lab brand tokens
+   Source: docs/LOBSTER LAB Assets/IDENTITY/LOBLAB GUIDE .pdf
+     navy   #013a71  (PMS 654C)
+     orange #fe6700  (PMS 1505C)
+   Typeface in the guide is Sofia Pro Narrow (Adobe Font). We self-host Barlow
+   Semi Condensed as a near-match stand-in — swap --font-display/--font-body
+   here and nothing else changes.
+--------------------------------------------------------------------------- */
+@theme {
+  --color-navy: #013a71;
+  --color-navy-deep: #01284e;
+  --color-orange: #fe6700;
+  --color-orange-dark: #e25a00;
+  --color-sand: #f2f1ea;
+  --color-cream: #f7f6f0;
+  --color-shell: #fafaf7;
+
+  --font-display: var(--font-brand), "Sofia Pro Narrow", "Barlow Semi Condensed",
+    ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-brand), "Sofia Pro Narrow", "Barlow Semi Condensed",
+    ui-sans-serif, system-ui, sans-serif;
+
+  --ease-brand: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+  /* offset anchor targets so the fixed nav never covers a heading */
+  scroll-padding-top: 5.5rem;
+}
+
+body {
+  background: #ffffff;
+  color: var(--color-navy);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Lenis drives scroll; disable native smooth so the two don't fight */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* --- scroll reveal ------------------------------------------------------- */
+/* Hidden ONLY once the inline head script has confirmed JS is running. With no
+   JS — or if the observer never runs — every section stays visible, so the page
+   can never end up blank. */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.8s var(--ease-brand),
+    transform 0.8s var(--ease-brand);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+.js .reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* --- focus ring ---------------------------------------------------------- */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 3px solid var(--color-orange);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* --- reviews watermark --------------------------------------------------- */
+/* Repeating "LOBSTER LAB" tile behind the reviews band, as in the mockup. */
+.wordmark-wall {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(2rem, 5.2vw, 3.6rem);
+  line-height: 1.05;
+  letter-spacing: 0.01em;
+  color: var(--color-navy);
+  opacity: 0.055;
+  white-space: nowrap;
+  user-select: none;
+}
+
+/* --- honor reduced motion ------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .js .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

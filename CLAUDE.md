@@ -15,10 +15,12 @@
 - **Sibling:** `TigerHospitality_Website_01` is the parent group's site. Lobster Lab has its **own** brand (navy/orange, Sofia Pro Narrow) — do **not** inherit Tiger's black/gold, Bebas Neue identity.
 
 ## Run locally
-- **Assigned dev port: `9151`** (K13 dev-port registry in `CONVENTIONS.md` — one fixed port per project, for life). Pin it so collisions fail loudly:
-  - Next `next dev -p 9151` · Vite `vite --port 9151 --strictPort` · static `python3 -m http.server 9151 --bind 127.0.0.1`
+- **Assigned dev port: `9151`** (K13 dev-port registry in `CONVENTIONS.md` — one fixed port per project, for life). Pinned in `package.json` as `next dev -p 9151`.
 - Open: **http://localhost:9151/** · macOS: never use 5000/7000 (AirPlay squats them).
-- Nothing runs yet — this repo is still an archive (see below). The port is claimed for when the scaffold lands.
+- `npm install` → `./scripts/build-assets.sh` (once) → `npm run dev`.
+- **Killing the dev/prod server:** the process renames itself, so `pkill -f "next start"` does **not**
+  match it. Use `pkill -f next-server` (or kill the PID from `lsof -nP -iTCP:9151 -sTCP:LISTEN`).
+  A stale server silently serves the previous build and makes fixes look like they did nothing.
 
 ## Git workflow — always branch → PR → merge
 **Never commit directly to `main` — no exceptions.** Every change goes on a branch, into a PR, and lands
@@ -31,13 +33,27 @@ via a real GitHub merge (`gh pr merge --merge`; no squash/rebase, keep all branc
 
 ## What this repo is
 
-An **archive + rebuild blueprint**, not an application. There is no build system, no package manager, no tests — just data, docs, and one shell script. It captures lobsterlab.us (Tiger Hospitality Group's Lobster Lab) as it existed on SpotHopper (website ID `244728`) before SpotHopper access ended **Aug 1, 2026**, so the site can be rebuilt from scratch.
+Two things at once:
 
-The Next.js front-end scaffold described in the README does not exist yet. If asked to "build the site," you are creating it — read [docs/Lobster_Lab_Site_Structure.md](docs/Lobster_Lab_Site_Structure.md) §6 first, which specifies the intended architecture (Next.js App Router + Tailwind, Vercel, JSON content now → headless CMS later, `/[location]` route template for the other 4 locations).
+1. **The live site** — a Next.js (App Router) + Tailwind v4 one-pager in [app/](app/), [components/](components/), [lib/](lib/). Built July 29, 2026.
+2. **The archive** it was rebuilt from — `menus/`, `data/`, `pages/`, `images/`, `docs/`: lobsterlab.us as it existed on SpotHopper (website ID `244728`) before access ended **Aug 1, 2026**.
+
+The site is a **one-pager**, not the old 8-route tree — that follows the client's own brief, which
+overrides `docs/Lobster_Lab_Site_Structure.md` §6 (that doc predates the client design files and
+still describes a multi-route build with a `/[location]` template). Old slugs 301 to anchors.
+
+**[lib/content.ts](lib/content.ts) is where all copy and links live.** Every string on the site is
+there with a provenance comment. Change copy there, not in components.
+
+Client-supplied values that are still blank live in `.env.example` — the Formspree form id and the
+DoorDash/Grubhub URLs. Both degrade gracefully rather than rendering dead controls.
 
 ## Commands
 
 ```bash
+npm install && ./scripts/build-assets.sh && npm run dev            # the site, on :9151
+npm run build                                                      # 5 prerendered static routes
+./scripts/build-assets.sh                                          # regenerate public/ from the brand library
 cd images && chmod +x download_images.sh && ./download_images.sh   # pull assets from the SpotHopper CDN → images/downloaded_assets/ (gitignored)
 open docs/sitemap_diagram.html                                     # visual site map
 ```
@@ -73,16 +89,21 @@ Key facts extracted from it:
 - `docs/Lobster_Lab_Site_Structure.md` §8 refers to a `deliverables/` directory; those files live in `docs/`.
 - **Prices in `food_menu.json` are stale in places.** The client menu PDF prices Feeling Truffly at Lobster $33 / Crab $25 (JSON says $32 / $25… JSON's crab matches, lobster does not) and Grilled Cheese add-protein at Lobster $35 / Shrimp $22 / Crab $26. The PDFs also carry items absent from the JSON entirely (Caviar $30, Smoked Salmon sandwich, the whole Sky Deck entree and drink list). Treat `MENU/*.pdf` as current and the JSON as the July 2026 web capture.
 
-## Building the site (when the scaffold lands)
+## Working on the site
 - Phases **P0→P5** per `CONVENTIONS.md`; run the P5 done-checklist before calling it done.
-- House stack default for a premium animated site: **Next.js (App Router)** + `motion`/GSAP + Lenis, Tailwind,
-  deploy Vercel, forms via Formspree. That matches `docs/Lobster_Lab_Site_Structure.md` §6.
-- Once the brand is settled in code, run **`dna Lobster`** from the War Room to produce `public/styleguide.html`
-  (titled `Lobster Lab DNA`) plus the Soul profile — the brand guide facts below are the raw material.
-- Mobile-first; honour `prefers-reduced-motion`. Client-facing reports get archived under
-  `docs/reports/` and must pass the two-agent Chrome QA gate (see `CONVENTIONS.md`).
+- Stack in place: **Next.js 15 (App Router)** + Tailwind v4 + Lenis, deploy Vercel, catering form via Formspree.
+- **Copy and links → [lib/content.ts](lib/content.ts).** Components read from it; don't hardcode strings.
+- **Assets → `scripts/build-assets.sh`.** Don't hand-copy files into `public/`; add them to the script
+  so a fresh clone can regenerate. Photo picks are commented with which mockup slot they fill.
+- Motion is gated behind `prefers-reduced-motion`, and `.reveal` only hides under the `.js` class set
+  by an inline head script — **keep that guard**, or a JS failure blanks the whole page.
+- Not yet run: **`dna Lobster`** from the War Room, to produce `public/styleguide.html`
+  (titled `Lobster Lab DNA`) plus the Soul profile. The brand facts below are the raw material.
+- Mobile-first. Client-facing reports get archived under `docs/reports/` and must pass the
+  two-agent Chrome QA gate (see `CONVENTIONS.md`).
 
 ## Content conventions
 
-- Old slugs are long and location-prefixed (`/carlsbad-windmill-food-hall-lobster-lab-food-menu`). The rebuild uses short slugs (`/menu`, `/drinks`, `/specials`, `/events`, `/parties`, `/catering`, `/accessibility`) with 301 redirects from the old ones — the mapping table is in §2 of the structure doc. Do not reuse old slugs in new code.
+- Old slugs are long and location-prefixed (`/carlsbad-windmill-food-hall-lobster-lab-food-menu`). Because the rebuild is a one-pager, they 301 to **anchors** (`/#menu`, `/#catering`, `/#locations`, `/#contact`), not to standalone pages. The short slugs the structure doc proposes (`/menu`, `/drinks`, …) also 301 to those anchors, so inbound links from either era land correctly. The full map is `LEGACY_REDIRECTS` in [next.config.mjs](next.config.mjs). Do not reuse old slugs in new code.
+- `/accessibility` is the one real second route.
 - When adding captured data, keep the `captured_on` / `source_url` provenance fields; they distinguish archived fact from rebuild invention.
