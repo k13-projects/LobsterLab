@@ -246,6 +246,33 @@ export default function CateringPanel({ onDone }: { onDone: () => void }) {
           />
         </div>
 
+        {/*
+          TCPA: the form takes a phone number. Consent to be contacted ABOUT
+          this request is narrow and implied by submitting it; consent to
+          MARKETING texts is a separate, express, unbundled opt-in and must
+          stay opt-out-by-default. Do not pre-check this box.
+        */}
+        <label className="flex cursor-pointer items-start gap-3 rounded-xl bg-navy/[0.03] px-4 py-3">
+          <input
+            type="checkbox"
+            name="sms_marketing_consent"
+            value="yes"
+            className="mt-0.5 h-5 w-5 shrink-0 accent-[#fe6700]"
+          />
+          <span className="text-[13px] leading-snug text-navy/70">
+            Optional — text me about Lobster Lab offers and updates. Message and data rates may
+            apply; reply STOP to opt out. You do not need to agree to this to send your inquiry.
+          </span>
+        </label>
+
+        <p className="text-[13px] leading-snug text-navy/55">
+          By sending this inquiry you agree we may contact you about your catering request. See our{" "}
+          <a href="/privacy" className="font-semibold text-navy/75 underline">
+            Privacy Policy
+          </a>
+          .
+        </p>
+
         {state === "error" && (
           <p role="alert" className="rounded-xl bg-orange/10 px-4 py-3 text-sm text-navy">
             {error}

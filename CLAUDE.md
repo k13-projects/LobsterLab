@@ -45,8 +45,16 @@ still describes a multi-route build with a `/[location]` template). Old slugs 30
 **[lib/content.ts](lib/content.ts) is where all copy and links live.** Every string on the site is
 there with a provenance comment. Change copy there, not in components.
 
-Client-supplied values that are still blank live in `.env.example` — the Formspree form id and the
-DoorDash/Grubhub URLs. Both degrade gracefully rather than rendering dead controls.
+**[tasks/todo.md](tasks/todo.md) is the phased delivery plan.** Every finding from both reports in
+`docs/reports/` lives there in the phase that solves it, including the ones blocked on the client.
+Start there when picking up work.
+
+Client-supplied values that are still blank: the Formspree form id (`.env.example`) and the per-
+location ordering URLs (`locations[].ordering` in `lib/content.ts`). Both degrade to an honest
+"coming soon" state rather than rendering dead controls — keep that property.
+
+Reviews are attributed non-identifyingly on purpose. See the block comment above `reviews` in
+`lib/content.ts` before touching them.
 
 ## Commands
 

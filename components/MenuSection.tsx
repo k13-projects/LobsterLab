@@ -7,10 +7,12 @@ export default function MenuSection() {
     <section id="menu" className="overflow-hidden py-16 sm:py-20 lg:py-24">
       <div className="mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
         <div className="grid items-center gap-8 lg:grid-cols-[minmax(0,180px)_minmax(0,1fr)_minmax(0,420px)] lg:gap-12">
-          {/* Oversized vertical wordmark — bleeds off the left edge, as in the mockup */}
+          {/* Oversized vertical wordmark — bleeds off the left edge, as in the
+              mockup. The negative margin only applies at lg: below that a 12px
+              offset is too small to read as intentional and looks misaligned. */}
           <h2
             aria-label="Menu"
-            className="reveal -ml-3 font-display text-[19vw] font-medium leading-[0.82] tracking-tight text-navy lg:-ml-14 lg:text-[168px]"
+            className="reveal font-display text-[19vw] font-medium leading-[0.82] tracking-tight text-navy lg:-ml-14 lg:text-[168px]"
           >
             <span aria-hidden="true" className="lg:[writing-mode:vertical-rl]">
               MENU

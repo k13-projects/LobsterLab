@@ -4,11 +4,11 @@ import { site } from "@/lib/content";
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     { url: site.url, lastModified: new Date(), changeFrequency: "weekly", priority: 1 },
-    {
-      url: `${site.url}/accessibility`,
+    ...["accessibility", "privacy", "terms"].map((slug) => ({
+      url: `${site.url}/${slug}`,
       lastModified: new Date(),
-      changeFrequency: "yearly",
+      changeFrequency: "yearly" as const,
       priority: 0.3,
-    },
+    })),
   ];
 }

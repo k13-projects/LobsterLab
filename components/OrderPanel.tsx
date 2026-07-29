@@ -1,105 +1,91 @@
 "use client";
 
 import Image from "next/image";
-import { ordering } from "@/lib/content";
+import { locations, orderChannels, type OrderChannel, type Location } from "@/lib/content";
 
-function Platform({ name, logo, url }: { name: string; logo: string; url: string }) {
-  const disabled = !url;
+/**
+ * Per-location ordering (plan P1).
+ *
+ * Five locations share one brand but each has its own storefront, so a single
+ * global "order" link sent a customer standing in Little Italy to the Carlsbad
+ * store. This lists every location and shows only the channels that are
+ * actually wired for it. Locations with nothing connected say so plainly
+ * rather than rendering a control that goes nowhere.
+ *
+ * To connect one, fill its `ordering` block in lib/content.ts. No change here.
+ */
 
-  const inner = (
-    <>
-      <Image src={logo} alt="" width={48} height={48} className="h-12 w-12 object-contain" />
-      <span className="font-display text-lg font-bold tracking-tight">{name}</span>
-    </>
-  );
+const CHANNEL_ORDER: OrderChannel[] = ["toast", "doordash", "grubhub"];
 
-  const base =
-    "flex flex-1 flex-col items-center justify-center gap-3 rounded-2xl border-2 px-4 py-6 text-navy transition";
+function liveChannels(l: Location) {
+  return CHANNEL_ORDER.filter((c) => Boolean(l.ordering[c]));
+}
 
-  if (disabled) {
-    return (
-      <div
-        className={`${base} cursor-not-allowed border-navy/10 bg-navy/[0.03] opacity-55`}
-        title={`${name} ordering link coming soon`}
-        aria-disabled="true"
-      >
-        {inner}
-        <span className="text-xs font-medium uppercase tracking-wide text-navy/50">
-          Coming soon
-        </span>
-      </div>
-    );
-  }
-
+function ChannelButton({ channel, url }: { channel: OrderChannel; url: string }) {
+  const meta = orderChannels[channel];
   return (
     <a
       href={url}
       target="_blank"
       rel="noopener noreferrer"
-      className={`${base} border-navy/12 hover:-translate-y-0.5 hover:border-orange hover:shadow-lg hover:shadow-navy/5`}
+      className="flex flex-1 items-center justify-center gap-2 rounded-xl border-2 border-navy/12 px-3 py-2.5 text-navy transition hover:-translate-y-0.5 hover:border-orange hover:shadow-md hover:shadow-navy/5"
     >
-      {inner}
+      <Image src={meta.logo} alt="" width={24} height={24} className="h-6 w-6 object-contain" />
+      <span className="text-left leading-tight">
+        <span className="block font-display text-sm font-bold tracking-tight">{meta.provider}</span>
+        <span className="block text-[11px] uppercase tracking-wide text-navy/50">{meta.label}</span>
+      </span>
     </a>
   );
 }
 
-export default function OrderPanel() {
-  const live = ordering.delivery.filter((d) => d.url);
+function LocationRow({ location }: { location: Location }) {
+  const live = liveChannels(location);
 
   return (
-    <div className="space-y-7">
-      <section>
-        <h3 className="mb-3 font-display text-xs font-bold uppercase tracking-[0.18em] text-orange">
-          Order Pickup
-        </h3>
-        <a
-          href={ordering.pickup.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-4 rounded-2xl border-2 border-navy/12 px-5 py-4 text-navy transition hover:-translate-y-0.5 hover:border-orange hover:shadow-lg hover:shadow-navy/5"
-        >
-          <Image
-            src={ordering.pickup.logo}
-            alt=""
-            width={48}
-            height={48}
-            className="h-12 w-12 shrink-0 object-contain"
-          />
-          <span className="flex-1">
-            <span className="block font-display text-lg font-bold leading-tight tracking-tight">
-              Order on {ordering.pickup.provider}
-            </span>
-            <span className="block text-sm leading-tight text-navy/60">
-              Carlsbad · Windmill Food Hall
-            </span>
-          </span>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path
-              d="M5 12h14M13 6l6 6-6 6"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </a>
-      </section>
+    <li className="rounded-2xl border-2 border-navy/10 p-4">
+      <p className="font-display text-xs font-bold uppercase tracking-[0.18em] text-orange">
+        {location.area}
+      </p>
+      <h3 className="mt-0.5 font-display text-lg font-semibold leading-tight tracking-tight text-navy">
+        {location.name}
+      </h3>
 
-      <section>
-        <h3 className="mb-3 font-display text-xs font-bold uppercase tracking-[0.18em] text-orange">
-          Order Delivery
-        </h3>
-        <div className="flex gap-3">
-          {ordering.delivery.map((d) => (
-            <Platform key={d.provider} name={d.provider} logo={d.logo} url={d.url} />
+      {live.length > 0 ? (
+        <div className="mt-3 flex flex-wrap gap-2">
+          {live.map((c) => (
+            <ChannelButton key={c} channel={c} url={location.ordering[c]!} />
           ))}
         </div>
-        {live.length === 0 && (
-          <p className="mt-3 text-center text-sm text-navy/55">
-            Delivery links are being set up — pickup on Toast is live now.
-          </p>
-        )}
-      </section>
+      ) : (
+        <p className="mt-2 text-sm text-navy/55">
+          Online ordering coming soon — order at the counter.
+        </p>
+      )}
+    </li>
+  );
+}
+
+export default function OrderPanel() {
+  const anyLive = locations.some((l) => liveChannels(l).length > 0);
+
+  return (
+    <div className="space-y-4">
+      <p className="text-[15px] leading-snug text-navy/70">
+        Choose your Lobster Lab and we&apos;ll take you straight to its ordering page.
+      </p>
+
+      <ul className="space-y-3">
+        {locations.map((l) => (
+          <LocationRow key={l.name} location={l} />
+        ))}
+      </ul>
+
+      {!anyLive && (
+        <p className="text-center text-sm text-navy/55">
+          Online ordering is being set up. Come see us at the counter in the meantime.
+        </p>
+      )}
     </div>
   );
 }

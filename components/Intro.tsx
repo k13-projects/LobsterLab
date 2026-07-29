@@ -14,7 +14,12 @@ export default function Intro() {
           <span className="block italic text-orange">{intro.headlineAccent}</span>
         </h2>
 
-        <div className="reveal space-y-4 self-center text-[17px] leading-relaxed text-navy sm:text-lg" style={{ "--reveal-delay": "120ms" } as React.CSSProperties}>
+        {/* max-w-[62ch] keeps the line length in the 45-75 char range — at 768px
+            the full-width column measured 78 characters. */}
+        <div
+          className="reveal max-w-[62ch] space-y-4 self-center text-[17px] leading-relaxed text-navy sm:text-lg"
+          style={{ "--reveal-delay": "120ms" } as React.CSSProperties}
+        >
           {intro.body.map((p) => (
             <p key={p.slice(0, 24)}>{p}</p>
           ))}

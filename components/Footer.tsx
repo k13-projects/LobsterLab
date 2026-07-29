@@ -84,12 +84,19 @@ export default function Footer() {
                 {item.label}
               </a>
             ))}
-            <a
-              href="/accessibility"
-              className="inline-flex min-h-[24px] items-center px-2 py-1.5 text-sm font-semibold text-navy/70 transition-colors hover:text-orange"
-            >
-              Accessibility
-            </a>
+            {[
+              { href: "/accessibility", label: "Accessibility" },
+              { href: "/privacy", label: "Privacy" },
+              { href: "/terms", label: "Terms" },
+            ].map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                className="inline-flex min-h-[24px] items-center px-2 py-1.5 text-sm font-semibold text-navy/70 transition-colors hover:text-orange"
+              >
+                {item.label}
+              </a>
+            ))}
           </nav>
         </div>
       </div>

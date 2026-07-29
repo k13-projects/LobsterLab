@@ -46,7 +46,12 @@ export default function Nav() {
           />
         </a>
 
-        <nav aria-label="Primary" className="hidden items-center gap-7 lg:flex xl:gap-9">
+        {/* md, not lg — at lg the 768-1023 band (iPad portrait) left the header
+            empty between the wordmark and the CTA. gap tightens to fit at 768. */}
+        <nav
+          aria-label="Primary"
+          className="hidden items-center gap-4 md:flex lg:gap-7 xl:gap-9"
+        >
           {nav.map((item) => (
             <a
               key={item.href}
@@ -72,7 +77,7 @@ export default function Nav() {
             onClick={() => setOpen((v) => !v)}
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
-            className="-mr-2 flex h-11 w-11 items-center justify-center text-navy lg:hidden"
+            className="-mr-2 flex h-11 w-11 items-center justify-center text-navy md:hidden"
           >
             <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               {open ? (
@@ -88,7 +93,7 @@ export default function Nav() {
       {/* mobile sheet */}
       <div
         className={[
-          "overflow-hidden border-t border-navy/10 bg-white transition-[max-height,opacity] duration-300 lg:hidden",
+          "overflow-hidden border-t border-navy/10 bg-white transition-[max-height,opacity] duration-300 md:hidden",
           open ? "max-h-[80vh] opacity-100" : "max-h-0 opacity-0",
         ].join(" ")}
       >
