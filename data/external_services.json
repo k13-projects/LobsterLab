@@ -1,0 +1,41 @@
+{
+  "note": "Third-party integrations embedded in the current SpotHopper site. These are the functional dependencies to reproduce in a rebuild. Toast and EZCater are independent of SpotHopper and will keep working; the tmt.spotapps.co embeds (catering form, private parties, job listings) are SpotHopper-hosted and will be LOST on Aug 1.",
+  "services": [
+    {
+      "purpose": "Online ordering (pickup/delivery)",
+      "provider": "Toast",
+      "url": "https://www.toasttab.com/local/order/lobster-lab-windmill-food-hall-890-palomar-airport-road/r-e7ff1c2b-5c9c-47de-9b94-d10ae264a959",
+      "lost_on_migration": false
+    },
+    {
+      "purpose": "Catering orders",
+      "provider": "EZCater",
+      "url": "https://www.ezcater.com/catering/pvt/lobster-lab-3?fcv=1",
+      "lost_on_migration": false
+    },
+    {
+      "purpose": "Catering inquiry form (embedded)",
+      "provider": "SpotHopper (tmt.spotapps.co)",
+      "url": "https://tmt.spotapps.co/catering?spot_id=244728",
+      "lost_on_migration": true
+    },
+    {
+      "purpose": "Private parties / group reservations form (embedded)",
+      "provider": "SpotHopper (tmt.spotapps.co)",
+      "url": "https://tmt.spotapps.co/private-parties?spot_id=244728",
+      "lost_on_migration": true
+    },
+    {
+      "purpose": "Job listings / application portal (embedded)",
+      "provider": "SpotHopper (tmt.spotapps.co)",
+      "url": "https://tmt.spotapps.co/job-listings?spot_id=244728&callback_url=http://lobsterlab.us/",
+      "lost_on_migration": true
+    },
+    {
+      "purpose": "Image & video asset hosting (CDN)",
+      "provider": "SpotHopper (static.spotapps.co / cdn.spotapps.co)",
+      "url": "https://static.spotapps.co/website_images/ab_websites/244728_website_v1/",
+      "lost_on_migration": true
+    }
+  ]
+}

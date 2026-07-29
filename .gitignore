@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Builds
+.next/
+out/
+build/
+dist/
+
+# Env
+.env
+.env*.local
+
+# Downloaded assets (pulled locally via images/download_images.sh)
+images/downloaded_assets/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
+*.swp

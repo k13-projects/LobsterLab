@@ -1,0 +1,36 @@
+{
+  "note": "All locations are listed on the lobsterlab.us homepage as address entries. Only the Carlsbad location has dedicated menu/order pages on this domain. The others are food-hall stalls under Tiger Hospitality Group.",
+  "captured_on": "2026-07-28",
+  "locations": [
+    {
+      "name": "Carlsbad - Windmill Food Hall",
+      "address": "890 Palomar Airport Road, Carlsbad, CA 92011",
+      "status": "Open",
+      "has_dedicated_pages": true
+    },
+    {
+      "name": "Del Mar - Sky Deck at Del Mar Highlands Town Center",
+      "address": "12841 El Camino Real Ste 206, San Diego, CA 92130",
+      "status": "Open / Expanding 2026",
+      "has_dedicated_pages": false
+    },
+    {
+      "name": "San Clemente - Miramar Food Hall",
+      "address": "1720 North El Camino Real, San Clemente, CA 92672",
+      "status": "Open",
+      "has_dedicated_pages": false
+    },
+    {
+      "name": "Little Italy - Global Fork Food Hall",
+      "address": "550 W Date St Suite B, San Diego, CA 92101",
+      "status": "Open",
+      "has_dedicated_pages": false
+    },
+    {
+      "name": "UCSD - Station 8 Public Market",
+      "address": "9165 Theatre District Drive, La Jolla, CA 92037",
+      "status": "Coming Soon",
+      "has_dedicated_pages": false
+    }
+  ]
+}

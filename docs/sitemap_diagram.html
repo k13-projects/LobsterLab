@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lobster Lab — Site Map & Rebuild Blueprint</title>
+<style>
+  :root{
+    --coral:#e2452f; --coral-d:#b8331f; --navy:#122a3a; --ink:#1d2b33;
+    --paper:#fbf7f2; --card:#ffffff; --line:#e4ddd3; --muted:#6b7a82;
+    --content:#2e9e6b; --placeholder:#d99a2b; --external:#2f6fd6; --lost:#c0392b;
+    --shadow:0 2px 10px rgba(18,42,58,.08);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+       background:var(--paper);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased}
+  header{background:linear-gradient(135deg,var(--navy),#0c1c27);color:#fff;padding:34px 24px 28px}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 20px}
+  header h1{margin:0;font-size:1.7rem;letter-spacing:.3px}
+  header h1 span{color:var(--coral)}
+  header p{margin:8px 0 0;color:#c7d3da;font-size:.95rem}
+  .badge{display:inline-block;margin-top:14px;background:rgba(226,69,47,.18);color:#ffd7cd;
+         border:1px solid rgba(226,69,47,.5);padding:5px 12px;border-radius:20px;font-size:.8rem}
+  section{padding:30px 0}
+  h2{font-size:1.15rem;color:var(--navy);border-left:4px solid var(--coral);padding-left:12px;margin:0 0 18px}
+  .legend{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:22px}
+  .legend span{display:flex;align-items:center;gap:7px;font-size:.82rem;color:var(--muted)}
+  .dot{width:12px;height:12px;border-radius:50%;display:inline-block}
+  .tree{display:flex;flex-direction:column;gap:0}
+  .root{background:var(--navy);color:#fff;font-weight:600;border-radius:10px;padding:12px 16px;
+        box-shadow:var(--shadow);align-self:flex-start;margin-bottom:6px}
+  .branch{display:grid;grid-template-columns:22px 1fr;gap:0}
+  .rail{position:relative}
+  .rail::before{content:"";position:absolute;left:10px;top:0;bottom:0;width:2px;background:var(--line)}
+  .rail.last::before{bottom:auto;height:26px}
+  .nodewrap{padding:6px 0 6px 6px;position:relative}
+  .nodewrap::before{content:"";position:absolute;left:-12px;top:26px;width:16px;height:2px;background:var(--line)}
+  .node{background:var(--card);border:1px solid var(--line);border-left-width:5px;border-radius:9px;
+        padding:11px 14px;box-shadow:var(--shadow);display:flex;flex-wrap:wrap;align-items:baseline;gap:8px}
+  .node .name{font-weight:650;font-size:.98rem}
+  .node .slug{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.76rem;color:var(--muted);
+        background:#f4efe8;padding:2px 6px;border-radius:5px}
+  .node .tag{margin-left:auto;font-size:.72rem;font-weight:600;padding:3px 9px;border-radius:20px}
+  .node .desc{flex-basis:100%;font-size:.83rem;color:var(--muted);margin-top:2px}
+  .c-content{border-left-color:var(--content)} .t-content{background:#e6f5ee;color:var(--content)}
+  .c-placeholder{border-left-color:var(--placeholder)} .t-placeholder{background:#fbf0da;color:#a9761a}
+  .c-external{border-left-color:var(--external)} .t-external{background:#e7effb;color:var(--external)}
+  .c-lost{border-left-color:var(--lost)} .t-lost{background:#fbe7e5;color:var(--lost)}
+  .c-static{border-left-color:#8595a0} .t-static{background:#eef1f3;color:#66757e}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;box-shadow:var(--shadow)}
+  .card h3{margin:0 0 10px;font-size:1rem;color:var(--navy)}
+  .card ul{margin:0;padding-left:18px} .card li{margin:5px 0;font-size:.88rem}
+  .flow{display:flex;flex-wrap:wrap;align-items:center;gap:10px;justify-content:center;
+        background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px;box-shadow:var(--shadow)}
+  .box{background:var(--paper);border:1px solid var(--line);border-radius:9px;padding:10px 14px;font-size:.85rem;font-weight:600;text-align:center}
+  .box small{display:block;font-weight:400;color:var(--muted);font-size:.74rem;margin-top:2px}
+  .box.hl{background:var(--navy);color:#fff;border-color:var(--navy)}
+  .box.hl small{color:#c7d3da}
+  .arrow{color:var(--coral);font-size:1.3rem;font-weight:700}
+  .cta{background:#fff4ec;border:1px solid #f4c9b6;border-radius:12px;padding:16px 20px;margin-top:14px}
+  .cta strong{color:var(--coral-d)}
+  table{width:100%;border-collapse:collapse;font-size:.85rem;background:var(--card);border-radius:12px;overflow:hidden;box-shadow:var(--shadow)}
+  th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line)}
+  th{background:#f4efe8;color:var(--navy);font-size:.78rem;text-transform:uppercase;letter-spacing:.4px}
+  tr:last-child td{border-bottom:none}
+  .keep{color:var(--content);font-weight:600}.drop{color:var(--lost);font-weight:600}
+  footer{color:var(--muted);font-size:.8rem;text-align:center;padding:26px 20px 40px}
+  @media(max-width:720px){.cols{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <h1>Lobster<span>Lab</span> — Site Map &amp; Rebuild Blueprint</h1>
+    <p>lobsterlab.us · built on SpotHopper (website ID 244728) · captured July 28, 2026</p>
+    <div class="badge">⚠ SpotHopper access ends August 1, 2026 — download assets before then</div>
+  </div>
+</header>
+
+<div class="wrap">
+
+<section>
+  <h2>Front-end site map</h2>
+  <div class="legend">
+    <span><i class="dot" style="background:var(--content)"></i> Real content</span>
+    <span><i class="dot" style="background:var(--placeholder)"></i> Live placeholder ("updating")</span>
+    <span><i class="dot" style="background:var(--external)"></i> External (keeps working)</span>
+    <span><i class="dot" style="background:var(--lost)"></i> Lost on Aug 1 (rebuild)</span>
+    <span><i class="dot" style="background:#8595a0"></i> Static page</span>
+  </div>
+
+  <div class="tree">
+    <div class="root">🦞 lobsterlab.us &nbsp;/&nbsp; Home <span style="font-weight:400;color:#9fb0ba">— hero video, gallery, locations, CTAs</span></div>
+    <div class="branch">
+      <div class="rail"></div>
+      <div>
+        <div class="nodewrap"><div class="node c-content"><span class="name">Food Menu</span><span class="slug">/food-menu</span><span class="tag t-content">24 items captured</span><span class="desc">Meals, Salads, Grilled Cheese, Sides — full names, descriptions, prices</span></div></div>
+        <div class="nodewrap"><div class="node c-placeholder"><span class="name">Drink Menu</span><span class="slug">/drink-menu</span><span class="tag t-placeholder">placeholder</span><span class="desc">"We are updating our menu" — route exists, no items published</span></div></div>
+        <div class="nodewrap"><div class="node c-placeholder"><span class="name">Happy Hours &amp; Specials</span><span class="slug">/happy-hours-specials</span><span class="tag t-placeholder">placeholder</span><span class="desc">"We are updating our specials"</span></div></div>
+        <div class="nodewrap"><div class="node c-placeholder"><span class="name">Events</span><span class="slug">/events</span><span class="tag t-placeholder">placeholder</span><span class="desc">"We are updating our events"</span></div></div>
+        <div class="nodewrap"><div class="node c-lost"><span class="name">Parties</span><span class="slug">/party</span><span class="tag t-lost">SpotHopper form</span><span class="desc">"Group Reservations and Private Parties" — embedded tmt.spotapps.co form (lost → rebuild)</span></div></div>
+        <div class="nodewrap"><div class="node c-lost"><span class="name">Catering</span><span class="slug">/catering</span><span class="tag t-lost">SpotHopper form</span><span class="desc">Embedded inquiry form (lost) + EZCater order link (external, kept)</span></div></div>
+        <div class="nodewrap"><div class="node c-static"><span class="name">Accessibility</span><span class="slug">/accessibility-page-01</span><span class="tag t-static">static</span><span class="desc">WCAG 2.x AA commitment statement</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div style="height:16px"></div>
+  <div class="tree">
+    <div class="root" style="background:#33454f">External destinations (linked from nav / footer)</div>
+    <div class="branch">
+      <div class="rail last"></div>
+      <div>
+        <div class="nodewrap"><div class="node c-external"><span class="name">Order online</span><span class="slug">Toast</span><span class="tag t-external">keeps working</span><span class="desc">toasttab.com — online ordering, independent of SpotHopper</span></div></div>
+        <div class="nodewrap"><div class="node c-external"><span class="name">Order catering</span><span class="slug">EZCater</span><span class="tag t-external">keeps working</span><span class="desc">ezcater.com/catering/pvt/lobster-lab-3</span></div></div>
+        <div class="nodewrap"><div class="node c-lost"><span class="name">Jobs</span><span class="slug">tmt.spotapps.co</span><span class="tag t-lost">lost on Aug 1</span><span class="desc">SpotHopper-hosted job listings portal → replace</span></div></div>
+        <div class="nodewrap"><div class="node c-external"><span class="name">Instagram / Google</span><span class="slug">social</span><span class="tag t-external">external</span><span class="desc">@lobsterlab.us · Google Business reviews &amp; directions</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>What survives vs. what you must rebuild</h2>
+  <table>
+    <tr><th>Feature</th><th>Provider</th><th>On Aug 1</th><th>Rebuild action</th></tr>
+    <tr><td>Online ordering</td><td>Toast (external)</td><td class="keep">Keeps working</td><td>Re-link existing URL</td></tr>
+    <tr><td>Catering checkout</td><td>EZCater (external)</td><td class="keep">Keeps working</td><td>Re-link existing URL</td></tr>
+    <tr><td>Catering inquiry form</td><td>SpotHopper embed</td><td class="drop">Lost</td><td>Simple contact form → email/CRM</td></tr>
+    <tr><td>Private parties form</td><td>SpotHopper embed</td><td class="drop">Lost</td><td>Booking/contact form</td></tr>
+    <tr><td>Jobs portal</td><td>SpotHopper embed</td><td class="drop">Lost</td><td>Listings page or ATS link</td></tr>
+    <tr><td>Images &amp; promo video</td><td>SpotHopper CDN</td><td class="drop">Lost</td><td>Download now, self-host</td></tr>
+    <tr><td>Newsletter list</td><td>SpotHopper</td><td class="drop">Lost</td><td>Export &amp; move to Mailchimp/Klaviyo</td></tr>
+    <tr><td>Reviews</td><td>Google Business</td><td class="keep">External</td><td>Keep linking Google</td></tr>
+  </table>
+  <div class="cta">🔴 <strong>Most urgent before Aug 1:</strong> (1) run <code>download_images.sh</code> to save all images + video; (2) export the newsletter list &amp; form submissions from the SpotHopper dashboard; (3) confirm you control the <strong>lobsterlab.us domain/DNS</strong> at your own registrar — if SpotHopper manages DNS, move it out now.</div>
+</section>
+
+<section>
+  <h2>Recommended rebuild architecture</h2>
+  <div class="cols">
+    <div class="card">
+      <h3>Front-end</h3>
+      <ul>
+        <li><strong>Next.js or Astro</strong> — static-first, strong SEO, cheap hosting</li>
+        <li><strong>Tailwind CSS</strong> for styling</li>
+        <li>Reusable components: Header, Footer, Hero, Gallery, MenuSection, LocationCard, ContactForm</li>
+        <li>A <code>/[location]</code> template so all 5 locations can share one codebase later</li>
+        <li>Self-host the downloaded images &amp; video in <code>/public</code></li>
+        <li>Host on <strong>Vercel</strong> or <strong>Netlify</strong> (auto HTTPS, Git deploys)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Back-end / data</h3>
+      <ul>
+        <li>Start from the captured <strong>JSON files</strong> (menu, locations, business info)</li>
+        <li>Graduate to a headless CMS — <strong>Sanity / Contentful / Payload</strong> — when staff edit menus</li>
+        <li>Content models: <code>MenuItem</code>, <code>Location</code>, <code>Page</code>, <code>SiteSettings</code></li>
+        <li>Forms → serverless function or <strong>Formspree/Basin</strong> → email <code>info@lobsterlab.us</code></li>
+        <li>Ordering &amp; catering stay external (Toast, EZCater)</li>
+        <li>Newsletter via Mailchimp/Klaviyo; Analytics + Search Console; 301 redirects</li>
+      </ul>
+    </div>
+  </div>
+
+  <div style="height:16px"></div>
+  <div class="flow">
+    <div class="box hl">Visitor</div>
+    <span class="arrow">→</span>
+    <div class="box hl">Next.js / Astro pages<small>static, SEO-friendly</small></div>
+    <span class="arrow">→</span>
+    <div class="box">Content<small>JSON → headless CMS</small></div>
+    <span class="arrow">→</span>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div class="box">Toast<small>ordering</small></div>
+      <div class="box">EZCater<small>catering</small></div>
+      <div class="box">Form fn<small>→ email/CRM</small></div>
+      <div class="box">Mailchimp<small>newsletter</small></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Lobster Lab site archive · prepared for Tiger Hospitality Group · July 28, 2026 · companion files: content_archive.md · food_menu.json · locations.json · external_services.json · image_manifest.csv · download_images.sh
+</footer>
+
+</div>
+</body>
+</html>

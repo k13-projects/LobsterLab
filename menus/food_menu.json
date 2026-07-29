@@ -1,0 +1,49 @@
+{
+  "restaurant": "Lobster Lab",
+  "location": "Carlsbad - Windmill Food Hall",
+  "source_url": "https://lobsterlab.us/carlsbad-windmill-food-hall-lobster-lab-food-menu",
+  "captured_on": "2026-07-28",
+  "currency": "USD",
+  "sections": [
+    {
+      "name": "Meals",
+      "items": [
+        { "name": "Lobster Roll", "description": "", "variants": [ {"label": "Normal", "price": 30.00}, {"label": "XL", "price": 48.00}, {"label": "XXL", "price": 70.00} ] },
+        { "name": "King Crab Roll", "description": "", "variants": [ {"label": "Normal", "price": 25.00}, {"label": "XL", "price": 34.00} ] },
+        { "name": "Shrimp Roll", "description": "", "variants": [ {"label": "Normal", "price": 18.00}, {"label": "XL", "price": 25.00} ] },
+        { "name": "Cali Roll", "description": "Lettuce, bacon, avocado", "variants": [ {"label": "Lobster", "price": 35.00}, {"label": "Shrimp", "price": 21.00}, {"label": "Crab", "price": 28.00} ] },
+        { "name": "Feeling Truffly", "description": "Your choice of protein. Mix with truffle aioli", "variants": [ {"label": "Lobster", "price": 32.00}, {"label": "Shrimp", "price": 20.00}, {"label": "Crab", "price": 25.00} ] },
+        { "name": "Tuna Melt", "description": "", "variants": [ {"label": "Classic", "price": 19.00}, {"label": "Premium", "price": 23.00} ] },
+        { "name": "Lobster Bisque", "description": "", "variants": [ {"label": "Cup", "price": 12.00}, {"label": "Bowl", "price": 17.00} ] },
+        { "name": "Clam Chowder", "description": "", "variants": [ {"label": "Cup", "price": 12.00}, {"label": "Bowl", "price": 17.00} ] },
+        { "name": "Smoked Salmon", "description": "Herbed cream cheese, arugula capers, red onion, tomatoes, cucumber.", "variants": [ {"label": "", "price": 21.00} ] },
+        { "name": "Caviar", "description": "Brioche, herbed cream cheese, hard-boiled egg, chives.", "variants": [ {"label": "", "price": 30.00} ] }
+      ]
+    },
+    {
+      "name": "Salad",
+      "items": [
+        { "name": "Plain Salad", "description": "Iceberg, radish, avocado, fennel, cucumber, tomatoes.", "variants": [ {"label": "", "price": 15.00} ] },
+        { "name": "Lobster Salad", "description": "", "variants": [ {"label": "", "price": 34.00} ] },
+        { "name": "Shrimp Salad", "description": "", "variants": [ {"label": "", "price": 20.00} ] },
+        { "name": "Smoked Salmon Salad", "description": "", "variants": [ {"label": "", "price": 22.00} ] }
+      ]
+    },
+    {
+      "name": "Grilled Cheese",
+      "items": [
+        { "name": "Simple Grilled Cheese", "description": "", "variants": [ {"label": "", "price": 15.00} ] },
+        { "name": "Lobster Grilled Cheese", "description": "", "variants": [ {"label": "", "price": 35.00} ] },
+        { "name": "Shrimp Grilled Cheese", "description": "", "variants": [ {"label": "", "price": 22.00} ] },
+        { "name": "Crab Grilled Cheese", "description": "", "variants": [ {"label": "", "price": 26.00} ] }
+      ]
+    },
+    {
+      "name": "Sides",
+      "items": [
+        { "name": "Coleslaw", "description": "", "variants": [ {"label": "", "price": 4.00} ] },
+        { "name": "Kettle Chips", "description": "", "variants": [ {"label": "", "price": 3.00} ] }
+      ]
+    }
+  ]
+}
