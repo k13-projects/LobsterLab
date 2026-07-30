@@ -28,6 +28,33 @@ Status key: `[x]` done · `[ ]` open · `[~]` harness built, waiting on an exter
 
 ---
 
+## PL — LAUNCH · **NOT STARTED — HARD DEADLINE AUG 1**
+
+**Verified 2026-07-30:** `lobsterlab.us` still serves the old SpotHopper site — 173 references to
+`spotapps.co` in the live HTML, and every route we built (`/privacy`, `/terms`, `/accessibility`,
+`/menu`) returns 404. **The new site is not deployed anywhere.**
+
+This phase was missing from the plan, which was organised by *kind of work* rather than by
+*sequence*. That omission hid the only genuinely time-boxed item in the project.
+
+SpotHopper access ends **August 1**. When it does, the current live site goes with it. Everything
+else in this file can slip; this cannot.
+
+- [ ] Create the Vercel project and link the repo
+- [ ] Deploy `main` to a preview URL and walk the whole site on it — this is the first time the
+      build runs anywhere other than localhost
+- [ ] Point `lobsterlab.us` DNS at Vercel (client holds DNS — confirmed, so this is ours to schedule
+      with them, not to chase)
+- [ ] Verify on the real domain: HTTPS, the 301s from every old slug, security headers, sitemap and
+      robots, and that `/` renders with images
+- [ ] Keep a rollback path until the new site is confirmed good
+
+**It is safe to launch without the client values.** Every unconnected integration degrades to an
+honest "coming soon" rather than a dead control — that was built in deliberately for exactly this
+situation. A live site with four locations pending beats a dead domain.
+
+---
+
 ## P1 — Integration wiring · **HARNESS DONE, AWAITING CLIENT VALUES**
 
 Everything third-party, consolidated into one phase so it can be connected in a single sitting.
