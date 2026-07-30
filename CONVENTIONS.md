@@ -36,12 +36,24 @@ Extracted from Kazim's repos. These are the defaults; override per project as ne
 | 9143 | Fadilov Finance | `fafi` | node |
 | 9144 | EDISYN | `edisyn` | vite — _left as-is, not pinned (per Kazim)_ |
 | 9145 | soulseek tool | `slsk` | static |
-| 9146 | La Vida | `vida` | _reserved_ |
-| 9147 | ClickBank | `cb` | _reserved_ |
-| 9148 | SecuriVision | `sv` | _reserved_ |
+| 9146 | La Vida | `vida` | _reserved_ — site live, local repo lost (recover from GitHub) |
+| 9147 | ~~ClickBank~~ | `cb` | ⚰️ **dead** — empty folder, no repo. Do **not** recycle the row (one port per project, for life). |
+| 9148 | ~~SecuriVision~~ | `sv` | ⚰️ **dead** — Fatih's project, no `k13-projects` remote, local history gone. Row retired, not recycled. |
 | 9149 | Egg & Out | `ego` | next |
 | 9150 | AcuFlow (ProjectVerse) | `acu` | next |
-| 9151–9199 | _future projects_ | — | — |
+| **9151** | **HoK_Website** | `hok` | next — first claim (2026-06-25) |
+| **9152** | **TLC (Three Lions Capital)** | `tlc` | next — claimed 2026-06-24 |
+| **9153** | **CarlosAlmaraz** | `carlo` | next — reassigned 2026-07-30 (was 9151) |
+| **9154** | **LobsterLab** | `lobster` | ⬅️ **this project** — reassigned 2026-07-30 (was 9151) |
+| **9155** | **HeartBreak_Os** | `heartbreak` | static — claimed 2026-07-30 |
+| 9156–9199 | _future projects_ | — | — |
+
+> ⚠️ **This table stopping at 9150 is what broke the "one port for life" rule.** Three projects
+> (HoK_Website, CarlosAlmaraz, LobsterLab) each self-assigned **9151** because the registry had no
+> rows past 9150 and nobody wrote back to it; TLC took 9152 without recording it either. Resolved
+> by first-claim date on 2026-07-30. **Check the table before claiming, and write back to it after
+> — a port recorded only in a project's own `CLAUDE.md` is invisible to the next project.**
+> The authoritative copy lives in the War Room: `K13-WarRoom/starter-kit/CONVENTIONS.md`.
 
 **Rules**
 - **One port per project, for life.** Claim the next free row when a project is born; never reuse or reshuffle.
