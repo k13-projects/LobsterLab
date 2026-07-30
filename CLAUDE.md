@@ -15,11 +15,12 @@
 - **Sibling:** `TigerHospitality_Website_01` is the parent group's site. Lobster Lab has its **own** brand (navy/orange, Sofia Pro Narrow) — do **not** inherit Tiger's black/gold, Bebas Neue identity.
 
 ## Run locally
-- **Assigned dev port: `9151`** (K13 dev-port registry in `CONVENTIONS.md` — one fixed port per project, for life). Pinned in `package.json` as `next dev -p 9151`.
-- Open: **http://localhost:9151/** · macOS: never use 5000/7000 (AirPlay squats them).
+- **Assigned dev port: `9154`** (K13 dev-port registry in `CONVENTIONS.md` — one fixed port per project, for life). Pinned in `package.json` as `next dev -p 9154`.
+  - Was **9151** until 2026-07-30. That row belongs to HoK_Website by first claim (2026-06-25); this project, CarlosAlmaraz and HoK had all self-assigned 9151 because the registry table stopped at 9150. Reassigned to 9154 — do not move it back.
+- Open: **http://localhost:9154/** · macOS: never use 5000/7000 (AirPlay squats them).
 - `npm install` → `./scripts/build-assets.sh` (once) → `npm run dev`.
 - **Killing the dev/prod server:** the process renames itself, so `pkill -f "next start"` does **not**
-  match it. Use `pkill -f next-server` (or kill the PID from `lsof -nP -iTCP:9151 -sTCP:LISTEN`).
+  match it. Use `pkill -f next-server` (or kill the PID from `lsof -nP -iTCP:9154 -sTCP:LISTEN`).
   A stale server silently serves the previous build and makes fixes look like they did nothing.
 
 ## Git workflow — always branch → PR → merge
@@ -51,7 +52,7 @@ DoorDash/Grubhub URLs. Both degrade gracefully rather than rendering dead contro
 ## Commands
 
 ```bash
-npm install && ./scripts/build-assets.sh && npm run dev            # the site, on :9151
+npm install && ./scripts/build-assets.sh && npm run dev            # the site, on :9154
 npm run build                                                      # 5 prerendered static routes
 ./scripts/build-assets.sh                                          # regenerate public/ from the brand library
 cd images && chmod +x download_images.sh && ./download_images.sh   # pull assets from the SpotHopper CDN → images/downloaded_assets/ (gitignored)
