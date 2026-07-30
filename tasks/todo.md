@@ -49,6 +49,21 @@ The code is finished and placeholder-driven: when the values land, this is a **o
       Confirm signed platform agreements exist first — CA AB 2149 (Fair Food Delivery Act).
 - [ ] Verify each supplied URL resolves to the correct store before launch
 
+### Restore the private-parties path — **REGRESSION, buildable now**
+
+- [ ] **Rebuild the private parties / group booking enquiry.** Not a new idea: the old SpotHopper
+      site had a "Group Reservations and Private Parties" page,
+      `data/external_services.json` marks that form `lost_on_migration: true`, and
+      `docs/Lobster_Lab_Site_Structure.md` says of it verbatim **"replace with a form in the
+      rebuild"** — the same instruction that produced the catering form we did build. The client's
+      own ideas deck asks for it too ("private parties, corporate events, weddings").
+      A guest wanting a group booking has no path on the new site and had one on the old.
+      *Not blocked.* The modal shell, the form and the occasion vocabulary (Corporate Lunch,
+      Celebration, Family Event, Wedding) all already exist — only the entry point is missing.
+      Plan: widen ORDER CATERING into **Catering & Events** with two intents; the party form needs
+      a location field and drops pickup-or-delivery.
+      See `docs/reports/LobsterLab_AssetGapAnalysis_2026-07-30.md`.
+
 **Definition of done:** every location's ORDER ONLINE opens to a working storefront for that
 location, and a submitted catering inquiry lands in the shared inbox.
 
@@ -188,6 +203,12 @@ The growth ceiling. None of this is urgent; all of it compounds.
       (the PDFs are almost certainly untagged, and a PDF-only menu is a common ADA complaint).
       `menus/food_menu.json` already exists — needs price reconciliation against the current PDFs,
       which the archive notes are stale in places.
+      **Corroborated by the client's ideas deck** (slide 4), which lists the categories to show and
+      references Poke House's category-tabs-plus-item-cards treatment. This was the client's
+      original intent, not just our SEO argument.
+- [ ] **Surface the tagline.** "Seafood. Lobster Rolls. Fresh Ingredients. Everyday. Catch the
+      Vibe." is in the brand guide and on the ideas deck's homepage slide, but on our site it exists
+      only as `sr-only` and in page metadata. The brand's own line is invisible. Small fix.
 - [ ] **Per-location pages** on the `/[location]` template from `docs/Lobster_Lab_Site_Structure.md`
       §6. Five locations across two counties currently share one URL, so the site cannot rank
       locally in five markets. This is the largest single growth lever.
@@ -223,3 +244,8 @@ Carried forward until answered. Raise these whenever there is contact.
 5. Permission position on the named Google/Yelp reviews *(P3)*
 6. The three value icons as SVG *(P2)*
 7. Web-optimized menu PDF exports *(P5)*
+8. **Our Story copy, and a decision on a team/founder photo** *(new — from the ideas deck)*. The
+   deck asks for "Our story" and "Team intro (chef / founders / team)". Neither reached the final
+   mockup, so this needs a client decision as well as a build. Origin story is the one content type
+   that must come from the operator — do not invent it. The 2023 shoot has chef-at-work frames that
+   could carry it if they want the fuller treatment.
