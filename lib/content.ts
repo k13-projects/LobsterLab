@@ -11,10 +11,20 @@
  * describes the NEW site; the archive is the July 2026 capture of the old one.
  */
 
+/**
+ * The canonical production host. Staging deploys (lobster.k13projects.com,
+ * Vercel preview URLs) set NEXT_PUBLIC_SITE_URL to their own origin, which
+ * flips `isProduction` false and makes robots.ts noindex them — otherwise a
+ * staging copy competes with the real site for the same search results.
+ */
+export const PRODUCTION_URL = "https://lobsterlab.us";
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || PRODUCTION_URL;
+export const isProduction = SITE_URL === PRODUCTION_URL;
+
 export const site = {
   name: "Lobster Lab",
   operator: "Tiger Hospitality Group",
-  url: "https://lobsterlab.us",
+  url: SITE_URL,
   tagline: "Seafood. Lobster Rolls. Fresh Ingredients. Everyday. Catch the Vibe.",
   description:
     "Bold coastal flavors in San Diego — buttery lobster rolls, seafood favorites, bisques, salads and melts. Catch the vibe at Lobster Lab.",
