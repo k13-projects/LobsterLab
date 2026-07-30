@@ -3,7 +3,7 @@ import { Barlow_Semi_Condensed } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import ConsentBanner from "@/components/ConsentBanner";
-import { site, locations } from "@/lib/content";
+import { site, locations, isProduction } from "@/lib/content";
 
 /**
  * Brand face is Sofia Pro Narrow (Adobe Font). Barlow Semi Condensed is the
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     description: site.description,
     images: ["/photos/hero.webp"],
   },
-  robots: { index: true, follow: true },
+  robots: { index: isProduction, follow: isProduction },
 };
 
 export const viewport: Viewport = {
