@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { track } from "@/lib/analytics";
 import { menu } from "@/lib/content";
 import { OrderOnlineButton } from "./Buttons";
 
@@ -37,6 +40,7 @@ export default function MenuSection() {
                 href={pdf.href}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => track("menu_pdf_open", { menu: pdf.label })}
                 className="inline-flex items-center justify-center rounded-full bg-orange px-6 py-3.5 text-center font-display text-[15px] font-bold leading-tight tracking-tight text-white transition hover:-translate-y-0.5 hover:bg-orange-dark"
               >
                 {pdf.label}

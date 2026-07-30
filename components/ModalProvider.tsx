@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useMemo, useState } from "react";
+import { track } from "@/lib/analytics";
 import Modal from "./Modal";
 import OrderPanel from "./OrderPanel";
 import CateringPanel from "./CateringPanel";
@@ -25,7 +26,16 @@ export default function ModalProvider({ children }: { children: React.ReactNode 
   const [catering, setCatering] = useState(false);
 
   const value = useMemo<Ctx>(
-    () => ({ openOrder: () => setOrder(true), openCatering: () => setCatering(true) }),
+    () => ({
+      openOrder: () => {
+        track("order_modal_open");
+        setOrder(true);
+      },
+      openCatering: () => {
+        track("catering_modal_open");
+        setCatering(true);
+      },
+    }),
     [],
   );
 

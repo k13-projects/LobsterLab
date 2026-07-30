@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { site } from "@/lib/content";
+import { ANALYTICS_ENABLED } from "@/lib/analytics";
 import LegalPage, { H2, P, UL } from "@/components/LegalPage";
 
 export const metadata: Metadata = {
@@ -70,11 +71,32 @@ export default function PrivacyPage() {
       </P>
 
       <H2>Cookies and tracking</H2>
-      <P>
-        This website does not currently use advertising cookies, analytics trackers, session replay,
-        or third-party marketing pixels. If we add analytics in future, we will update this policy
-        and ask for your consent first where required.
-      </P>
+      {/* Rendered from the live config so this section can never drift out of
+          date: with no analytics id set, the site genuinely loads no tracker. */}
+      {ANALYTICS_ENABLED ? (
+        <>
+          <P>
+            We use Google Analytics to understand how this website is used — for example which
+            sections people read and where they drop off — so we can improve it.{" "}
+            <strong>It only loads if you agree to it.</strong> When you first visit we ask, and we
+            remember your answer. If you decline, no analytics script is loaded at all.
+          </P>
+          <P>
+            We do not use advertising pixels, cross-site ad tracking, or session replay. IP
+            addresses are anonymised and Google advertising signals are switched off.
+          </P>
+          <P>
+            To change your mind, clear this site&apos;s data in your browser settings and you will
+            be asked again on your next visit.
+          </P>
+        </>
+      ) : (
+        <P>
+          This website does not currently use advertising cookies, analytics trackers, session
+          replay, or third-party marketing pixels. If we add analytics in future, we will update
+          this policy and ask for your consent first.
+        </P>
+      )}
 
       <H2>Do Not Track</H2>
       <P>

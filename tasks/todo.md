@@ -64,7 +64,8 @@ The six open recommendations from the UI/UX audit. None were launch blockers.
 - [x] **F-E** roll strip locked to a 2048×1152 crop rendered ~211px tall at 375px → taller mobile crop
 - [x] **F-F** MENU heading sat 12px off the section grid below `lg` — too small to read as the
       deliberate bleed it is at desktop → negative margin now applies only at `lg`
-- [ ] **F-C** Locations orphan row (5 cards in a 3-col grid). Purely cosmetic, lowest priority.
+- [x] **F-C** Locations trailing row was pinned left by the grid and read unfinished → flex-wrap
+      with `justify-center`; both rows now share a 720px centre at 1440
 - [~] **F-D** value icons were redrawn as SVG because the client supplied them only as raster
       inside a PDF. The citrus and seal read well; the "hand seasoning a bowl" is the weakest.
       *BLOCKED ON: client designer.* Ask for the three icons as SVG — a five-minute request for
@@ -112,17 +113,24 @@ phase makes that review cheap, it does not replace it.
 
 ---
 
-## P4 — Measurement & consent · **NEXT**
+## P4 — Measurement & consent · **HARNESS DONE, AWAITING STACK DECISION**
 
 Deliberately after P3, because in California the tracker and the consent mechanism must ship
 **together**. Retrofitting consent onto a pixel that has already been running is the expensive path.
 
-- [ ] Decide the analytics stack (GA4 vs a cookieless option like Plausible/Fathom).
-      A cookieless tool materially reduces the CIPA exposure below and may remove the banner need.
-- [ ] Consent banner, shipped in the same release as the first tracker
-- [ ] Event tracking: ORDER ONLINE opens, per-location storefront clicks, catering form starts vs
-      submits, menu PDF opens, Get-directions taps
-- [ ] Disclose all trackers in the privacy policy
+- [x] Consent banner built and gate proven: with an id configured, `gtag` is `undefined` before
+      consent, a `function` after Allow, and stays `undefined` after Decline. Choice persisted.
+- [x] Event tracking wired: `order_modal_open`, `catering_modal_open`, `storefront_click`
+      (with channel + location), `catering_form_start`, `catering_inquiry_sent`, `menu_pdf_open`,
+      `directions_click`
+- [x] Privacy policy renders its tracking section from the live config, so it cannot drift out of
+      date — with no id set it truthfully says the site loads no tracker
+- [x] Ships inert: `NEXT_PUBLIC_GA_ID` unset means no banner, no script, no cookie
+- [ ] **Decide the analytics stack.** Harness is wired for GA4. A cookieless tool
+      (Plausible/Fathom) would materially reduce the CIPA exposure below and likely remove the
+      banner entirely — swap `loadVendor()` in `lib/analytics.ts` and set `REQUIRES_CONSENT` false.
+      *BLOCKED ON: K13 + client decision.*
+- [ ] Set `NEXT_PUBLIC_GA_ID` (or the chosen equivalent) in Vercel once decided
 
 **Why this matters legally:** California has a large and active wave of litigation applying the
 **California Invasion of Privacy Act** — including its pen register/trap-and-trace provisions — to

@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { track } from "@/lib/analytics";
 import { locations, orderChannels, type OrderChannel, type Location } from "@/lib/content";
 
 /**
@@ -21,13 +22,22 @@ function liveChannels(l: Location) {
   return CHANNEL_ORDER.filter((c) => Boolean(l.ordering[c]));
 }
 
-function ChannelButton({ channel, url }: { channel: OrderChannel; url: string }) {
+function ChannelButton({
+  channel,
+  url,
+  location,
+}: {
+  channel: OrderChannel;
+  url: string;
+  location: string;
+}) {
   const meta = orderChannels[channel];
   return (
     <a
       href={url}
       target="_blank"
       rel="noopener noreferrer"
+      onClick={() => track("storefront_click", { channel, location })}
       className="flex flex-1 items-center justify-center gap-2 rounded-xl border-2 border-navy/12 px-3 py-2.5 text-navy transition hover:-translate-y-0.5 hover:border-orange hover:shadow-md hover:shadow-navy/5"
     >
       <Image src={meta.logo} alt="" width={24} height={24} className="h-6 w-6 object-contain" />
@@ -54,7 +64,7 @@ function LocationRow({ location }: { location: Location }) {
       {live.length > 0 ? (
         <div className="mt-3 flex flex-wrap gap-2">
           {live.map((c) => (
-            <ChannelButton key={c} channel={c} url={location.ordering[c]!} />
+            <ChannelButton key={c} channel={c} url={location.ordering[c]!} location={location.name} />
           ))}
         </div>
       ) : (

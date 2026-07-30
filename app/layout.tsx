@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Barlow_Semi_Condensed } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
+import ConsentBanner from "@/components/ConsentBanner";
 import { site, locations } from "@/lib/content";
 
 /**
@@ -108,6 +109,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </a>
         <SmoothScroll />
         {children}
+        <ConsentBanner />
       </body>
     </html>
   );

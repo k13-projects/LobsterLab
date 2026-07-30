@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { track } from "@/lib/analytics";
 import { ordering, occasions, serviceTypes, site } from "@/lib/content";
 
 /**
@@ -22,6 +23,7 @@ type State = "idle" | "sending" | "sent" | "error";
 
 export default function CateringPanel({ onDone }: { onDone: () => void }) {
   const [state, setState] = useState<State>("idle");
+  const startedRef = useRef(false);
   const [error, setError] = useState<string>("");
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -47,6 +49,7 @@ export default function CateringPanel({ onDone }: { onDone: () => void }) {
       });
       if (!res.ok) throw new Error(`Formspree responded ${res.status}`);
       setState("sent");
+      track("catering_inquiry_sent");
       form.reset();
     } catch {
       setState("error");
@@ -122,7 +125,17 @@ export default function CateringPanel({ onDone }: { onDone: () => void }) {
       </div>
 
       {/* 2 — inquiry form */}
-      <form onSubmit={handleSubmit} className="space-y-4" noValidate={false}>
+      <form
+        onSubmit={handleSubmit}
+        onFocusCapture={() => {
+          if (!startedRef.current) {
+            startedRef.current = true;
+            track("catering_form_start");
+          }
+        }}
+        className="space-y-4"
+        noValidate={false}
+      >
         <input type="hidden" name="_subject" value="Lobster Lab — catering inquiry" />
         {/* honeypot */}
         <input
