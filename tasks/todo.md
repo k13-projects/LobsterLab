@@ -56,7 +56,7 @@ location, and a submitted catering inquiry lands in the shared inbox.
 
 ## P2 — UI/UX polish · **DONE**
 
-The six open recommendations from the UI/UX audit. None were launch blockers.
+The six open recommendations from the UI/UX audit, plus the mobile-agent findings below.
 
 - [x] **F-A** nav links appeared only at 1024px, leaving the header empty across 768–1023 (iPad
       portrait is real restaurant-browsing traffic) → dropped to `md`
@@ -70,6 +70,24 @@ The six open recommendations from the UI/UX audit. None were launch blockers.
       inside a PDF. The citrus and seal read well; the "hand seasoning a bowl" is the weakest.
       *BLOCKED ON: client designer.* Ask for the three icons as SVG — a five-minute request for
       exact brand fidelity.
+
+### Mobile agent findings (2026-07-29 responsive sweep)
+
+- [x] **Blocking:** mobile nav sheet had no focus trap and no Escape. `max-h-0` only hides it
+      visually, so its 6 links kept a layout box and stayed tabbable while invisible (WCAG 2.4.7),
+      and tabbing past the last item threw focus ~2000px down the page behind the open sheet.
+      Fixed with `inert` when closed, Escape-to-close, focus trap and focus restore to the toggle.
+- [x] Primary nav labels wrapped to two lines at 768 and 844 — added `whitespace-nowrap` and
+      stepped type/gaps/CTA down at md so the row fits
+- [x] Nav labels then measured 23px tall at md, 1px under the WCAG 2.5.8 AA floor — `min-h-[24px]`
+- [x] Order modal channel sub-label was 11px, under the mobile legibility floor → 12px
+- [x] TCPA consent checkbox was 20x20, under the AA floor → 24x24
+- [x] Reviews carousel had no end state; Next past the last card gave no feedback → both arrows
+      now disable at their edge. Note the resting start is `scrollLeft == padding-left` (20 on
+      mobile), not 0, because snap-start pulls the first card flush
+- [x] Duplicate React keys in the reviews list, introduced when attributions were genericized and
+      stopped being unique → keyed on the quote
+- [ ] Optional perf nit: tighten `sizes` on the hero `<Image>` to stop the unused-preload warning
 
 ---
 

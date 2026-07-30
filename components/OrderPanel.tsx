@@ -43,7 +43,7 @@ function ChannelButton({
       <Image src={meta.logo} alt="" width={24} height={24} className="h-6 w-6 object-contain" />
       <span className="text-left leading-tight">
         <span className="block font-display text-sm font-bold tracking-tight">{meta.provider}</span>
-        <span className="block text-[11px] uppercase tracking-wide text-navy/50">{meta.label}</span>
+        <span className="block text-xs uppercase tracking-wide text-navy/50">{meta.label}</span>
       </span>
     </a>
   );

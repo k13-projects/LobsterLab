@@ -270,7 +270,7 @@ export default function CateringPanel({ onDone }: { onDone: () => void }) {
             type="checkbox"
             name="sms_marketing_consent"
             value="yes"
-            className="mt-0.5 h-5 w-5 shrink-0 accent-[#fe6700]"
+            className="mt-0.5 h-6 w-6 shrink-0 accent-[#fe6700]"
           />
           <span className="text-[13px] leading-snug text-navy/70">
             Optional — text me about Lobster Lab offers and updates. Message and data rates may
