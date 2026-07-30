@@ -8,7 +8,12 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-SRC="$ROOT/docs/LOBSTER LAB Assets"
+# The client library has lived at both docs/ and the repo root — accept either.
+SRC=""
+for cand in "$ROOT/LOBSTER LAB Assets" "$ROOT/docs/LOBSTER LAB Assets"; do
+  [ -d "$cand" ] && { SRC="$cand"; break; }
+done
+[ -z "$SRC" ] && SRC="$ROOT/LOBSTER LAB Assets"
 PUB="$ROOT/public"
 TMP="$(mktemp -d)"
 trap 'rm -rf "$TMP"' EXIT
