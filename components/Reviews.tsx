@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { reviews } from "@/lib/content";
 
 function Stars() {
@@ -36,6 +36,34 @@ function WordmarkWall() {
 
 export default function Reviews() {
   const rail = useRef<HTMLUListElement>(null);
+  const [atStart, setAtStart] = useState(true);
+  const [atEnd, setAtEnd] = useState(false);
+
+  // Without an end state, tapping Next past the last card gave no feedback.
+  //
+  // The resting start position is NOT scrollLeft 0: the rail carries px-5 on
+  // mobile and snap-start pulls the first card flush to the port, so it settles
+  // at scrollLeft == padding-left (measured 20 at 375px). Compare against the
+  // padding or the Prev button never disables on mobile.
+  const syncEdges = useCallback(() => {
+    const el = rail.current;
+    if (!el) return;
+    const padLeft = parseFloat(getComputedStyle(el).paddingLeft) || 0;
+    setAtStart(el.scrollLeft <= padLeft + 2);
+    setAtEnd(el.scrollLeft + el.clientWidth >= el.scrollWidth - 2);
+  }, []);
+
+  useEffect(() => {
+    const el = rail.current;
+    if (!el) return;
+    syncEdges();
+    el.addEventListener("scroll", syncEdges, { passive: true });
+    window.addEventListener("resize", syncEdges);
+    return () => {
+      el.removeEventListener("scroll", syncEdges);
+      window.removeEventListener("resize", syncEdges);
+    };
+  }, [syncEdges]);
 
   const scrollBy = (dir: 1 | -1) => {
     const el = rail.current;
@@ -70,7 +98,8 @@ export default function Reviews() {
                 type="button"
                 onClick={() => scrollBy(-1)}
                 aria-label="Previous reviews"
-                className="flex h-11 w-11 items-center justify-center rounded-full bg-white text-navy shadow-sm transition hover:bg-navy hover:text-white"
+                disabled={atStart}
+                className="flex h-11 w-11 items-center justify-center rounded-full bg-white text-navy shadow-sm transition hover:bg-navy hover:text-white disabled:cursor-default disabled:opacity-35 disabled:hover:bg-white disabled:hover:text-navy"
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                   <path d="M19 12H5M11 6l-6 6 6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -80,7 +109,8 @@ export default function Reviews() {
                 type="button"
                 onClick={() => scrollBy(1)}
                 aria-label="Next reviews"
-                className="flex h-11 w-11 items-center justify-center rounded-full bg-white text-navy shadow-sm transition hover:bg-navy hover:text-white"
+                disabled={atEnd}
+                className="flex h-11 w-11 items-center justify-center rounded-full bg-white text-navy shadow-sm transition hover:bg-navy hover:text-white disabled:cursor-default disabled:opacity-35 disabled:hover:bg-white disabled:hover:text-navy"
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                   <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -94,9 +124,11 @@ export default function Reviews() {
             className="reveal -mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth px-5 pb-4 sm:-mx-8 sm:px-8 lg:mx-0 lg:px-0"
             style={{ scrollbarWidth: "none" }}
           >
+            {/* key on the quote, not the author — attributions are deliberately
+                non-identifying and therefore repeat (see lib/content.ts) */}
             {reviews.map((r) => (
               <li
-                key={r.author}
+                key={r.quote.slice(0, 40)}
                 className="flex w-[82vw] shrink-0 snap-start flex-col rounded-2xl bg-white p-6 shadow-sm sm:w-[340px]"
               >
                 <Stars />

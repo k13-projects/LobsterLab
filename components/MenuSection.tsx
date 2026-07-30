@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { track } from "@/lib/analytics";
 import { menu } from "@/lib/content";
 import { OrderOnlineButton } from "./Buttons";
 
@@ -7,10 +10,14 @@ export default function MenuSection() {
     <section id="menu" className="overflow-hidden py-16 sm:py-20 lg:py-24">
       <div className="mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
         <div className="grid items-center gap-8 lg:grid-cols-[minmax(0,180px)_minmax(0,1fr)_minmax(0,420px)] lg:gap-12">
-          {/* Oversized vertical wordmark — bleeds off the left edge, as in the mockup */}
+          {/* Oversized vertical wordmark — bleeds off the left edge, as in the
+              mockup. The negative margin only applies at lg: below that a 12px
+              offset is too small to read as intentional and looks misaligned. */}
           <h2
             aria-label="Menu"
-            className="reveal -ml-3 font-display text-[19vw] font-medium leading-[0.82] tracking-tight text-navy lg:-ml-14 lg:text-[168px]"
+            // 22vh cap: at 19vw alone the wordmark ran ~160px tall on a 390px
+            // landscape screen and pushed the menu CTAs off before any could be tapped
+            className="reveal font-display text-[min(19vw,22vh)] font-medium leading-[0.82] tracking-tight text-navy lg:-ml-14 lg:text-[168px]"
           >
             <span aria-hidden="true" className="lg:[writing-mode:vertical-rl]">
               MENU
@@ -35,6 +42,7 @@ export default function MenuSection() {
                 href={pdf.href}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => track("menu_pdf_open", { menu: pdf.label })}
                 className="inline-flex items-center justify-center rounded-full bg-orange px-6 py-3.5 text-center font-display text-[15px] font-bold leading-tight tracking-tight text-white transition hover:-translate-y-0.5 hover:bg-orange-dark"
               >
                 {pdf.label}

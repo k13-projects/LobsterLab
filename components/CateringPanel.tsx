@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { track } from "@/lib/analytics";
 import { ordering, occasions, serviceTypes, site } from "@/lib/content";
 
 /**
@@ -22,6 +23,7 @@ type State = "idle" | "sending" | "sent" | "error";
 
 export default function CateringPanel({ onDone }: { onDone: () => void }) {
   const [state, setState] = useState<State>("idle");
+  const startedRef = useRef(false);
   const [error, setError] = useState<string>("");
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -47,6 +49,7 @@ export default function CateringPanel({ onDone }: { onDone: () => void }) {
       });
       if (!res.ok) throw new Error(`Formspree responded ${res.status}`);
       setState("sent");
+      track("catering_inquiry_sent");
       form.reset();
     } catch {
       setState("error");
@@ -122,7 +125,17 @@ export default function CateringPanel({ onDone }: { onDone: () => void }) {
       </div>
 
       {/* 2 — inquiry form */}
-      <form onSubmit={handleSubmit} className="space-y-4" noValidate={false}>
+      <form
+        onSubmit={handleSubmit}
+        onFocusCapture={() => {
+          if (!startedRef.current) {
+            startedRef.current = true;
+            track("catering_form_start");
+          }
+        }}
+        className="space-y-4"
+        noValidate={false}
+      >
         <input type="hidden" name="_subject" value="Lobster Lab — catering inquiry" />
         {/* honeypot */}
         <input
@@ -245,6 +258,33 @@ export default function CateringPanel({ onDone }: { onDone: () => void }) {
             placeholder="Tell us about the event, any dietary needs, favorite dishes…"
           />
         </div>
+
+        {/*
+          TCPA: the form takes a phone number. Consent to be contacted ABOUT
+          this request is narrow and implied by submitting it; consent to
+          MARKETING texts is a separate, express, unbundled opt-in and must
+          stay opt-out-by-default. Do not pre-check this box.
+        */}
+        <label className="flex cursor-pointer items-start gap-3 rounded-xl bg-navy/[0.03] px-4 py-3">
+          <input
+            type="checkbox"
+            name="sms_marketing_consent"
+            value="yes"
+            className="mt-0.5 h-6 w-6 shrink-0 accent-[#fe6700]"
+          />
+          <span className="text-[13px] leading-snug text-navy/70">
+            Optional — text me about Lobster Lab offers and updates. Message and data rates may
+            apply; reply STOP to opt out. You do not need to agree to this to send your inquiry.
+          </span>
+        </label>
+
+        <p className="text-[13px] leading-snug text-navy/55">
+          By sending this inquiry you agree we may contact you about your catering request. See our{" "}
+          <a href="/privacy" className="font-semibold text-navy/75 underline">
+            Privacy Policy
+          </a>
+          .
+        </p>
 
         {state === "error" && (
           <p role="alert" className="rounded-xl bg-orange/10 px-4 py-3 text-sm text-navy">

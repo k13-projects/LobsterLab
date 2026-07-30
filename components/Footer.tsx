@@ -31,7 +31,7 @@ export default function Footer() {
                 <dd className="mt-1">
                   <a
                     href={`mailto:${site.email}`}
-                    className="text-navy transition-colors hover:text-orange"
+                    className="inline-flex min-h-[24px] items-center py-1 text-navy transition-colors hover:text-orange"
                   >
                     {site.email}
                   </a>
@@ -73,22 +73,30 @@ export default function Footer() {
           <p className="text-sm text-navy/55">
             © {year} {site.name}. All rights reserved.
           </p>
-          <nav aria-label="Footer" className="flex flex-wrap justify-center gap-x-6 gap-y-2">
+          {/* py-1.5 keeps every target at least 24x24 CSS px (WCAG 2.5.8 AA) */}
+          <nav aria-label="Footer" className="flex flex-wrap justify-center gap-x-4 gap-y-1">
             {nav.map((item) => (
               <a
                 key={item.href}
                 href={item.href}
-                className="text-sm font-semibold text-navy/70 transition-colors hover:text-orange"
+                className="inline-flex min-h-[24px] items-center px-2 py-1.5 text-sm font-semibold text-navy/70 transition-colors hover:text-orange"
               >
                 {item.label}
               </a>
             ))}
-            <a
-              href="/accessibility"
-              className="text-sm font-semibold text-navy/70 transition-colors hover:text-orange"
-            >
-              Accessibility
-            </a>
+            {[
+              { href: "/accessibility", label: "Accessibility" },
+              { href: "/privacy", label: "Privacy" },
+              { href: "/terms", label: "Terms" },
+            ].map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                className="inline-flex min-h-[24px] items-center px-2 py-1.5 text-sm font-semibold text-navy/70 transition-colors hover:text-orange"
+              >
+                {item.label}
+              </a>
+            ))}
           </nav>
         </div>
       </div>

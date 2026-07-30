@@ -34,29 +34,34 @@ export const nav = [
 /* Ordering                                                                    */
 /* -------------------------------------------------------------------------- */
 
+/**
+ * ===========================================================================
+ * ORDERING — the one place to wire every storefront (plan P1)
+ * ===========================================================================
+ * Each location owns its own links. To connect a location, paste its URL into
+ * the matching `ordering` block in `locations` below. Nothing else needs to
+ * change: the ORDER ONLINE modal reads this and renders whatever exists.
+ *
+ * An empty string is not a bug — it renders an honest "coming soon" state
+ * instead of a dead link. That is deliberate, so a half-wired site never
+ * sends a customer to a broken storefront.
+ *
+ * Provenance: Carlsbad Toast URL is from data/external_services.json
+ * (captured 2026-07-28, lost_on_migration: false — it survives SpotHopper).
+ * The rest are pending from the client; see tasks/todo.md P1.
+ */
+
+export const orderChannels = {
+  toast: { label: "Pickup", provider: "Toast", logo: "/order/toast.webp" },
+  doordash: { label: "Delivery", provider: "DoorDash", logo: "/order/doordash.webp" },
+  grubhub: { label: "Delivery", provider: "Grubhub", logo: "/order/grubhub.webp" },
+} as const;
+
+export type OrderChannel = keyof typeof orderChannels;
+export type OrderLinks = Partial<Record<OrderChannel, string>>;
+
 export const ordering = {
-  // Toast — live, survives the SpotHopper migration (lost_on_migration: false)
-  pickup: {
-    provider: "Toast",
-    logo: "/order/toast.webp",
-    url: "https://www.toasttab.com/local/order/lobster-lab-windmill-food-hall-890-palomar-airport-road/r-e7ff1c2b-5c9c-47de-9b94-d10ae264a959",
-  },
-  // The client docx lists DoorDash + Grubhub but leaves the URLs as "Link".
-  // Set these two env vars (or edit here) once the client supplies the storefronts.
-  // Until then the delivery tile renders a disabled state rather than a dead link.
-  delivery: [
-    {
-      provider: "DoorDash",
-      logo: "/order/doordash.webp",
-      url: process.env.NEXT_PUBLIC_DOORDASH_URL ?? "",
-    },
-    {
-      provider: "Grubhub",
-      logo: "/order/grubhub.webp",
-      url: process.env.NEXT_PUBLIC_GRUBHUB_URL ?? "",
-    },
-  ],
-  // EZCater — live, survives the migration (lost_on_migration: false)
+  // ezCater — live, survives the migration (lost_on_migration: false)
   catering: {
     provider: "ezCater",
     url: "https://www.ezcater.com/catering/pvt/lobster-lab-3?fcv=1",
@@ -118,6 +123,8 @@ export type Location = {
   address: string;
   hours: string;
   mapsQuery: string;
+  /** Storefronts for THIS location. Empty string = not connected yet. */
+  ordering: OrderLinks;
 };
 
 export const locations: Location[] = [
@@ -127,6 +134,12 @@ export const locations: Location[] = [
     address: "890 Palomar Airport Rd, Carlsbad, CA 92011",
     hours: "11:00 AM – 9:00 PM",
     mapsQuery: "Lobster Lab, 890 Palomar Airport Rd, Carlsbad, CA 92011",
+    ordering: {
+      toast:
+        "https://www.toasttab.com/local/order/lobster-lab-windmill-food-hall-890-palomar-airport-road/r-e7ff1c2b-5c9c-47de-9b94-d10ae264a959",
+      doordash: "", // TODO(client, P1): DoorDash storefront URL
+      grubhub: "", // TODO(client, P1): Grubhub storefront URL
+    },
   },
   {
     area: "Del Mar",
@@ -134,6 +147,11 @@ export const locations: Location[] = [
     address: "12841 El Camino Real Ste 206, San Diego, CA 92130",
     hours: "11:00 AM – 10:00 PM",
     mapsQuery: "Lobster Lab, Sky Deck, 12841 El Camino Real, San Diego, CA 92130",
+    ordering: {
+      toast: "", // TODO(client, P1): Toast storefront URL
+      doordash: "", // TODO(client, P1)
+      grubhub: "", // TODO(client, P1)
+    },
   },
   {
     area: "San Clemente",
@@ -141,6 +159,11 @@ export const locations: Location[] = [
     address: "1720 North El Camino Real, San Clemente, CA 92672",
     hours: "11:00 AM – 9:00 PM",
     mapsQuery: "Lobster Lab, 1720 N El Camino Real, San Clemente, CA 92672",
+    ordering: {
+      toast: "", // TODO(client, P1)
+      doordash: "", // TODO(client, P1)
+      grubhub: "", // TODO(client, P1)
+    },
   },
   {
     area: "Little Italy",
@@ -148,6 +171,11 @@ export const locations: Location[] = [
     address: "550 W Date St Suite B, San Diego, CA 92101",
     hours: "11:00 AM – 9:00 PM",
     mapsQuery: "Lobster Lab, 550 W Date St, San Diego, CA 92101",
+    ordering: {
+      toast: "", // TODO(client, P1)
+      doordash: "", // TODO(client, P1)
+      grubhub: "", // TODO(client, P1)
+    },
   },
   {
     area: "UCSD Campus",
@@ -155,11 +183,32 @@ export const locations: Location[] = [
     address: "9165 Theatre District Drive, La Jolla, CA 92037",
     hours: "11:00 AM – 9:00 PM",
     mapsQuery: "Lobster Lab, 9165 Theatre District Dr, La Jolla, CA 92037",
+    ordering: {
+      toast: "", // TODO(client, P1)
+      doordash: "", // TODO(client, P1)
+      grubhub: "", // TODO(client, P1)
+    },
   },
 ];
 
+/** True once any location has at least one live storefront. */
+export const hasAnyOrdering = locations.some((l) =>
+  Object.values(l.ordering).some((url) => Boolean(url)),
+);
+
 /* -------------------------------------------------------------------------- */
-/* Reviews — verbatim from the client docx                                     */
+/* Reviews — verbatim quotes from the client docx                              */
+/*                                                                             */
+/* ATTRIBUTION IS DELIBERATELY NON-IDENTIFYING. The client's brief supplied     */
+/* these with full reviewer names. Publishing a named individual's words as     */
+/* advertising without their consent creates exposure under California Civil    */
+/* Code s.3344 (statutory floor $750 per violation) on top of the Yelp/Google   */
+/* platform terms. `author` therefore carries a city/label, not a person.       */
+/*                                                                             */
+/* The real names are preserved in the client docx and in git history if        */
+/* consent is later obtained. Proper fix (plan P3): switch to the official      */
+/* Yelp/Google embed widgets, which are licensed for exactly this, or get       */
+/* written consent from each reviewer. Do not re-add names before then.         */
 /* -------------------------------------------------------------------------- */
 
 export type Review = { quote: string; author: string; source: "Google" | "Yelp" };
@@ -168,37 +217,37 @@ export const reviews: Review[] = [
   {
     quote:
       "The warm lobster roll with garlic butter is the best I've had on the west coast. Being from the northeast, I've had plenty a Maine lobster roll and this roll was generously filled with fresh, large chunks of lobster & claw meat and NOT overcooked or rubbery. The bread was also really high quality, dense, just sweet enough, and perfectly toasted.",
-    author: "Joe Neyes",
+    author: "Google reviewer, Carlsbad",
     source: "Google",
   },
   {
     quote:
       "I've gotten lobster rolls up and down the West coast. Vancouver BC to Seattle to LA to San Diego. The lobster roll at Carlsbad Lobster Lab is The Best I've ever had. The Best! The lobster is sweet, not salty. The roll is wonderfully warm and soft and buttery. Perfection!",
-    author: "Tom",
+    author: "Google reviewer, Carlsbad",
     source: "Google",
   },
   {
     quote:
       "The Lobster Roll and Cali Roll were so gorgeous and exceeded our expectations! So remarkable and impressive! The lobster meat was super succulent and fresh! Perfection in EVERY BITE!! I loved the clam chowder and the lobster bisque!! Great for dunking!! Amazing flavor!!",
-    author: "Michele Leocadio",
+    author: "Google reviewer, San Diego",
     source: "Google",
   },
   {
     quote:
       "Food and Service was amazing. The best Lobster roll since I lived in New England. Can't wait for San Clemente location opens!! Crab roll was also exceptional!",
-    author: "Trayce T.",
+    author: "Yelp reviewer, San Diego",
     source: "Yelp",
   },
   {
     quote:
       "We got the Connecticut Style XL Lobster Roll, The Cali Crab Roll, The Classic Tuna Melt, and the Lobster Bisque. It was all fantastic. Juicy tender lobster on the upmost perfect buttery toasted roll seasoned but not over seasoned. I have never seen a crab roll with big pieces of king crab. Absolutely delicious.",
-    author: "Rex S.",
+    author: "Yelp reviewer, San Diego",
     source: "Yelp",
   },
   {
     quote:
       "Lobster lab is amazing! We had the Connecticut lobster roll and the lobster grilled cheese with the lobster bisque, both were plentiful and delicious.",
-    author: "Summer",
+    author: "Yelp reviewer, Carlsbad",
     source: "Yelp",
   },
 ];
