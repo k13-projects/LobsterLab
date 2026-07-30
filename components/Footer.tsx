@@ -63,7 +63,33 @@ export default function Footer() {
                 <dt className="font-display text-xs font-bold uppercase tracking-[0.18em] text-orange">
                   Operated by
                 </dt>
-                <dd className="mt-1 text-navy">{site.operator}</dd>
+                <dd className="mt-1">
+                  <a
+                    href={site.operatorUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex min-h-[24px] items-center gap-1.5 py-1 text-navy transition-colors hover:text-orange"
+                  >
+                    {site.operator}
+                    <svg
+                      width="13"
+                      height="13"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      aria-hidden="true"
+                      className="shrink-0 opacity-60"
+                    >
+                      <path
+                        d="M7 17 17 7M17 7H9m8 0v8"
+                        stroke="currentColor"
+                        strokeWidth="2.2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                    <span className="sr-only">(opens in a new tab)</span>
+                  </a>
+                </dd>
               </div>
             </dl>
           </div>

@@ -24,6 +24,7 @@ export const isProduction = SITE_URL === PRODUCTION_URL;
 export const site = {
   name: "Lobster Lab",
   operator: "Tiger Hospitality Group",
+  operatorUrl: "https://tigerhospitalitygroup.com",
   url: SITE_URL,
   tagline: "Seafood. Lobster Rolls. Fresh Ingredients. Everyday. Catch the Vibe.",
   description:
