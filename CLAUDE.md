@@ -49,6 +49,11 @@ there with a provenance comment. Change copy there, not in components.
 `docs/reports/` lives there in the phase that solves it, including the ones blocked on the client.
 Start there when picking up work.
 
+**[docs/WORKING_METHOD.md](docs/WORKING_METHOD.md) is how this project is built and tested.** Read
+it before a substantial change — it records the loop, the verification standard, how agents are
+used, and an honest list of what cost time. Durable rules are in
+[.claude/Lessons.md](.claude/Lessons.md); re-read both at session start.
+
 Client-supplied values that are still blank: the Formspree form id (`.env.example`) and the per-
 location ordering URLs (`locations[].ordering` in `lib/content.ts`). Both degrade to an honest
 "coming soon" state rather than rendering dead controls — keep that property.
@@ -109,6 +114,10 @@ Key facts extracted from it:
   (titled `Lobster Lab DNA`) plus the Soul profile. The brand facts below are the raw material.
 - Mobile-first. Client-facing reports get archived under `docs/reports/` and must pass the
   two-agent Chrome QA gate (see `CONVENTIONS.md`).
+- **Run `fitcheck` after any layout, breakpoint or nav change** — those are exactly the edits that
+  regress one screen size while fixing another. Nine viewports, shared measurement harness, trust
+  gate. Skill: `~/.claude/skills/fitcheck/`. Every responsive defect in this repo was found by it
+  or by the pass that became it.
 
 ## Content conventions
 

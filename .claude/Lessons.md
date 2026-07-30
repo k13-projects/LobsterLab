@@ -35,4 +35,50 @@ On `hail mary` / `hm` (or `hail mary that shit` / `hm pls`): new branch → comm
 ## Learned patterns
 > Add entries here after corrections from Kazim.
 
-_(none yet)_
+### Verification
+1. **"Fixed" needs a before/after pair.** Paste both numbers. An adjective is a claim, not a result.
+   Example: `scrollHeight 667 == clientHeight 667, title at -543px` → `scrollHeight 1238 > 667,
+   title at 28px`.
+2. **A dead server measures as flawlessly clean.** Every check returns zero because there is
+   nothing to check, and that reads as a pass. Assert the page actually loaded before trusting any
+   sweep — `curl` the URL, and check the DOM has content.
+3. **`next start` renames its process to `next-server`.** `pkill -f "next start"` misses it and the
+   stale server keeps serving the previous build, so fixes look like they did nothing. Cost two
+   cycles. Use `pkill -f next-server`, then verify the new markup is actually served with `curl`.
+4. **Say what you could not test.** An untested area reported as passing is worse than no report.
+
+### Measurement
+5. **Measure AND look — both, every time.** Numbers miss "this is ugly" (an icon reading as a
+   folded fan). Eyes miss "1px under the AA floor". Read every screenshot you take; a screenshot
+   you did not open is a file, not a test.
+6. **Fix the cause, not the number.** A 23px tap target is not fixed with a magic minimum — find
+   the font step-down that caused it. Then comment the constant with the measurement that produced
+   it, so nobody "cleans it up".
+7. **Never retype measurement code.** Both measurement errors in the Lobster Lab pass came from
+   re-typing assertions per sweep. Shared harness: `~/.claude/skills/fitcheck/measure.js`.
+
+### Agents
+8. **Agents audit; one hand edits.** Parallel agents editing the same files clobber each other.
+   They return measurements, screenshots and exact diffs.
+9. **Split agents by device tier AND by lens** (QA / designer / front-end) so the same page gets
+   several independent readings.
+10. **Verify every agent finding before acting.** They self-correct, but they are wrong exactly
+    where they did not double-check. Reproduce it yourself first.
+11. **The browse daemon is shared between parallel agents and is NOT isolated.** Viewports and tabs
+    bleed across sessions — this produced five phantom failures in one sweep. Assert
+    `window.innerWidth` in-band inside every measurement.
+12. **When the subagent API fails repeatedly (529), stop retrying and do the work directly.** Seven
+    consecutive failures cost real time. Re-run the agent version later; never stall, never imply
+    agent output exists when it does not.
+13. **Prove the toolchain before spending agent budget on it.** Playwright's Chromium was not
+    installed and the first browser call failed.
+
+### Build
+14. **Open the client's actual design files.** A described design is a different design. Render the
+    PDF, extract the docx, look at every slice before writing layout.
+15. **Missing third-party values get a harness, not a lying placeholder.** Unset renders an honest
+    "coming soon"; connecting later is one edit to one file.
+16. **Scroll-reveal content must not depend on JS to be visible.** Hide only under a `.js` class set
+    by an inline head script, or a JS failure blanks the page.
+17. **Ask for vector assets on day one.** Icons were redrawn three times because the source was
+    raster-only inside a PDF.
