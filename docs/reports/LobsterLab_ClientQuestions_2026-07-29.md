@@ -1,8 +1,8 @@
 # Client email draft — questions for Lorena (cc Eren)
 
 **Status:** DRAFT — not sent. Review, adjust tone/names, then send from Kazim.
-**Date drafted:** 2026-07-29
-**Context for K13:** these are the 7 standing questions from `tasks/todo.md`. Written for a reader
+**Date drafted:** 2026-07-29 · **Revised:** 2026-07-30 (question 8 added after re-reading the ideas deck)
+**Context for K13:** these are the 8 standing questions from `tasks/todo.md`. Q8 came out of re-reading `LOBSTER LAB - WEBSITE IDEAS.pptx`, which had never been opened — see `LobsterLab_AssetGapAnalysis_2026-07-30.md`. Written for a reader
 who has not been following the build, so each one explains what it is, why it matters, and what
 happens if we do not get it.
 
@@ -10,7 +10,7 @@ happens if we do not get it.
 
 **To:** Lorena
 **Cc:** Eren
-**Subject:** Lobster Lab website — ready to launch, need 7 things from you (2 are urgent)
+**Subject:** Lobster Lab website — ready to launch, need 8 things from you (2 are urgent)
 
 ---
 
@@ -210,6 +210,35 @@ bring in new customers.
 
 ---
 
+
+### 8. Your story, and the team
+
+**What I need:** a few paragraphs about how Lobster Lab started, and a decision on whether you want
+the founders or kitchen team on the site.
+
+**Why I am asking:** going back through everything you sent, I found your original
+*LOBSTER LAB — WEBSITE IDEAS* deck. It asks for two things that never made it into the final design:
+**"Our story"** and a **team introduction (chef / founders / team)**. The references you picked
+were Cousins Maine Lobster's sourcing page and Pacific Catch's about-us — both of which lead with
+where the food comes from and who makes it.
+
+I have not invented anything to fill that space, on purpose. A restaurant's origin story is the one
+piece of content that has to come from the people who lived it — anything I write would be
+plausible and false, and guests can tell.
+
+**What would help:**
+- Two or three paragraphs: how it started, why lobster rolls, what you are trying to do differently.
+  Rough notes are fine — I will shape them.
+- Whether you want a photo of the founders or the kitchen team. **Good news here:** your 2023 shoot
+  already includes chef-at-work frames — hands plating, pouring the bisque — so we may not need new
+  photography at all.
+
+This is genuinely optional. The site works without it. But "who are these people and why should I
+trust their lobster" is the question a first-time guest is actually asking, and right now the site
+does not answer it.
+
+---
+
 ## What I would chase first
 
 If you only have time for two things today: **the ordering links (#1)** and **the catering inbox and
@@ -225,6 +254,15 @@ Happy to jump on a quick call if it is easier to walk through any of this.
 
 Best,
 Kazim
+
+---
+
+## Note for K13 — not a client question
+
+While re-reading the deck I found that **private parties / group bookings** were dropped between the
+old site and the new brief. That is not a question for Lorena — the old site had the function, the
+archive says to rebuild it, and we simply build it. It is now in the plan at P1. Do not raise it as
+a client decision; if anything, mention it as something we caught and are fixing.
 
 ---
 
