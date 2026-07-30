@@ -136,7 +136,7 @@ export default function Modal({ open, onClose, title, subtitle, children, size =
               type="button"
               onClick={onClose}
               aria-label="Close"
-              className="-mr-1 -mt-1 shrink-0 rounded-full p-2 text-navy/50 transition hover:bg-navy/5 hover:text-navy"
+              className="-mr-2 -mt-2 flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-navy/50 transition hover:bg-navy/5 hover:text-navy"
             >
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path

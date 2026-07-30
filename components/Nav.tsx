@@ -108,9 +108,10 @@ export default function Nav() {
             <a
               key={item.href}
               href={item.href}
-              // min-h-[24px]: the 15px step-down at md gives a 23px line box,
-              // 1px under the WCAG 2.5.8 AA target floor
-              className="inline-flex min-h-[24px] items-center whitespace-nowrap font-display text-[15px] font-semibold text-navy transition-colors hover:text-orange lg:text-[17px]"
+              // min-h-[44px]: this nav renders from 768px up, which includes
+              // phone landscape — a touchscreen. Line-height alone gave a 23-26px
+              // hit box. The row is 72px tall so 44px fits without moving anything.
+              className="inline-flex min-h-[44px] items-center whitespace-nowrap font-display text-[15px] font-semibold text-navy transition-colors hover:text-orange lg:text-[17px]"
             >
               {item.label}
             </a>

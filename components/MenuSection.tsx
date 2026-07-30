@@ -15,7 +15,9 @@ export default function MenuSection() {
               offset is too small to read as intentional and looks misaligned. */}
           <h2
             aria-label="Menu"
-            className="reveal font-display text-[19vw] font-medium leading-[0.82] tracking-tight text-navy lg:-ml-14 lg:text-[168px]"
+            // 22vh cap: at 19vw alone the wordmark ran ~160px tall on a 390px
+            // landscape screen and pushed the menu CTAs off before any could be tapped
+            className="reveal font-display text-[min(19vw,22vh)] font-medium leading-[0.82] tracking-tight text-navy lg:-ml-14 lg:text-[168px]"
           >
             <span aria-hidden="true" className="lg:[writing-mode:vertical-rl]">
               MENU

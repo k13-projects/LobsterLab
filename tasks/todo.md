@@ -87,7 +87,24 @@ The six open recommendations from the UI/UX audit, plus the mobile-agent finding
       mobile), not 0, because snap-start pulls the first card flush
 - [x] Duplicate React keys in the reviews list, introduced when attributions were genericized and
       stopped being unique → keyed on the quote
-- [ ] Optional perf nit: tighten `sizes` on the hero `<Image>` to stop the unused-preload warning
+### Landscape agent findings (2026-07-29)
+
+- [x] **High:** at 844x390 (phone landscape) the hero's flat `min-h-[320px]` plus the 72px header
+      came to 392px in a 390px viewport — the next section was not below the fold, it was **0px
+      visible**, with nothing signalling the page continued. Now `min-h-[min(320px,58vh)]`:
+      92px of the next section shows at 844x390, and tall viewports are unchanged
+- [x] Primary nav renders from 768px up, which includes phone landscape — a touchscreen. Links
+      were a 24-26px hit box; now `min-h-[44px]` inside the 72px row, no visual change
+- [x] `text-[19vw]` MENU wordmark ran ~160px tall on a 390px landscape screen and pushed the menu
+      CTAs out of reach → capped at `min(19vw,22vh)`, now 86px there, portrait unchanged
+- [x] Modal close button was 38x38 → 44x44
+- [ ] Optional perf nit: the "hero.webp preloaded but not used" console warning fires on every
+      load. Benign, but it masks real errors during QA. Worth tightening the `sizes` hint.
+
+**Agent process note:** the browse daemon is shared between parallel agents and is not isolated —
+both agents caught another agent's viewport bleeding into their session, and so did I (one sweep
+reported five phantom failures). Every measurement should assert `window.innerWidth` in-band
+before it is trusted. Worth solving before the next parallel run.
 
 ---
 
