@@ -16,11 +16,22 @@ happens if we do not get it.
 
 Hi Lorena,
 
-Good news first: the new **lobsterlab.us** is built and tested. It follows your design mockup and
-website brief closely — the single scrolling page with About, Menu, Locations, Catering and Contact,
-the ORDER ONLINE pop-up, and the catering pop-up with the inquiry form. It works on phones, tablets
-and desktop, and the old page links all redirect correctly so nothing you have shared over the years
-breaks.
+Good news first: the new **lobsterlab.us** is built, tested, and you can look at it right now:
+
+### 👉 https://lobster.k13projects.com
+
+That is a private preview on our own domain — it is hidden from Google, so nothing is public yet.
+The real lobsterlab.us still shows the old site until we make the switch.
+
+It follows your design mockup and website brief closely — the single scrolling page with About,
+Menu, Locations, Catering and Contact, the ORDER ONLINE pop-up, and the catering pop-up with the
+inquiry form. It works on phones, tablets and desktop, and the old page links all redirect correctly
+so nothing you have shared over the years breaks.
+
+**Two things you will notice on the preview, both deliberate:** four of the five locations say
+"online ordering coming soon", and the catering form will tell you it is not connected yet. That is
+questions 1 and 2 below — we chose to show an honest message rather than a button that goes nowhere.
+Both switch on the moment you send those details.
 
 Quick background in case you have not been in the loop: the old site was hosted by **SpotHopper**, and
 that service ends **August 1**. We rebuilt the site from scratch on our own hosting so you are no
