@@ -69,7 +69,7 @@ function LocationRow({ location }: { location: Location }) {
         </div>
       ) : (
         <p className="mt-2 text-sm text-navy/55">
-          Online ordering coming soon — order at the counter.
+          Online ordering coming soon, order at the counter.
         </p>
       )}
     </li>

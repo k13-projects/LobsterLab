@@ -5,7 +5,7 @@ import Lenis from "lenis";
 
 /**
  * Lenis smooth scroll + the IntersectionObserver that drives `.reveal`.
- * Both are fully disabled when the user prefers reduced motion — Lenis never
+ * Both are fully disabled when the user prefers reduced motion, Lenis never
  * starts, and every `.reveal` is marked visible immediately.
  */
 export default function SmoothScroll() {

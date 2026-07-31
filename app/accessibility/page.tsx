@@ -15,7 +15,7 @@ export default function AccessibilityPage() {
     <div className="min-h-screen bg-white">
       <header className="border-b border-navy/10">
         <div className="mx-auto flex h-[72px] max-w-[1400px] items-center px-5 sm:px-8 lg:px-12">
-          <Link href="/" aria-label="Lobster Lab — home">
+          <Link href="/" aria-label="Lobster Lab, home">
             <Image
               src="/brand/wordmark-horizontal.png"
               alt="Lobster Lab"

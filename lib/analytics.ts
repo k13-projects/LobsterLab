@@ -7,7 +7,7 @@
  *    litigation applying the Invasion of Privacy Act (CIPA), including its pen
  *    register provisions, to ordinary web trackers and pixels. Retro-fitting
  *    consent onto a tracker that has already been running is the expensive path.
- *    Never load a vendor script at import time or in a layout — always behind
+ *    Never load a vendor script at import time or in a layout, always behind
  *    `grantConsent()`.
  *
  * 2. NOTHING loads unless an id is configured. With `NEXT_PUBLIC_GA_ID` unset
@@ -15,7 +15,7 @@
  *    tracker-free by default and the privacy policy stays truthful.
  *
  * If the project picks a cookieless tool (Plausible, Fathom) instead of GA4,
- * the banner can likely be dropped entirely — swap `loadVendor()` and set
+ * the banner can likely be dropped entirely, swap `loadVendor()` and set
  * `REQUIRES_CONSENT` to false. Keep the gate for anything cookie-based.
  *
  * Never add session-replay tooling. It is the highest-risk category in this
@@ -40,7 +40,7 @@ export function readConsent(): ConsentState {
     const v = window.localStorage.getItem(STORAGE_KEY);
     return v === "granted" || v === "denied" ? v : "unset";
   } catch {
-    // private mode / storage blocked — treat as no decision, never as consent
+    // private mode / storage blocked, treat as no decision, never as consent
     return "unset";
   }
 }
@@ -95,7 +95,7 @@ export function initAnalytics() {
  *
  * The events worth having here, per the business report: ordering modal opens,
  * per-location storefront clicks, catering form starts vs submits, menu PDF
- * opens, and get-directions taps — that last set is how we learn which
+ * opens, and get-directions taps, that last set is how we learn which
  * locations the site actually drives traffic to.
  */
 export function track(event: string, params: Record<string, string | number> = {}) {

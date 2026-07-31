@@ -1,4 +1,4 @@
-# Lobster Lab — Website Rebuild
+# Lobster Lab, Website Rebuild
 
 Rebuild of **lobsterlab.us** (Tiger Hospitality Group) after migrating off SpotHopper.
 This repo holds the **live Next.js site**, plus a complete archive of the old SpotHopper site (website ID `244728`) captured **July 28, 2026**.
@@ -11,13 +11,13 @@ This repo holds the **live Next.js site**, plus a complete archive of the old Sp
 
 ```bash
 npm install
-./scripts/build-assets.sh   # once — generates public/ from the client brand library
+./scripts/build-assets.sh   # once, generates public/ from the client brand library
 npm run dev                 # http://localhost:9151
 ```
 
 `scripts/build-assets.sh` reads `docs/LOBSTER LAB Assets/` (gitignored, ~101MB, client-supplied)
 and writes optimized photos, logos and menu PDFs into `public/`. If that folder is missing from a
-fresh clone that is expected — ask the owner for it. `public/` is committed, so the site builds
+fresh clone that is expected, ask the owner for it. `public/` is committed, so the site builds
 without it.
 
 Copy `.env.example` → `.env.local` and fill in the Formspree id and delivery URLs (see below).
@@ -27,7 +27,7 @@ Copy `.env.example` → `.env.local` and fill in the Formspree id and delivery U
 ## What's in this repo
 
 ```
-/app       Next.js App Router — one-pager, /accessibility, 404, sitemap, robots
+/app       Next.js App Router, one-pager, /accessibility, 404, sitemap, robots
 /components  page sections + the two ordering modals
 /lib       content.ts ................ every string and link on the site, with provenance
 /scripts   build-assets.sh ........... brand library -> public/
@@ -40,7 +40,7 @@ Copy `.env.example` → `.env.local` and fill in the Formspree id and delivery U
            external_services.json .... third-party integrations + what's lost on migration
 /pages     content_archive.md ........ every page's text captured verbatim
 /images    image_manifest.csv ........ every image/video URL on the old site
-           download_images.sh ........ downloader — RUN THIS BEFORE AUG 1
+           download_images.sh ........ downloader, RUN THIS BEFORE AUG 1
 /docs      Lobster_Lab_Site_Structure.md .. full site map + rebuild blueprint
            sitemap_diagram.html ....... visual site map (open in a browser)
 ```
@@ -49,11 +49,11 @@ Copy `.env.example` → `.env.local` and fill in the Formspree id and delivery U
 
 ## The new site
 
-A **one-pager**, per the client's `LOBSTER LAB WEBSITE.pdf` mockup and `Lobster Lab website structure.docx` —
+A **one-pager**, per the client's `LOBSTER LAB WEBSITE.pdf` mockup and `Lobster Lab website structure.docx`, 
 not the old 8-route tree. Sections: hero → intro + 3 values → Menu → Catering → Locations → Reviews → Contact.
 Every old slug 301s to the matching anchor (`next.config.mjs`).
 
-- **Brand** — navy `#013a71` / orange `#fe6700`. Sofia Pro Narrow is an Adobe Font, so the site
+- **Brand**, navy `#013a71` / orange `#fe6700`. Sofia Pro Narrow is an Adobe Font, so the site
   self-hosts **Barlow Semi Condensed** as a stand-in via `next/font`. Swap `--font-brand` in
   `app/globals.css` + `app/layout.tsx` to change it; nothing else references a font name.
 - **Ordering is modal, not a link.** ORDER ONLINE opens Pickup (Toast) vs Delivery (DoorDash /
@@ -79,7 +79,7 @@ Single-location marketing site for the Carlsbad / Windmill Food Hall location. 8
 | Page | Old slug | State |
 |---|---|---|
 | Home | `/` | hero video, gallery, locations, CTAs |
-| Food Menu | `/carlsbad-windmill-food-hall-lobster-lab-food-menu` | **real content — 20 items** |
+| Food Menu | `/carlsbad-windmill-food-hall-lobster-lab-food-menu` | **real content, 20 items** |
 | Drink Menu | `/carlsbad-windmill-food-hall-lobster-lab-drink-menu` | placeholder ("updating") |
 | Specials | `/carlsbad-windmill-food-hall-lobster-lab-happy-hours-specials` | placeholder |
 | Events | `/carlsbad-windmill-food-hall-lobster-lab-events` | placeholder |
@@ -94,9 +94,9 @@ Lost on Aug 1: SpotHopper form embeds (catering inquiry, private parties, jobs),
 
 ## Do before Aug 1 (you lose these)
 
-1. `cd images && ./download_images.sh` — saves all images + the promo video from the SpotHopper CDN.
+1. `cd images && ./download_images.sh`, saves all images + the promo video from the SpotHopper CDN.
 2. Export newsletter subscribers and any form submissions from the SpotHopper dashboard.
-3. **Confirm you control `lobsterlab.us` DNS at your own registrar.** If SpotHopper manages DNS, move it out now — this is the highest-risk item.
+3. **Confirm you control `lobsterlab.us` DNS at your own registrar.** If SpotHopper manages DNS, move it out now, this is the highest-risk item.
 4. Save the Toast + EZCater admin logins and public URLs (URLs are in `data/external_services.json`).
 
 ---
@@ -116,9 +116,9 @@ Full architecture, content model, and data flow are in [`docs/Lobster_Lab_Site_S
 The site is built and passes a desktop + mobile Chrome QA pass. To ship:
 
 1. Fill in the three client-supplied values in the table above.
-2. Deploy to Vercel (project is static — `next build` emits 5 prerendered routes).
+2. Deploy to Vercel (project is static, `next build` emits 5 prerendered routes).
 3. Point `lobsterlab.us` DNS at Vercel and confirm the 301s resolve on the real domain.
 
 One known content issue: `public/menus/lobster-lab-menu-food-halls.pdf` is **10MB** as supplied by
-the client. Worth asking for a web-optimized export before launch — it is a heavy download on
+the client. Worth asking for a web-optimized export before launch, it is a heavy download on
 mobile data.

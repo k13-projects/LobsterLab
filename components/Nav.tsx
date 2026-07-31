@@ -29,7 +29,7 @@ export default function Nav() {
    * keyboard contract as a dialog: Escape closes it, Tab stays inside, and
    * focus returns to the button that opened it. Without the trap, tabbing past
    * the last item dropped focus thousands of pixels down the page while the
-   * sheet still covered the screen — with no visible focus ring anywhere.
+   * sheet still covered the screen, with no visible focus ring anywhere.
    */
   useEffect(() => {
     if (!open) return;
@@ -83,7 +83,7 @@ export default function Nav() {
       ].join(" ")}
     >
       <div className="mx-auto flex h-[72px] max-w-[1400px] items-center justify-between gap-4 px-5 sm:px-8 lg:gap-6 lg:px-12">
-        <a href="#top" aria-label="Lobster Lab — home" className="shrink-0">
+        <a href="#top" aria-label="Lobster Lab, home" className="shrink-0">
           <Image
             src="/brand/wordmark-horizontal.png"
             alt="Lobster Lab"
@@ -109,7 +109,7 @@ export default function Nav() {
               key={item.href}
               href={item.href}
               // min-h-[44px]: this nav renders from 768px up, which includes
-              // phone landscape — a touchscreen. Line-height alone gave a 23-26px
+              // phone landscape, a touchscreen. Line-height alone gave a 23-26px
               // hit box. The row is 72px tall so 44px fits without moving anything.
               className="inline-flex min-h-[44px] items-center whitespace-nowrap font-display text-[15px] font-semibold text-navy transition-colors hover:text-orange lg:text-[17px]"
             >
@@ -149,7 +149,7 @@ export default function Nav() {
 
       {/*
         `inert` while closed. max-h-0 + overflow-hidden only hides the sheet
-        visually — its links keep a layout box and stay in the tab order, so a
+        visually, its links keep a layout box and stay in the tab order, so a
         keyboard user landed on invisible controls with no focus ring.
       */}
       <div

@@ -75,7 +75,7 @@ export default function CateringPanel({ onDone }: { onDone: () => void }) {
           Request sent
         </h3>
         <p className="mx-auto mt-2 max-w-sm text-navy/70">
-          Thanks — we&apos;ve got your details and we&apos;ll be in touch shortly to lock in the menu.
+          Thanks, we&apos;ve got your details and we&apos;ll be in touch shortly to lock in the menu.
         </p>
         <button
           type="button"
@@ -90,7 +90,7 @@ export default function CateringPanel({ onDone }: { onDone: () => void }) {
 
   return (
     <div className="space-y-6">
-      {/* 1 — order straight through ezCater */}
+      {/* 1, order straight through ezCater */}
       <a
         href={ordering.catering.url}
         target="_blank"
@@ -124,7 +124,7 @@ export default function CateringPanel({ onDone }: { onDone: () => void }) {
         <span className="h-px flex-1 bg-navy/12" />
       </div>
 
-      {/* 2 — inquiry form */}
+      {/* 2, inquiry form */}
       <form
         onSubmit={handleSubmit}
         onFocusCapture={() => {
@@ -136,7 +136,7 @@ export default function CateringPanel({ onDone }: { onDone: () => void }) {
         className="space-y-4"
         noValidate={false}
       >
-        <input type="hidden" name="_subject" value="Lobster Lab — catering inquiry" />
+        <input type="hidden" name="_subject" value="Lobster Lab, catering inquiry" />
         {/* honeypot */}
         <input
           type="text"
@@ -273,7 +273,7 @@ export default function CateringPanel({ onDone }: { onDone: () => void }) {
             className="mt-0.5 h-6 w-6 shrink-0 accent-[#fe6700]"
           />
           <span className="text-[13px] leading-snug text-navy/70">
-            Optional — text me about Lobster Lab offers and updates. Message and data rates may
+            Optional, text me about Lobster Lab offers and updates. Message and data rates may
             apply; reply STOP to opt out. You do not need to agree to this to send your inquiry.
           </span>
         </label>

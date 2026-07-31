@@ -98,7 +98,7 @@ export default function Modal({ open, onClose, title, subtitle, children, size =
       {/*
         `min-h-full` on this flex wrapper is load-bearing. Centering (or
         end-aligning) directly on the scroll container strands any overflow
-        above the scroll origin — scrollTop cannot go negative, so on a short
+        above the scroll origin, scrollTop cannot go negative, so on a short
         viewport the panel's header and its primary CTA become permanently
         unreachable. Letting the wrapper grow past the viewport keeps the top
         scrollable into view.

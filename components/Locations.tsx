@@ -12,7 +12,7 @@ export default function Locations() {
     <section id="locations" className="bg-sand py-16 sm:py-20 lg:py-24">
       <div className="mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
         <header className="reveal mb-10 lg:mb-14">
-          {/* Caps at 6xl so it stays below the intro headline (68px) — a section
+          {/* Caps at 6xl so it stays below the intro headline (68px), a section
               heading outranking the page's opening statement inverts hierarchy. */}
           <h2 className="font-display text-5xl font-medium leading-[0.95] tracking-tight text-navy sm:text-6xl">
             Locations
@@ -39,11 +39,21 @@ export default function Locations() {
                 onClick={() => track("directions_click", { location: l.name })}
                 className="group flex h-full flex-col rounded-2xl bg-white p-6 transition hover:-translate-y-1 hover:shadow-xl hover:shadow-navy/10"
               >
-                <p className="font-display text-xs font-bold uppercase tracking-[0.18em] text-orange">
-                  {l.area}
-                </p>
+                <div className="flex items-start justify-between gap-3">
+                  <p className="font-display text-xs font-bold uppercase tracking-[0.18em] text-orange">
+                    {l.area}
+                  </p>
+                  {l.status && (
+                    /* Not decoration: a guest who reads only the card would
+                       otherwise drive to a location that has not opened. */
+                    <span className="shrink-0 rounded-full border border-navy/20 bg-navy/5 px-2.5 py-1 font-display text-[10px] font-bold uppercase leading-none tracking-[0.14em] text-navy/70">
+                      {l.status}
+                    </span>
+                  )}
+                </div>
                 <h3 className="mt-2 font-display text-2xl font-semibold leading-tight tracking-tight text-navy">
                   {l.name}
+                  {l.status && <span className="sr-only"> ({l.status})</span>}
                 </h3>
                 <p className="mt-3 text-[15px] leading-snug text-navy/75">{l.address}</p>
 
@@ -57,11 +67,13 @@ export default function Locations() {
                       strokeLinecap="round"
                     />
                   </svg>
-                  {l.hours}
+                  {/* Bare opening times beside a Coming Soon badge read as
+                      "open now". Qualify them so nobody drives out early. */}
+                  {l.status ? `Opening soon, ${l.hours}` : l.hours}
                 </p>
 
                 <span className="mt-5 inline-flex items-center gap-1.5 font-display text-sm font-bold uppercase tracking-[0.1em] text-orange">
-                  Get directions
+                  {l.status ? "See the location" : "Get directions"}
                   <svg
                     width="16"
                     height="16"

@@ -30,12 +30,12 @@ export default function PrivacyPage() {
           "Your name",
           "Your phone number",
           "Your email address",
-          "Event details you provide — number of people, date, time, occasion, whether you want pickup or delivery, and any description or requests you write",
+          "Event details you provide, number of people, date, time, occasion, whether you want pickup or delivery, and any description or requests you write",
         ]}
       />
       <P>
         We do not require an account, and we do not ask for payment details on this website. Ordering
-        and catering checkout happen on third-party sites — see below.
+        and catering checkout happen on third-party sites, see below.
       </P>
 
       <H2>How we use it</H2>
@@ -59,8 +59,8 @@ export default function PrivacyPage() {
       </P>
       <UL
         items={[
-          "Formspree — receives and delivers catering inquiry submissions to us",
-          "Vercel — hosts this website and processes standard server request logs",
+          "Formspree, receives and delivers catering inquiry submissions to us",
+          "Vercel, hosts this website and processes standard server request logs",
         ]}
       />
       <P>
@@ -76,8 +76,8 @@ export default function PrivacyPage() {
       {ANALYTICS_ENABLED ? (
         <>
           <P>
-            We use Google Analytics to understand how this website is used — for example which
-            sections people read and where they drop off — so we can improve it.{" "}
+            We use Google Analytics to understand how this website is used, for example which
+            sections people read and where they drop off, so we can improve it.{" "}
             <strong>It only loads if you agree to it.</strong> When you first visit we ask, and we
             remember your answer. If you decline, no analytics script is loaded at all.
           </P>

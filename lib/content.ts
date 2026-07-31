@@ -7,14 +7,14 @@
  *   links     -> data/external_services.json (captured 2026-07-28)
  *   reviews   -> the docx, verbatim with attribution
  *
- * Where the docx and the SpotHopper archive disagree, the docx wins — it
+ * Where the docx and the SpotHopper archive disagree, the docx wins, it
  * describes the NEW site; the archive is the July 2026 capture of the old one.
  */
 
 /**
  * The canonical production host. Staging deploys (lobster.k13projects.com,
  * Vercel preview URLs) set NEXT_PUBLIC_SITE_URL to their own origin, which
- * flips `isProduction` false and makes robots.ts noindex them — otherwise a
+ * flips `isProduction` false and makes robots.ts noindex them, otherwise a
  * staging copy competes with the real site for the same search results.
  */
 export const PRODUCTION_URL = "https://lobsterlab.us";
@@ -28,7 +28,7 @@ export const site = {
   url: SITE_URL,
   tagline: "Seafood. Lobster Rolls. Fresh Ingredients. Everyday. Catch the Vibe.",
   description:
-    "Bold coastal flavors in San Diego — buttery lobster rolls, seafood favorites, bisques, salads and melts. Catch the vibe at Lobster Lab.",
+    "Bold coastal flavors in San Diego, buttery lobster rolls, seafood favorites, bisques, salads and melts. Catch the vibe at Lobster Lab.",
   email: "info@lobsterlab.us",
   instagram: "https://www.instagram.com/lobsterlab.us",
 } as const;
@@ -47,18 +47,18 @@ export const nav = [
 
 /**
  * ===========================================================================
- * ORDERING — the one place to wire every storefront (plan P1)
+ * ORDERING, the one place to wire every storefront (plan P1)
  * ===========================================================================
  * Each location owns its own links. To connect a location, paste its URL into
  * the matching `ordering` block in `locations` below. Nothing else needs to
  * change: the ORDER ONLINE modal reads this and renders whatever exists.
  *
- * An empty string is not a bug — it renders an honest "coming soon" state
+ * An empty string is not a bug, it renders an honest "coming soon" state
  * instead of a dead link. That is deliberate, so a half-wired site never
  * sends a customer to a broken storefront.
  *
  * Provenance: Carlsbad Toast URL is from data/external_services.json
- * (captured 2026-07-28, lost_on_migration: false — it survives SpotHopper).
+ * (captured 2026-07-28, lost_on_migration: false, it survives SpotHopper).
  * The rest are pending from the client; see tasks/todo.md P1.
  */
 
@@ -72,7 +72,7 @@ export type OrderChannel = keyof typeof orderChannels;
 export type OrderLinks = Partial<Record<OrderChannel, string>>;
 
 export const ordering = {
-  // ezCater — live, survives the migration (lost_on_migration: false)
+  // ezCater, live, survives the migration (lost_on_migration: false)
   catering: {
     provider: "ezCater",
     url: "https://www.ezcater.com/catering/pvt/lobster-lab-3?fcv=1",
@@ -100,7 +100,7 @@ export const values = [
 
 export const menu = {
   body: "Discover a menu full of coastal comfort and bold flavor. From our signature lobster, crab, and shrimp rolls to seafood sandwiches, creamy bisques, fresh salads, melts, and more. Every item is crafted to satisfy cravings and elevate classic favorites.",
-  // Two PDFs, split by location group — see CLAUDE.md
+  // Two PDFs, split by location group, see CLAUDE.md
   pdfs: [
     {
       label: "Miramar | Windmill | Global Fork",
@@ -124,7 +124,7 @@ export const catering = {
 } as const;
 
 /* -------------------------------------------------------------------------- */
-/* Locations — grouped as the client docx groups them                          */
+/* Locations, grouped as the client docx groups them                          */
 /* Hours come from the docx; addresses cross-checked against data/locations.json */
 /* -------------------------------------------------------------------------- */
 
@@ -134,6 +134,12 @@ export type Location = {
   address: string;
   hours: string;
   mapsQuery: string;
+  /**
+   * Trading status, carried through from data/locations.json (captured
+   * 2026-07-28). Set it only when the location is NOT simply open, so the
+   * badge stays meaningful instead of decorating every card.
+   */
+  status?: "Coming Soon";
   /** Storefronts for THIS location. Empty string = not connected yet. */
   ordering: OrderLinks;
 };
@@ -194,6 +200,7 @@ export const locations: Location[] = [
     address: "9165 Theatre District Drive, La Jolla, CA 92037",
     hours: "11:00 AM – 9:00 PM",
     mapsQuery: "Lobster Lab, 9165 Theatre District Dr, La Jolla, CA 92037",
+    status: "Coming Soon",
     ordering: {
       toast: "", // TODO(client, P1)
       doordash: "", // TODO(client, P1)
@@ -208,7 +215,7 @@ export const hasAnyOrdering = locations.some((l) =>
 );
 
 /* -------------------------------------------------------------------------- */
-/* Reviews — verbatim quotes from the client docx                              */
+/* Reviews, verbatim quotes from the client docx                              */
 /*                                                                             */
 /* ATTRIBUTION IS DELIBERATELY NON-IDENTIFYING. The client's brief supplied     */
 /* these with full reviewer names. Publishing a named individual's words as     */
@@ -264,7 +271,7 @@ export const reviews: Review[] = [
 ];
 
 /* -------------------------------------------------------------------------- */
-/* Catering inquiry form — field spec straight from the client docx            */
+/* Catering inquiry form, field spec straight from the client docx            */
 /* -------------------------------------------------------------------------- */
 
 export const occasions = [

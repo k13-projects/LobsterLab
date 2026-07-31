@@ -4,11 +4,11 @@
 # Source:  docs/LOBSTER LAB Assets/   (gitignored, ~101MB, client design source)
 # Output:  public/photos, public/brand, public/order, public/menus  (committed)
 #
-# Idempotent — safe to re-run. Requires macOS `sips` and `cwebp` (brew install webp).
+# Idempotent, safe to re-run. Requires macOS `sips` and `cwebp` (brew install webp).
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-# The client library has lived at both docs/ and the repo root — accept either.
+# The client library has lived at both docs/ and the repo root, accept either.
 SRC=""
 for cand in "$ROOT/LOBSTER LAB Assets" "$ROOT/docs/LOBSTER LAB Assets"; do
   [ -d "$cand" ] && { SRC="$cand"; break; }
@@ -21,7 +21,7 @@ trap 'rm -rf "$TMP"' EXIT
 if [ ! -d "$SRC" ]; then
   echo "ERROR: brand asset library not found at:"
   echo "  $SRC"
-  echo "It is gitignored by design — ask the owner for it."
+  echo "It is gitignored by design, ask the owner for it."
   exit 1
 fi
 command -v cwebp >/dev/null || { echo "ERROR: cwebp not found. brew install webp"; exit 1; }
@@ -39,14 +39,14 @@ photo() {
 }
 
 echo "==> photos"
-# Hero — the exact top-down tray spread used in LOBSTER LAB WEBSITE.pdf
+# Hero, the exact top-down tray spread used in LOBSTER LAB WEBSITE.pdf
 photo "Lobster Lab 3 - 5.25.23-85.jpg"  hero              2048 84
-# Menu strip — the four shots in the mockup, in order
+# Menu strip, the four shots in the mockup, in order
 photo "Lobster Lab 2 - 5.25.23-13.jpg"  menu-lobster-roll 1200
 photo "Lobster Lab 3 - 5.25.23-51.jpg"  menu-bisque       1200
 photo "Lobster Lab 2 - 5.25.23-01.jpg"  menu-shrimp-roll  1200
 photo "Lobster Lab 2 - 5.25.23-02.jpg"  menu-grilled-cheese 1200
-# Catering — hands/craft shot
+# Catering, hands/craft shot
 photo "Lobster Lab 3 - 5.25.23-44.jpg"  catering          1600
 # Full-bleed roll strip above the reviews band
 photo "Lobster Lab 2 - 5.25.23-20.jpg"  roll-strip        2048 84
@@ -91,7 +91,7 @@ do
 done
 
 echo "==> menu PDFs"
-cp "$SRC/MENU/Menu_Miramar, Windmill, Global Fork , Station 8.pdf" \
+cp "$SRC/MENU/Menu_Miramar, Windmill, Global Fork, Station 8.pdf" \
    "$PUB/menus/lobster-lab-menu-food-halls.pdf" && echo "  menus/lobster-lab-menu-food-halls.pdf"
 cp "$SRC/MENU/Menu Sky Deck at Del Mar Highlands Town Center_.pdf" \
    "$PUB/menus/lobster-lab-menu-sky-deck.pdf" && echo "  menus/lobster-lab-menu-sky-deck.pdf"

@@ -124,7 +124,7 @@ export default function Reviews() {
             className="reveal -mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth px-5 pb-4 sm:-mx-8 sm:px-8 lg:mx-0 lg:px-0"
             style={{ scrollbarWidth: "none" }}
           >
-            {/* key on the quote, not the author — attributions are deliberately
+            {/* key on the quote, not the author, attributions are deliberately
                 non-identifying and therefore repeat (see lib/content.ts) */}
             {reviews.map((r) => (
               <li
