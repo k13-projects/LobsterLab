@@ -1,7 +1,7 @@
 # How we worked on Lobster Lab
 
 > Written 2026-07-29, at the end of the build, while the detail was still fresh.
-> This is the loop that produced the site — recorded so it can be repeated, not
+> This is the loop that produced the site, recorded so it can be repeated, not
 > re-derived. Portable pieces have been lifted into the `fitcheck` house skill;
 > what stays here is the shape of the collaboration.
 
@@ -21,7 +21,7 @@ the code and reasoning about it. Every one of them was invisible in the diff.
 
 The repo already contained a structure doc describing an 8-route site. The
 client's actual design files described a one-pager. Building from the summary
-would have produced the wrong site — correctly, and on time.
+would have produced the wrong site, correctly, and on time.
 
 What we did instead:
 
@@ -43,7 +43,7 @@ wordmark are the client's exact choices, because we could see them.
 
 Every string on the site lives in `lib/content.ts` with a comment saying where
 it came from and which source wins on conflict. Prices, hours and addresses
-disagreed between the archive JSON and the client docx — without provenance,
+disagreed between the archive JSON and the client docx, without provenance,
 each session would re-guess.
 
 **Rule: captured data carries `captured_on` / `source_url`. Rebuilt content
@@ -56,7 +56,7 @@ carries a note on which source it beat.**
 Three integrations were blocked on the client (Formspree id, four Toast URLs,
 DoorDash/Grubhub). None of them blocked the build:
 
-- The data model was built for the real shape — **per-location** ordering, not
+- The data model was built for the real shape, **per-location** ordering, not
   one global link, because five locations sharing one storefront link was a
   business bug regardless of whether the URLs had arrived
 - An unset value renders an honest "coming soon", never a dead control
@@ -73,8 +73,8 @@ This is the core of the method and it is not optional.
 
 | Found by measuring | Would never have been noticed by eye |
 |---|---|
-| Footer links 20px tall — 4px under the WCAG 2.5.8 AA floor | yes |
-| Nav labels 23px — **1px** under the floor | yes |
+| Footer links 20px tall, 4px under the WCAG 2.5.8 AA floor | yes |
+| Nav labels 23px, **1px** under the floor | yes |
 | Intro copy at 78 characters per line at 768px | yes |
 | "Locations" at 72px outranking the 68px page headline | yes |
 | Carousel resting at `scrollLeft: 20`, not 0 | yes |
@@ -93,7 +93,7 @@ take.** A screenshot you did not open is a file, not a test.
 ## 5. Fix the cause, not the number
 
 When nav labels measured 23px, the lazy fix is `min-h-[24px]` and move on. The
-real question is *why 23* — a font step-down at `md` that we had introduced one
+real question is *why 23*, a font step-down at `md` that we had introduced one
 commit earlier. Both got fixed, and the comment in the code says why the
 minimum exists so nobody "cleans it up" later.
 
@@ -120,8 +120,8 @@ landscape hero, 844x390
   after:  next section visible 92px
 ```
 
-The consent gate was proven the same way — `gtag` `undefined` before consent,
-`function` after Allow, `undefined` after Decline — rather than described as
+The consent gate was proven the same way, `gtag` `undefined` before consent,
+`function` after Allow, `undefined` after Decline, rather than described as
 "consent-gated".
 
 **Rule: "fixed" without a before/after pair is a claim. Paste the pair.**
@@ -133,10 +133,10 @@ The consent gate was proven the same way — `gtag` `undefined` before consent,
 Two things could not be verified in this environment and both are written down
 rather than glossed:
 
-- The `prefers-reduced-motion` **runtime** branch — the browser harness blocks
+- The `prefers-reduced-motion` **runtime** branch, the browser harness blocks
   `Emulation.setEmulatedMedia`. The CSS was confirmed to ship; the JS path that
   skips Lenis is inspection-only.
-- The vector wordmark — the supplied EPS is binary with only a TIFF preview and
+- The vector wordmark, the supplied EPS is binary with only a TIFF preview and
   no PDF stream, and no renderer was available. The PNGs are used instead and
   the gap is on the client list.
 
@@ -148,7 +148,7 @@ rather than glossed:
 
 What worked:
 
-- **Split by device tier and by lens simultaneously** — QA engineer on small
+- **Split by device tier and by lens simultaneously**, QA engineer on small
   phones, designer on tablet with the mockup open, front-end on desktop. Same
   page, three different readings.
 - **Agents audit; they do not edit.** Three agents editing the same components
@@ -157,7 +157,7 @@ What worked:
 - **Tell them what is already known and being fixed**, so their budget goes on
   new ground.
 - **Verify every finding before acting on it.** The agents self-corrected two
-  false positives — a mismeasured section gap, and a "focus restore is broken"
+  false positives, a mismeasured section gap, and a "focus restore is broken"
   report that was really an artifact of `element.click()` not focusing the way a
   real pointer event does. They were right wherever they had double-checked and
   wrong exactly where they had not. So the standard is: reproduce it yourself,
@@ -172,7 +172,7 @@ What bit us:
   trusted. This is baked into `fitcheck`'s harness as a `TRUST` gate.
 - **The subagent API returned `529 Overloaded` seven times in a row** at one
   point. The correct response was to stop retrying and do the work directly,
-  then re-run the agent version later — not to stall, and not to pretend the
+  then re-run the agent version later, not to stall, and not to pretend the
   agent output existed.
 
 ---
@@ -181,7 +181,7 @@ What bit us:
 
 Branch → documented commit → PR → merge, never straight to `main`. Commits carry
 the measurement in the body, so the reason for a one-line class change survives
-in `git log` — where the next person actually looks.
+in `git log`, where the next person actually looks.
 
 Every phase of work ended with the plan file updated, so `tasks/todo.md` is
 always the current truth and blocked items sit visibly in their phase with the
@@ -212,7 +212,7 @@ Honest post-mortem, because the point is to be faster next time:
 
 The responsive work in section 4 recurs in every project, so it is now a skill:
 
-**`fitcheck`** (short: `fit`) — `~/.claude/skills/fitcheck/`
+**`fitcheck`** (short: `fit`), `~/.claude/skills/fitcheck/`
 
 Nine viewports, a shared measurement harness with a trust gate, and the specific
 bug classes that only appear at one size. See the skill for the full spec.

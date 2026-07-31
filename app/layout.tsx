@@ -7,7 +7,7 @@ import { site, locations, isProduction } from "@/lib/content";
 
 /**
  * Brand face is Sofia Pro Narrow (Adobe Font). Barlow Semi Condensed is the
- * self-hosted stand-in — same narrow geometric proportions, and it ships the
+ * self-hosted stand-in, same narrow geometric proportions, and it ships the
  * Regular / Semi Bold / Black weights plus true italics the design needs.
  * next/font self-hosts at build time, so there is no external font request.
  */
@@ -61,13 +61,13 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-/** Restaurant schema — one entry per location, so each stall can rank locally. */
+/** Restaurant schema, one entry per location, so each stall can rank locally. */
 function structuredData() {
   return {
     "@context": "https://schema.org",
     "@graph": locations.map((l) => ({
       "@type": "Restaurant",
-      name: `Lobster Lab — ${l.name}`,
+      name: `Lobster Lab, ${l.name}`,
       servesCuisine: ["Seafood", "American"],
       priceRange: "$$",
       url: site.url,

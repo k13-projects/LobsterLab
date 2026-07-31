@@ -13,12 +13,12 @@ const common = {
   "aria-hidden": true,
 };
 
-/** Citrus wedge — "Freshness First" */
+/** Citrus wedge, "Freshness First" */
 export function CitrusIcon({ className = "" }: { className?: string }) {
   return (
     <svg {...common} className={className}>
       <g transform="rotate(-22 48 52)">
-        {/* rind — half disc sitting on its flat edge */}
+        {/* rind, half disc sitting on its flat edge */}
         <path d="M18 66A30 30 0 0 1 78 66Z" />
         {/* pith */}
         <path d="M23.5 66A24.5 24.5 0 0 1 72.5 66" />
@@ -36,7 +36,7 @@ export function CitrusIcon({ className = "" }: { className?: string }) {
   );
 }
 
-/** Hand seasoning a bowl — "Flavor in Every Detail" */
+/** Hand seasoning a bowl, "Flavor in Every Detail" */
 export function SeasonIcon({ className = "" }: { className?: string }) {
   return (
     <svg {...common} className={className}>
@@ -55,7 +55,7 @@ export function SeasonIcon({ className = "" }: { className?: string }) {
   );
 }
 
-/** Scalloped seal with a check — "Consistency & Quality" */
+/** Scalloped seal with a check, "Consistency & Quality" */
 export function SealIcon({ className = "" }: { className?: string }) {
   // 16-point scalloped rosette generated on a circle
   const points = 16;

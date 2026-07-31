@@ -14,7 +14,7 @@ export default function Intro() {
           <span className="block italic text-orange">{intro.headlineAccent}</span>
         </h2>
 
-        {/* max-w-[62ch] keeps the line length in the 45-75 char range — at 768px
+        {/* max-w-[62ch] keeps the line length in the 45-75 char range, at 768px
             the full-width column measured 78 characters. */}
         <div
           className="reveal max-w-[62ch] space-y-4 self-center text-[17px] leading-relaxed text-navy sm:text-lg"

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# The Hail Mary — branch + commit (session record) + push.
+# The Hail Mary, branch + commit (session record) + push.
 # Variants:  --here (hm-1, skip new branch)   --ship (hm++: PR + merge)
 # Usage: scripts/hm.sh [--here] [--ship] [--prefix <shortcode>] <commit-message-file>
 # The agent writes the Hail Mary grouped-bullet message to a file, then calls this.

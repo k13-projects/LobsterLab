@@ -19,7 +19,7 @@ export default function TermsPage() {
 
       <H2>What this website is</H2>
       <P>
-        This website provides information about Lobster Lab — our menus, locations, hours and
+        This website provides information about Lobster Lab, our menus, locations, hours and
         catering. It is an informational site. We do not take payment here.
       </P>
 
@@ -69,7 +69,7 @@ export default function TermsPage() {
         <a className="font-semibold text-orange underline" href="/accessibility">
           accessibility statement
         </a>
-        , and tell us if anything gets in your way.
+, and tell us if anything gets in your way.
       </P>
 
       <H2>Changes</H2>

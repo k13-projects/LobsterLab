@@ -7,7 +7,7 @@ export default function Hero() {
       {/*
         The 320px floor must itself yield on short viewports. At 844x390
         (phone landscape) a flat min-h-[320px] plus the 72px header came to
-        392px in a 390px viewport — the next section was not merely below the
+        392px in a 390px viewport, the next section was not merely below the
         fold, it was zero pixels visible, so nothing signalled the page
         continued. min() keeps the floor on tall screens and relaxes it on short.
       */}
@@ -22,7 +22,7 @@ export default function Hero() {
         />
       </div>
       <h1 className="sr-only">
-        {site.name} — {site.tagline}
+        {site.name}, {site.tagline}
       </h1>
     </section>
   );

@@ -15,7 +15,7 @@ import {
  *
  * Renders nothing at all unless a tracker is actually configured, so the site
  * ships with no banner and no tracker by default. Decline is a real, equal
- * choice — not a dark pattern — and it is remembered.
+ * choice, not a dark pattern, and it is remembered.
  */
 export default function ConsentBanner() {
   const [visible, setVisible] = useState(false);
