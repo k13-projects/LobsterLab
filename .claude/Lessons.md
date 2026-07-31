@@ -35,6 +35,13 @@ On `hail mary` / `hm` (or `hail mary that shit` / `hm pls`): new branch → comm
 ## Learned patterns
 > Add entries here after corrections from Kazim.
 
+### Shipping — corrected by Kazim 2026-07-30
+0. **Never run `hm` / `hm-1` / `hm++` on your own initiative.** Branch → PR → merge is always the
+   *mechanism* — that part was never in question and no commit has ever landed on `main` outside a
+   PR. What is not yours to decide is *when to pull the trigger*. Build the work, push a branch if
+   useful, then stop and report. Kazim says `hm` / `hm++`. Merging to `main` is his call, every time,
+   including for changes that look obviously safe.
+
 ### Verification
 1. **"Fixed" needs a before/after pair.** Paste both numbers. An adjective is a claim, not a result.
    Example: `scrollHeight 667 == clientHeight 667, title at -543px` → `scrollHeight 1238 > 667,

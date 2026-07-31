@@ -28,30 +28,56 @@ Status key: `[x]` done · `[ ]` open · `[~]` harness built, waiting on an exter
 
 ---
 
-## PL — LAUNCH · **NOT STARTED — HARD DEADLINE AUG 1**
+## PL — LAUNCH
 
-**Verified 2026-07-30:** `lobsterlab.us` still serves the old SpotHopper site — 173 references to
-`spotapps.co` in the live HTML, and every route we built (`/privacy`, `/terms`, `/accessibility`,
-`/menu`) returns 404. **The new site is not deployed anywhere.**
+### Stage 1 — stakeholder preview · **DONE 2026-07-30**
 
-This phase was missing from the plan, which was organised by *kind of work* rather than by
-*sequence*. That omission hid the only genuinely time-boxed item in the project.
+Live at **https://lobster.k13projects.com** (K13's own domain, Vercel project `lobster-lab`
+under team "Katalizor Kazim's projects", Hobby plan). DNS: `CNAME lobster -> cname.vercel-dns.com`
+on `k13projects.com`.
 
-SpotHopper access ends **August 1**. When it does, the current live site goes with it. Everything
-else in this file can slip; this cannot.
+- [x] Vercel project created, GitHub repo connected, auto-deploys from `main`
+- [x] `NEXT_PUBLIC_SITE_URL=https://lobster.k13projects.com` set → the whole project serves
+      `Disallow: /` and `noindex, nofollow`, so the preview cannot be indexed
+- [x] Verified live: 6 routes 200, 404 works, legacy slugs 301 to anchors, all five security
+      headers present, 9 images load, order modal shows Carlsbad live + 4 coming-soon, no console
+      errors, `fitcheck` clean at all 9 viewports on Vercel's own image optimizer and edge cache
+- [x] Favicon: `app/icon.svg` (LL monogram, navy/white/orange, legible at 16px) and
+      `app/apple-icon.png` (180×180, square — iOS applies its own mask, a pre-rounded source
+      gets double-rounded)
 
-- [ ] Create the Vercel project and link the repo
-- [ ] Deploy `main` to a preview URL and walk the whole site on it — this is the first time the
-      build runs anywhere other than localhost
-- [ ] Point `lobsterlab.us` DNS at Vercel (client holds DNS — confirmed, so this is ours to schedule
-      with them, not to chase)
-- [ ] Verify on the real domain: HTTPS, the 301s from every old slug, security headers, sitemap and
-      robots, and that `/` renders with images
-- [ ] Keep a rollback path until the new site is confirmed good
+### Stage 2 — production cutover to lobsterlab.us · **NOT STARTED**
 
-**It is safe to launch without the client values.** Every unconnected integration degrades to an
-honest "coming soon" rather than a dead control — that was built in deliberately for exactly this
-situation. A live site with four locations pending beats a dead domain.
+**SpotHopper access ends Aug 1.** `lobsterlab.us` still serves the old SpotHopper site today
+(verified 2026-07-30: 173 `spotapps.co` references in the live HTML, our routes 404).
+
+Run in this order. Steps 2 and 3 are the ones that bite if skipped.
+
+- [ ] **1.** Add `lobsterlab.us` (and `www.lobsterlab.us`) as domains on the same Vercel project
+- [ ] **2. DELETE the `NEXT_PUBLIC_SITE_URL` env var.** It currently pins the whole project to the
+      staging host, which means `noindex` + `Disallow: /`. Leaving it set ships the real restaurant
+      site telling Google not to index it, and nobody notices for days.
+- [ ] **3. Redeploy.** An environment-variable change does **not** trigger a redeploy on its own —
+      the old build keeps serving with the old value baked in.
+- [ ] **4.** Point `lobsterlab.us` DNS at Vercel. Client holds DNS — schedule with them, do not
+      assume it can be done unattended.
+- [ ] **5.** Decide what happens to `lobster.k13projects.com`: either remove it from the project, or
+      set it to redirect to `lobsterlab.us`. If it keeps serving the same content on a now-indexable
+      project, the duplicate-content problem we just avoided comes straight back.
+- [ ] **6.** Verify on the real domain: `robots.txt` now says **Allow** and lists the sitemap,
+      `<meta name="robots">` is gone, HTTPS is valid, the 301s resolve, security headers present.
+- [ ] **7.** Re-run `fitcheck` against `lobsterlab.us` — different domain, different cache, cheap to
+      confirm.
+- [ ] **8.** Keep a rollback path until the new site is confirmed good.
+
+**It is safe to cut over without the client values.** Every unconnected integration degrades to an
+honest "coming soon" rather than a dead control — built deliberately for exactly this. A live site
+with four locations pending beats a dead domain.
+
+**Still pending from the client at cutover time** (none of these block the cutover itself):
+Toast URLs for 4 locations · DoorDash + Grubhub · Formspree id and `catering@` inbox · reviews
+permission · photo rights · THG revenue for CCPA scoping · SVG icons · web-optimised menu PDFs ·
+Our Story copy.
 
 ---
 
