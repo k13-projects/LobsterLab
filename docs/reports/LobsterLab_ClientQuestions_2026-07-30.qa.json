@@ -1,0 +1,36 @@
+{
+  "report": "LobsterLab_ClientQuestions_2026-07-30.html",
+  "type": "client-email",
+  "date": "2026-07-30",
+  "built_by": "K13 (Claude)",
+  "gate": "Chrome QA — desktop + mobile",
+  "note": "Single-operator pass. The house two-agent gate was not run: the second reviewer would have been a subagent, and agents are only spawned on request in this project.",
+  "gmail_safety": {
+    "external_stylesheet_or_font": 0,
+    "style_block_in_body": 0,
+    "flex_or_grid": 0,
+    "css_variables": 0,
+    "position_absolute_or_fixed": 0,
+    "base64_images": 0,
+    "img_tags": 0,
+    "background_image": 0,
+    "size_kb": 27.0,
+    "gmail_clip_threshold_kb": 102
+  },
+  "viewports": {
+    "320x568": { "horizontal_overflow_px": 0 },
+    "375x812": { "horizontal_overflow_px": 0 },
+    "800x1000": { "horizontal_overflow_px": 0 }
+  },
+  "found_and_fixed": [
+    "640px fixed-width table did not shrink on phones — 289px horizontal overflow at 375px. Changed to width:100% with max-width:640px.",
+    "32px side gutters left too little measure at 375px — reduced to 22px.",
+    "4-column ordering table was the widest element — cell padding 10px to 6px, font 13px to 12px.",
+    "'have it' wrapped to two lines in the narrow Toast column — white-space:nowrap."
+  ],
+  "not_verified": [
+    "Rendering inside Gmail itself. Checks are structural (no flex/grid/vars/external CSS/images) plus Chrome rendering; the send path is paste-into-compose, which preserves inline-styled tables.",
+    "Outlook desktop (Word rendering engine) — out of scope, the client uses Gmail."
+  ],
+  "verdict": "PASS"
+}
