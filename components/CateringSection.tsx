@@ -17,7 +17,7 @@ export default function CateringSection() {
         <div className="reveal relative order-1 aspect-[4/3] w-full overflow-hidden lg:order-2 lg:aspect-[4/3.1]">
           <Image
             src="/photos/catering.webp"
-            alt="Lobster Lab chefs plating a spread of seafood rolls and grilled cheese for an event"
+            alt="An overhead spread of eleven Lobster Lab rolls and sandwiches plated on individual steel trays, laid out for a group"
             fill
             sizes="(max-width: 1024px) 100vw, 50vw"
             className="object-cover"
