@@ -46,8 +46,14 @@ photo "Lobster Lab 2 - 5.25.23-13.jpg"  menu-lobster-roll 1200
 photo "Lobster Lab 3 - 5.25.23-51.jpg"  menu-bisque       1200
 photo "Lobster Lab 2 - 5.25.23-01.jpg"  menu-shrimp-roll  1200
 photo "Lobster Lab 2 - 5.25.23-02.jpg"  menu-grilled-cheese 1200
-# Catering, hands/craft shot
-photo "Lobster Lab 3 - 5.25.23-44.jpg"  catering          1600
+# Catering. Deliberately the SAME source as the hero above, on Kazim's call: the top-down
+# tray spread is the only shot in the library that reads "feeds a group", which is the whole
+# point of the catering section. The two crops are far apart (hero is a wide 64vh band, this
+# is a 4/3 box), so the page does not read as a repeat.
+# Must stay LANDSCAPE regardless: CateringSection uses object-cover in a 4/3 box, so a portrait
+# source loses ~48% of its height. That is what the client (Lorena, 31 Jul 2026) flagged on the
+# previous bisque-pour photo.
+photo "Lobster Lab 3 - 5.25.23-85.jpg"  catering          1600
 # Full-bleed roll strip above the reviews band
 photo "Lobster Lab 2 - 5.25.23-20.jpg"  roll-strip        2048 84
 # Secondary / social + OG
