@@ -59,7 +59,24 @@ export const nav = [
  *
  * Provenance: Carlsbad Toast URL is from data/external_services.json
  * (captured 2026-07-28, lost_on_migration: false, it survives SpotHopper).
- * The rest are pending from the client; see tasks/todo.md P1.
+ * Everything else came from Lorena on 10 Aug 2026, in her soundcheck answers
+ * plus a follow-up email carrying the Sky Deck DoorDash link she had missed.
+ *
+ * Two gaps remain, both on the client, and both are gaps rather than mistakes:
+ *
+ *  - GRUBHUB IS NOT LIVE ANYWHERE. Not one location has a Grubhub storefront,
+ *    even though the logo appears in the client's own brief. Lorena's answer was
+ *    "delivery agreements signed: some locations only". The channel is kept
+ *    defined here so a URL is all that is needed later, and until then the modal
+ *    simply never renders it. Do not delete `grubhub` from `orderChannels` to
+ *    tidy up, that would mean rebuilding it when the agreement lands.
+ *  - Global Fork has Toast but no DoorDash, for the same reason.
+ *
+ * The DoorDash URLs arrived carrying click-attribution tokens from Lorena's own
+ * browsing session (`srsltid=...` on two, `utm_source=mx_share&aw=...` on the
+ * Sky Deck one). Those are stripped here. Left in, every customer who ordered
+ * would have been attributed to a Google Shopping click that never happened,
+ * polluting the client's own reporting. The path is the canonical part.
  */
 
 export const orderChannels = {
@@ -140,9 +157,28 @@ export type Location = {
    * badge stays meaningful instead of decorating every card.
    */
   status?: "Coming Soon";
+  /**
+   * Public phone number for this location, supplied by the client (Lorena,
+   * 10 Aug 2026) because guests were asking for one. Stored in the display
+   * format and converted to a bare E.164 `tel:` href at the call site, so the
+   * number is written once. Omit it for a location that is not trading, an
+   * unanswered phone is worse than no phone.
+   */
+  phone?: string;
   /** Storefronts for THIS location. Empty string = not connected yet. */
   ordering: OrderLinks;
 };
+
+/**
+ * `(760) 663-0176` -> `+17606630176`, for a `tel:` href.
+ *
+ * Written as a helper rather than a second field per location so the display
+ * string and the dial string can never drift apart. All numbers supplied are
+ * US, so a bare +1 prefix is correct here.
+ */
+export function telHref(phone: string): string {
+  return `tel:+1${phone.replace(/\D/g, "")}`;
+}
 
 export const locations: Location[] = [
   {
@@ -151,11 +187,12 @@ export const locations: Location[] = [
     address: "890 Palomar Airport Rd, Carlsbad, CA 92011",
     hours: "11:00 AM – 9:00 PM",
     mapsQuery: "Lobster Lab, 890 Palomar Airport Rd, Carlsbad, CA 92011",
+    phone: "(760) 663-0176",
     ordering: {
       toast:
         "https://www.toasttab.com/local/order/lobster-lab-windmill-food-hall-890-palomar-airport-road/r-e7ff1c2b-5c9c-47de-9b94-d10ae264a959",
-      doordash: "", // TODO(client, P1): DoorDash storefront URL
-      grubhub: "", // TODO(client, P1): Grubhub storefront URL
+      doordash: "https://www.doordash.com/store/lobster-lab-carlsbad-25017906/74882351/",
+      grubhub: "", // no Grubhub storefront supplied for any location, see note above `ordering`
     },
   },
   {
@@ -164,10 +201,11 @@ export const locations: Location[] = [
     address: "12841 El Camino Real Ste 206, San Diego, CA 92130",
     hours: "11:00 AM – 10:00 PM",
     mapsQuery: "Lobster Lab, Sky Deck, 12841 El Camino Real, San Diego, CA 92130",
+    phone: "(858) 687-5862",
     ordering: {
-      toast: "", // TODO(client, P1): Toast storefront URL
-      doordash: "", // TODO(client, P1)
-      grubhub: "", // TODO(client, P1)
+      toast: "https://toast.app/r/lobster-lab-sky-deck-12841-el-camino-real/order?utm_medium=redirect",
+      doordash: "https://www.doordash.com/store/49514999",
+      grubhub: "",
     },
   },
   {
@@ -176,10 +214,13 @@ export const locations: Location[] = [
     address: "1720 North El Camino Real, San Clemente, CA 92672",
     hours: "11:00 AM – 9:00 PM",
     mapsQuery: "Lobster Lab, 1720 N El Camino Real, San Clemente, CA 92672",
+    // Supplied as "(760) 470 93 28"; regrouped to the US convention.
+    phone: "(760) 470-9328",
     ordering: {
-      toast: "", // TODO(client, P1)
-      doordash: "", // TODO(client, P1)
-      grubhub: "", // TODO(client, P1)
+      toast:
+        "https://toast.app/r/lobster-lab-miramar-food-hall-new-1720-north-el-camino-real/order/r-55719c3c-6920-428d-8ab5-d6a23803d56a?utm_medium=redirect",
+      doordash: "https://www.doordash.com/store/lobster-lab-san-clemente-48102001/113647359/",
+      grubhub: "",
     },
   },
   {
@@ -188,10 +229,12 @@ export const locations: Location[] = [
     address: "550 W Date St Suite B, San Diego, CA 92101",
     hours: "11:00 AM – 9:00 PM",
     mapsQuery: "Lobster Lab, 550 W Date St, San Diego, CA 92101",
+    // Supplied as "(619) 963 8262"; regrouped to the US convention.
+    phone: "(619) 963-8262",
     ordering: {
-      toast: "", // TODO(client, P1)
-      doordash: "", // TODO(client, P1)
-      grubhub: "", // TODO(client, P1)
+      toast: "https://toast.app/r/lobster-lab-little-italy-550-w-date-st-suite-b/order?utm_medium=redirect",
+      doordash: "", // TODO(client): no DoorDash for Little Italy yet, "some locations only"
+      grubhub: "",
     },
   },
   {
@@ -201,10 +244,12 @@ export const locations: Location[] = [
     hours: "11:00 AM – 9:00 PM",
     mapsQuery: "Lobster Lab, 9165 Theatre District Dr, La Jolla, CA 92037",
     status: "Coming Soon",
+    // No phone on purpose: the site is not open yet and an unanswered number is
+    // worse than none. Add it when the Coming Soon badge comes off.
     ordering: {
-      toast: "", // TODO(client, P1)
-      doordash: "", // TODO(client, P1)
-      grubhub: "", // TODO(client, P1)
+      toast: "", // nothing to connect until it opens
+      doordash: "",
+      grubhub: "",
     },
   },
 ];
