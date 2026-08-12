@@ -1,7 +1,7 @@
 "use client";
 
 import { track } from "@/lib/analytics";
-import { locations } from "@/lib/content";
+import { locations, telHref } from "@/lib/content";
 
 function mapsHref(query: string) {
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
@@ -32,13 +32,19 @@ export default function Locations() {
               className="reveal basis-full sm:basis-[calc(50%-0.5rem)] lg:basis-[calc(33.333%-0.667rem)]"
               style={{ "--reveal-delay": `${i * 80}ms` } as React.CSSProperties}
             >
-              <a
-                href={mapsHref(l.mapsQuery)}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => track("directions_click", { location: l.name })}
-                className="group flex h-full flex-col rounded-2xl bg-white p-6 transition hover:-translate-y-1 hover:shadow-xl hover:shadow-navy/10"
-              >
+              {/*
+                The card used to be one big <a> to Google Maps. It cannot stay
+                that way now that it also carries a tel: link, because nesting an
+                anchor inside an anchor is invalid HTML and browsers recover from
+                it unpredictably.
+
+                So: the card is a plain element, the directions link is a real
+                anchor whose ::after is stretched over the whole card, and the
+                phone sits above it on the z axis. Tapping anywhere still gets
+                you directions, tapping the number still dials, and both remain
+                genuine links with their own text for a screen reader.
+              */}
+              <div className="group relative flex h-full flex-col rounded-2xl bg-white p-6 transition hover:-translate-y-1 hover:shadow-xl hover:shadow-navy/10">
                 <div className="flex items-start justify-between gap-3">
                   <p className="font-display text-xs font-bold uppercase tracking-[0.18em] text-orange">
                     {l.area}
@@ -72,8 +78,45 @@ export default function Locations() {
                   {l.status ? `Opening soon, ${l.hours}` : l.hours}
                 </p>
 
-                <span className="mt-5 inline-flex items-center gap-1.5 font-display text-sm font-bold uppercase tracking-[0.1em] text-orange">
+                {l.phone && (
+                  /* Above the stretched directions link, or tapping the number
+                     would open Google Maps instead of dialling. min-h-11 keeps
+                     it a 44px target on a phone, which is the whole point. */
+                  <a
+                    href={telHref(l.phone)}
+                    onClick={() => track("phone_click", { location: l.name })}
+                    className="relative z-10 -ml-1 mt-1 inline-flex min-h-11 items-center gap-2 self-start rounded-lg px-1 text-[15px] font-semibold text-navy underline decoration-navy/25 underline-offset-4 transition hover:decoration-orange"
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <path
+                        d="M6.5 3.5h3l1.5 4-2 1.5a12 12 0 0 0 6 6l1.5-2 4 1.5v3a2 2 0 0 1-2.2 2A17 17 0 0 1 4.5 5.7 2 2 0 0 1 6.5 3.5Z"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                    <span className="sr-only">Call {l.name}, </span>
+                    {l.phone}
+                  </a>
+                )}
+
+                <a
+                  href={mapsHref(l.mapsQuery)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => track("directions_click", { location: l.name })}
+                  /* min-h-6 is not cosmetic. The ::after makes the real target
+                     the whole card, verified by hit-testing all four corners,
+                     but getBoundingClientRect only ever sees this inline box,
+                     so an automated pass measures 20px and reports a WCAG 2.5.8
+                     failure on every run. A permanently red check is a check
+                     people stop reading, so the box is given the floor it is
+                     measured against. */
+                  className="mt-5 inline-flex min-h-6 items-center gap-1.5 self-start font-display text-sm font-bold uppercase tracking-[0.1em] text-orange after:absolute after:inset-0 after:rounded-2xl after:content-['']"
+                >
                   {l.status ? "See the location" : "Get directions"}
+                  <span className="sr-only"> for {l.name}</span>
                   <svg
                     width="16"
                     height="16"
@@ -90,8 +133,8 @@ export default function Locations() {
                       strokeLinejoin="round"
                     />
                   </svg>
-                </span>
-              </a>
+                </a>
+              </div>
             </li>
           ))}
         </ul>

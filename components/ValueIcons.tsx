@@ -1,89 +1,33 @@
 /**
- * The three value icons from the mockup, redrawn as stroked SVG so they stay
- * crisp at any size and inherit the brand orange from `currentColor`.
+ * The three value icons, as supplied by the client (Lorena, 3 Aug 2026).
+ *
+ * These were hand-redrawn SVG until now, because the only version available was
+ * a raster image inside a PDF. That was finding F-D in the UI/UX audit. The real
+ * vectors are in the brand library at ICONS/VECTORS/ and are cleaned into
+ * public/icons/ by scripts/build-assets.sh, which strips the white background
+ * rects, normalises the artwork to the brand orange and crops the padded portrait
+ * canvas to a square. See the comments there before touching the files.
+ *
+ * Rendered as <img> rather than inlined: the three files total ~45KB (~16KB
+ * gzipped) and inlining them would put that in the HTML of a one-page site for no
+ * benefit, since the artwork is a fixed brand orange and never needs to inherit
+ * colour. Sized explicitly so they reserve their space and cannot shift layout.
+ *
+ * Decorative on purpose. Each icon sits directly above its own text label, so
+ * alt text would be read out twice by a screen reader.
  */
 
-const common = {
-  viewBox: "0 0 96 96",
-  fill: "none" as const,
-  stroke: "currentColor",
-  strokeWidth: 2.6,
-  strokeLinecap: "round" as const,
-  strokeLinejoin: "round" as const,
-  "aria-hidden": true,
-};
+type IconProps = { className?: string };
 
-/** Citrus wedge, "Freshness First" */
-export function CitrusIcon({ className = "" }: { className?: string }) {
-  return (
-    <svg {...common} className={className}>
-      <g transform="rotate(-22 48 52)">
-        {/* rind, half disc sitting on its flat edge */}
-        <path d="M18 66A30 30 0 0 1 78 66Z" />
-        {/* pith */}
-        <path d="M23.5 66A24.5 24.5 0 0 1 72.5 66" />
-        {/* segments, radiating from the centre of the flat edge */}
-        <path d="M48 66 69.2 53.75" />
-        <path d="M48 66 60.25 44.75" />
-        <path d="M48 66V41.5" />
-        <path d="M48 66 35.75 44.75" />
-        <path d="M48 66 26.8 53.75" />
-        {/* seeds */}
-        <circle cx="41" cy="59" r="1.5" fill="currentColor" stroke="none" />
-        <circle cx="55" cy="59" r="1.5" fill="currentColor" stroke="none" />
-      </g>
-    </svg>
-  );
+function icon(src: string) {
+  return function ValueIcon({ className = "" }: IconProps) {
+    return <img src={src} alt="" aria-hidden="true" width={88} height={88} className={className} />;
+  };
 }
 
-/** Hand seasoning a bowl, "Flavor in Every Detail" */
-export function SeasonIcon({ className = "" }: { className?: string }) {
-  return (
-    <svg {...common} className={className}>
-      {/* bowl */}
-      <path d="M26 62h44a22 22 0 0 1-44 0Z" />
-      {/* hand: rounded back, index and thumb meeting in a pinch over the bowl */}
-      <path d="M63 14c6 1.4 9.8 7 8.6 12.8-1.1 5.3-6.2 8.8-11.7 8" />
-      <path d="M63 14 51 35" />
-      <path d="M59.9 34.8 51 35" />
-      <path d="M63 14c-2.2 5-3.6 10.3-4.2 15.6" />
-      {/* falling seasoning */}
-      <circle cx="47" cy="47" r="1.5" fill="currentColor" stroke="none" />
-      <circle cx="53.5" cy="51" r="1.5" fill="currentColor" stroke="none" />
-      <circle cx="41.5" cy="52" r="1.5" fill="currentColor" stroke="none" />
-    </svg>
-  );
-}
-
-/** Scalloped seal with a check, "Consistency & Quality" */
-export function SealIcon({ className = "" }: { className?: string }) {
-  // 16-point scalloped rosette generated on a circle
-  const points = 16;
-  const cx = 48;
-  const cy = 48;
-  const outer = 33;
-  const inner = 28.5;
-  let d = "";
-  for (let i = 0; i < points; i++) {
-    const a1 = (i / points) * Math.PI * 2 - Math.PI / 2;
-    const a2 = ((i + 0.5) / points) * Math.PI * 2 - Math.PI / 2;
-    const x1 = cx + outer * Math.cos(a1);
-    const y1 = cy + outer * Math.sin(a1);
-    const x2 = cx + inner * Math.cos(a2);
-    const y2 = cy + inner * Math.sin(a2);
-    d += i === 0 ? `M${x1.toFixed(2)} ${y1.toFixed(2)}` : "";
-    d += ` Q${x2.toFixed(2)} ${y2.toFixed(2)} ${(cx + outer * Math.cos(((i + 1) / points) * Math.PI * 2 - Math.PI / 2)).toFixed(2)} ${(cy + outer * Math.sin(((i + 1) / points) * Math.PI * 2 - Math.PI / 2)).toFixed(2)}`;
-  }
-  d += "Z";
-
-  return (
-    <svg {...common} className={className}>
-      <path d={d} />
-      <circle cx="48" cy="48" r="20" />
-      <path d="M39 48.5 45.5 55 58 42.5" />
-    </svg>
-  );
-}
+export const CitrusIcon = icon("/icons/citrus.svg");
+export const SeasonIcon = icon("/icons/season.svg");
+export const SealIcon = icon("/icons/seal.svg");
 
 export const valueIcons = {
   citrus: CitrusIcon,
