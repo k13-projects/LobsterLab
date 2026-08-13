@@ -125,3 +125,23 @@ Key facts extracted from it:
 - Old slugs are long and location-prefixed (`/carlsbad-windmill-food-hall-lobster-lab-food-menu`). Because the rebuild is a one-pager, they 301 to **anchors** (`/#menu`, `/#catering`, `/#locations`, `/#contact`), not to standalone pages. The short slugs the structure doc proposes (`/menu`, `/drinks`, …) also 301 to those anchors, so inbound links from either era land correctly. The full map is `LEGACY_REDIRECTS` in [next.config.mjs](next.config.mjs). Do not reuse old slugs in new code.
 - `/accessibility` is the one real second route.
 - When adding captured data, keep the `captured_on` / `source_url` provenance fields; they distinguish archived fact from rebuild invention.
+
+
+---
+
+<!--K13_BROADCAST_START · managed by War Room — do not hand-edit-->
+## 📡 War Room Broadcasts (org-wide rules)
+> Synced from the K13 War Room. Each entry is a house rule that applies to every K13 project. Managed automatically — edit the rule in the War Room, not here.
+
+<!--bc:2026-06-29-agent-agency-org-->
+### 2026-08-13 · Team K13: named departments, the handoff contract & the autonomy contract
+**K13 runs as team K13 — a controlled delivery pipeline, not a swarm.** Each AI specialist owns one repeatable stage, emits a predictable artifact, and hands off cleanly to the next. The **main Claude session is the GM (James)** — the only layer that sequences work (the hierarchy is flat: subagents don't spawn subagents, so agents never hand off to each other directly). **Jessica** runs Kazim's desk.
+
+- **Roster + status legend:** `starter-kit/ORG.md` (War Room). Lean 7 to build first: Selma (`solutions-architect`) → Valentina (`brand-dna-designer`) → Natalia (`frontend-engineer`) → Olga (`qa-test-engineer`) → Irina (`security-auditor`) → Kate (`release-engineer`) → Gabi (`report-writer`). Human names are display labels; the functional `name:` is the routing key.
+- **Handoff contract + Definition of Done:** `starter-kit/AGENT_HANDOFF_PROTOCOL.md`. Every delivery agent ends with the handoff block (Status / Summary / Files / Risks / Next / Human gate) and writes its artifact to `docs/handoffs/<stage>_<YYYY-MM-DD>.md` (same-day re-run → `_v2`, never overwrite).
+- **Delegation is not optional.** James does not do a pipeline stage's work himself and call it done — every stage gets its named agent actually invoked (Task tool, `subagent_type` matching the agent file), even on a small project. **No artifact = the work never happened**: the War Room Org tab reads only `docs/handoffs/`, so skipping the artifact makes team K13 invisible on the board.
+- **Autonomy contract — don't drip questions at Kazim.** Agents proceed by default. Only `Human gate` items come back to him: irreversible/destructive steps, money, real scope changes, anything that leaves for a client. Every other decision gets made, then **recorded in the handoff** instead of asked. Questions that genuinely survive are batched at the end of a run — never one at a time.
+- **Parallel work:** sequential by default; James may fan out several agents **concurrently for independent work** (QA dimensions, security + a11y, research) and relay findings between them — each still writes its own handoff.
+- **Agent vs skill:** token-heavy + isolatable → agent; in-context checklist/workflow → skill (compliance-checklist, media-generation).
+
+<!--K13_BROADCAST_END-->
