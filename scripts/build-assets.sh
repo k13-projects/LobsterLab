@@ -76,15 +76,19 @@ photo "Lobster Lab 2 - 5.25.23-13.jpg"  menu-lobster-roll 1200
 photo "Lobster Lab 3 - 5.25.23-51.jpg"  menu-bisque       1200
 photo "Lobster Lab 2 - 5.25.23-01.jpg"  menu-shrimp-roll  1200
 photo "Lobster Lab 2 - 5.25.23-02.jpg"  menu-grilled-cheese 1200
-# Catering. The client's own pick (Lorena, 4 Aug 2026), sent precisely so this section stops
-# reusing the hero shot: "That way we avoid using the same image as the intro."
-# It is the same tray spread but photographed at a three-quarter angle instead of top-down,
-# so it still reads "feeds a group" without repeating the hero.
-# She sent two crops of it; 1.jpg is the landscape one and 3.jpg the portrait. Landscape is
-# required here, CateringSection uses object-cover in a 4/3 box and a portrait source loses
-# ~48% of its height, which is the original complaint that started all of this.
-# NOTE: these two live at the library root, not in PHOTOS/, hence the different helper.
-loose_photo "1.jpg" catering 1600
+# Catering. The chefs-plating shot, on Kazim's call (14 Aug 2026), matching the photo Tiger
+# Hospitality Group already runs in the "A Dynamic Collective of Industry Innovators" band on
+# tigerhospitalitygroup.com. Copied in from THG-Website/assets/; it was never part of the
+# Lobster Lab library even though it is from the same 25 May 2023 shoot.
+#
+# This one is PORTRAIT 1366x2048, which is the opposite of what this slot wanted before. That
+# is deliberate and CateringSection was changed to suit it, not the other way round: the frame
+# is composed vertically, chefs at the top and the trays at the bottom, and a landscape crop
+# keeps only 50% of the height. Every horizontal position was tried and all of them fail,
+# centre cuts the top of his head off, top loses the food entirely. THG hit the same wall and
+# solved it with a near-square 560x600 box; the catering section now does the same.
+# If you swap a landscape photo back in here, widen the aspect in CateringSection to match.
+photo "Lobster Lab 3 - 5.25.23-79.jpg"  catering          1600
 # Full-bleed roll strip above the reviews band
 photo "Lobster Lab 2 - 5.25.23-20.jpg"  roll-strip        2048 84
 # Secondary / social + OG

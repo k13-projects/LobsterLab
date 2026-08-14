@@ -23,10 +23,11 @@ const LEGACY_REDIRECTS = [
   ["/about", "/#about"],
 ];
 
-// One Vercel deployment answers on two hostnames: the client's live domain and
-// K13's stakeholder preview. These regexes are how the two are told apart in the
-// routing rules below. Anchored, so `lobsterlab.us.evil.com` cannot match.
-const LIVE_HOST = "(www\\.)?lobsterlab\\.us";
+// One Vercel deployment answers on two hostnames: the client's live domain,
+// lobsterlab.us, and K13's stakeholder preview. This regex is how the preview is
+// singled out below. Anchored, so `lobster.k13projects.com.evil.com` cannot
+// match it. There was a matching LIVE_HOST here until the soundcheck page was
+// retired; it is gone rather than left unused.
 const PREVIEW_HOST = "lobster\\.k13projects\\.com";
 
 const nextConfig = {
@@ -38,31 +39,19 @@ const nextConfig = {
   },
 
   async redirects() {
-    return [
-      // The soundcheck page asks the client about revenue and operations. It is
-      // for Lorena and Eren on the preview domain only, never on the restaurant's
-      // public domain. Cannot be solved by deleting the file: both hostnames are
-      // served by the same deployment, and Lorena still has to fill it in.
-      //
-      // A redirect (not a rewrite) because redirects run BEFORE the filesystem
-      // check, so this fires ahead of the static file in public/. Temporary, not
-      // permanent, because the file gets deleted outright once her answers land
-      // and a cached 301 would then outlive its reason.
-      {
-        source: "/soundcheck.html",
-        has: [{ type: "host", value: LIVE_HOST }],
-        destination: "/",
-        permanent: false,
-      },
-
+    // There used to be a host-conditional rule here hiding /soundcheck.html from
+    // the live domain while leaving it reachable on the preview one. Both the
+    // page and the rule are gone: Lorena returned her answers on 10 Aug 2026, so
+    // the questionnaire had done its job, and a redirect guarding a file that no
+    // longer exists is just a trap for the next person reading this file.
+    // It was deliberately a temporary redirect, so nothing is cached to unpick.
+    return LEGACY_REDIRECTS.map(([source, destination]) => ({
       // Explicit 301 rather than `permanent: true` (which emits 308) — the
       // rebuild spec calls for 301s and every old slug is GET-only anyway.
-      ...LEGACY_REDIRECTS.map(([source, destination]) => ({
-        source,
-        destination,
-        statusCode: 301,
-      })),
-    ];
+      source,
+      destination,
+      statusCode: 301,
+    }));
   },
 
   async headers() {

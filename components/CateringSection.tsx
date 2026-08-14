@@ -14,10 +14,19 @@ export default function CateringSection() {
           <OrderCateringButton className="mt-8 w-full sm:w-auto sm:min-w-[280px]" />
         </div>
 
-        <div className="reveal relative order-1 aspect-[4/3] w-full overflow-hidden lg:order-2 lg:aspect-[4/3.1]">
+        {/*
+          Near-square rather than the landscape 4/3 this used to be. The photo is
+          portrait and composed top-to-bottom, chefs plating at the top and the
+          finished trays at the bottom, so a wide box keeps only half its height
+          and has to sacrifice one end or the other. Tiger Hospitality Group runs
+          the same shot on their own site in a 560x600 box for exactly this
+          reason. 4/5 on mobile, where the image is full width and has room, then
+          slightly wider at lg so it still balances the text column beside it.
+        */}
+        <div className="reveal relative order-1 aspect-[4/5] w-full overflow-hidden sm:aspect-[1/1] lg:order-2 lg:aspect-[10/11]">
           <Image
             src="/photos/catering.webp"
-            alt="An overhead spread of eleven Lobster Lab rolls and sandwiches plated on individual steel trays, laid out for a group"
+            alt="Two Lobster Lab chefs plating lobster rolls and grilled cheese onto steel trays lined up along a wooden table"
             fill
             sizes="(max-width: 1024px) 100vw, 50vw"
             className="object-cover"
