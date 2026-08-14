@@ -319,11 +319,31 @@ export const reviews: Review[] = [
 /* Catering inquiry form, field spec straight from the client docx            */
 /* -------------------------------------------------------------------------- */
 
+/**
+ * The old site had a separate route, "Group Reservations and Private Parties",
+ * whose only content was a SpotHopper booking embed that died with the
+ * migration. pages/content_archive.md section 6 records it and says outright:
+ * replace with a form in the rebuild. Since then `/parties` and the long legacy
+ * private-parties slug have 301'd to #catering, where nothing acknowledged that
+ * intent, so anyone arriving to book a group landed on a delivery form.
+ *
+ * "Private Party / Group Booking" closes that loop with the form we already
+ * have. Deliberately not a separate events section: four of the five locations
+ * are counters inside shared food halls and almost certainly cannot host a
+ * private event, and only the client can say which venues actually can. An
+ * events page implying all five do would generate enquiries the business cannot
+ * fulfil, which is worse than the gap. Tracked as p4.
+ *
+ * Note the service-type field (Pickup/Delivery) is intentionally NOT required,
+ * so an on-site booking enquiry can leave it blank rather than being forced into
+ * an answer that makes no sense for an event.
+ */
 export const occasions = [
   "Corporate Lunch",
   "Celebration",
   "Family Event",
   "Wedding",
+  "Private Party / Group Booking",
   "Beachside Get-Together",
   "Other",
 ] as const;
