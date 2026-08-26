@@ -10,6 +10,12 @@ export const metadata: Metadata = {
 };
 
 /**
+ * Updated 19 August 2026 to name the actual processor: the catering form now posts to
+ * /api/catering, which delivers via Resend, not Formspree. Formspree was never wired up (its
+ * env var was unset, so submissions went nowhere); this page named it anyway as the intended
+ * processor, and that statement is false the moment a real one is live, so it changes in the
+ * same commit as the code, not after.
+ *
  * Updated 12 August 2026 to add the California CCPA/CPRA disclosures.
  *
  * Why now: this policy was written when it was unknown whether the operator met
@@ -27,7 +33,7 @@ export const metadata: Metadata = {
  * has not been reviewed by a lawyer. See docs/reports for what still needs
  * counsel's eye.
  */
-const EFFECTIVE = "August 12, 2026";
+const EFFECTIVE = "August 19, 2026";
 
 export default function PrivacyPage() {
   return (
@@ -77,7 +83,7 @@ export default function PrivacyPage() {
       </P>
       <UL
         items={[
-          "Formspree, receives and delivers catering inquiry submissions to us",
+          "Resend, delivers catering inquiry submissions from this website to us by email",
           "Vercel, hosts this website and processes standard server request logs",
         ]}
       />

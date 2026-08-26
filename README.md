@@ -20,7 +20,7 @@ and writes optimized photos, logos and menu PDFs into `public/`. If that folder 
 fresh clone that is expected, ask the owner for it. `public/` is committed, so the site builds
 without it.
 
-Copy `.env.example` → `.env.local` and fill in the Formspree id and delivery URLs (see below).
+Copy `.env.example` → `.env.local` and fill in the Resend catering delivery vars and the ordering URLs (see below).
 
 ---
 
@@ -66,7 +66,7 @@ Every old slug 301s to the matching anchor (`next.config.mjs`).
 
 | What | Where it plugs in | Until then |
 |---|---|---|
-| Formspree form id | `NEXT_PUBLIC_FORMSPREE_ID` | form validates, then tells the user to email `info@lobsterlab.us` |
+| Resend API key + catering inbox | `RESEND_API_KEY` / `CATERING_TO_EMAIL` / `CATERING_FROM_EMAIL` | catering form fails the submission (503) and offers a pre-filled mailto: link instead |
 | DoorDash + Grubhub storefront URLs | `NEXT_PUBLIC_DOORDASH_URL` / `_GRUBHUB_URL` | delivery tiles render a disabled "coming soon" state |
 | Vector (SVG/EPS-as-PDF) wordmark | `public/brand/` | supplied PNGs are used; crisp at nav size, soft on retina in the footer |
 
