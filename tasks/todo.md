@@ -78,9 +78,9 @@ honest "coming soon" rather than a dead control, built deliberately for exactly 
 with four locations pending beats a dead domain.
 
 **Still pending from the client at cutover time** (none of these block the cutover itself):
-Toast URLs for 4 locations · DoorDash + Grubhub · Formspree id and `catering@` inbox · reviews
-permission · photo rights · THG revenue for CCPA scoping · SVG icons · web-optimised menu PDFs ·
-Our Story copy.
+Toast URLs for 4 locations · DoorDash + Grubhub · Resend catering delivery (API key, `catering@`
+inbox, sending-subdomain DNS) · reviews permission · photo rights · THG revenue for CCPA scoping ·
+SVG icons · web-optimised menu PDFs · Our Story copy.
 
 ---
 
@@ -94,9 +94,16 @@ The code is finished and placeholder-driven: when the values land, this is a **o
 - [x] ORDER ONLINE modal rebuilt as a per-location picker; locations without links degrade to an
       honest "coming soon" instead of a dead control
 - [x] `.env.example` documents every external value with where it plugs in
-- [~] **Formspree form id** → `NEXT_PUBLIC_FORMSPREE_ID`
+- [x] **Catering form wired to Resend, harness done** (2026-08-19). `app/api/catering/route.ts`
+      replaces the dead Formspree path: server-side send with retry/backoff, a shared idempotency
+      key so a retry can't double-deliver, Reply-To set to the enquirer, and honest failure
+      (503 not the visitor being told "sent"). On any failure the form offers a pre-filled
+      `mailto:` fallback so nothing typed is lost.
+- [~] **Resend API key + `catering@` inbox** → `RESEND_API_KEY` / `CATERING_TO_EMAIL` /
+      `CATERING_FROM_EMAIL`, plus verifying a sending subdomain in Resend
       *BLOCKED ON: client.* Recommend a shared `catering@` inbox, not a personal one, so leads
-      survive staff turnover. Until set, the form validates then directs the user to email.
+      survive staff turnover. Until these are set, the route fails closed (503) rather than
+      silently dropping the enquiry.
 - [~] **Toast URLs for the 4 non-Carlsbad locations** → `locations[].ordering.toast`
       *BLOCKED ON: client.* Carlsbad is live. This is the single biggest revenue gap, four of five
       locations currently cannot be ordered from.
@@ -294,7 +301,7 @@ The growth ceiling. None of this is urgent; all of it compounds.
 Carried forward until answered. Raise these whenever there is contact.
 
 1. Toast URLs for the four non-Carlsbad locations, plus DoorDash and Grubhub storefronts *(P1)*
-2. Formspree form id and the destination inbox *(P1)*
+2. Resend API key, the `catering@` destination inbox, and a sending subdomain to verify *(P1)*
 3. Total annual gross revenue for Tiger Hospitality Group *(P3, decides CCPA scope)*
 4. Written copyright assignment for the 2023 photography *(P3)*
 5. Permission position on the named Google/Yelp reviews *(P3)*
