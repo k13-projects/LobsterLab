@@ -202,7 +202,18 @@ menu() {
   echo "  menus/$2  ($(du -h "$out" | cut -f1))"
 }
 menu "LOBSTER  WEBSITE MENU_compressed.pdf"          lobster-lab-menu-food-halls.pdf
-menu "2 MENU LOBSTER LAB SKY DECK (2)_compressed.pdf" lobster-lab-menu-sky-deck.pdf
+# Sky Deck was re-issued by the client on 2 Sep 2026 (Lorena, email attachment
+# "A4 Lobster Lab Menu.pdf", Canva export, A4, 2 pages: food + drinks). The
+# kitchen changed it the week before: Lobster Mac $21 -> $24, Lobster Flight
+# $37 -> $39, add-lobster on the bisque +$12 -> +$14, Chocolate Mousse out and
+# Brownie in, the kids' steak became a 5oz NY strip, and the drinks page grew a
+# soft-drinks / water / kids-drinks block plus the Yelp "best lobster roll in
+# San Diego" badge. Saved into MENU/ under the client's own filename with the
+# location and date appended, because "A4 Lobster Lab Menu" alone does not say
+# which of the two menus it is. It is already vector + subset fonts at 312K,
+# so no compressed twin is needed. The 3 Aug file stays beside it as the
+# previous edition.
+menu "A4 Lobster Lab Menu (Sky Deck, 2026-09-02).pdf" lobster-lab-menu-sky-deck.pdf
 
 echo
 echo "Done. $(find "$PUB/photos" "$PUB/brand" "$PUB/order" "$PUB/menus" "$PUB/icons" -type f | wc -l | tr -d ' ') files in public/."
