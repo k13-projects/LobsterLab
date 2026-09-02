@@ -89,3 +89,12 @@ On `hail mary` / `hm` (or `hail mary that shit` / `hm pls`): new branch → comm
     by an inline head script, or a JS failure blanks the page.
 17. **Ask for vector assets on day one.** Icons were redrawn three times because the source was
     raster-only inside a PDF.
+
+## 2026-09-02 · "Merged" means "deployed"; check Vercel, not the deploy note
+The site had been live at lobsterlab.us for weeks, auto-deploying from `main`, while CLAUDE.md
+still said "Deploy: Vercel (planned)". A session believed the note, told Kazim the site was not
+wired, and ran the preview engine, which created a duplicate Vercel project and briefly wrote
+the preview origin into Production's `NEXT_PUBLIC_SITE_URL` (robots went `Disallow: /` for ten
+minutes). Rules: verify deployment state from Vercel itself before saying anything about it;
+after `hm++` the report is "merged and live" only once the deployment from the merge commit is
+READY; the Vercel project is `lobster-lab`, and Production's site URL stays `https://lobsterlab.us`.
