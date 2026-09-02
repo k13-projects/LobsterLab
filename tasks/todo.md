@@ -110,6 +110,10 @@ The code is finished and placeholder-driven: when the values land, this is a **o
 - [~] **DoorDash + Grubhub storefront URLs** → `locations[].ordering.doordash` / `.grubhub`
       *BLOCKED ON: client.* The brief left both as the literal word "Link".
       Confirm signed platform agreements exist first, CA AB 2149 (Fair Food Delivery Act).
+      **2026-09-02 (Lorena, email + call):** DoorDash is live for Carlsbad, Sky Deck and San
+      Clemente; the Little Italy and Global Fork links are not active yet, and Grubhub has no
+      account at any location yet. She will send both the moment they exist. Nothing to build,
+      the modal already hides a channel with no URL.
 - [ ] Verify each supplied URL resolves to the correct store before launch
 
 ### Restore the private-parties path, **REGRESSION, buildable now**
@@ -144,10 +148,10 @@ The six open recommendations from the UI/UX audit, plus the mobile-agent finding
       deliberate bleed it is at desktop → negative margin now applies only at `lg`
 - [x] **F-C** Locations trailing row was pinned left by the grid and read unfinished → flex-wrap
       with `justify-center`; both rows now share a 720px centre at 1440
-- [~] **F-D** value icons were redrawn as SVG because the client supplied them only as raster
+- [x] **F-D** value icons were redrawn as SVG because the client supplied them only as raster
       inside a PDF. The citrus and seal read well; the "hand seasoning a bowl" is the weakest.
-      *BLOCKED ON: client designer.* Ask for the three icons as SVG, a five-minute request for
-      exact brand fidelity.
+      → The client's own vectors arrived 3 Aug (`ICONS/VECTORS/`, wired in `build-assets.sh`),
+      and on 2026-09-02 Lorena confirmed in writing that those are the final icons. Closed.
 
 ### Mobile agent findings (2026-07-29 responsive sweep)
 
@@ -223,6 +227,9 @@ phase makes that review cheap, it does not replace it.
 - [ ] **ABC review**, Sky Deck carries a full cocktail/wine/beer list the four stalls do not.
       Confirm the menu PDF is acceptable as advertising, and that the site never implies alcohol
       at the stalls that do not serve it.
+      **2026-09-02:** Lorena confirms Sky Deck holds the license and is asking the team (Eren) for
+      the document to forward. File it under `docs/` when it lands; the review itself still needs
+      counsel.
 
 ---
 
@@ -259,8 +266,10 @@ optimizing blind.
 
 The growth ceiling. None of this is urgent; all of it compounds.
 
-- [ ] **Web-optimized menu PDFs.** The food-halls PDF is **10MB** as supplied, a conversion killer
-      on cellular. *BLOCKED ON: client export, or we re-compress.*
+- [x] **Web-optimized menu PDFs.** The food-halls PDF was **10MB** as supplied, a conversion
+      killer on cellular. → Client exports landed 3 Aug (552K / 144K). The Sky Deck menu was
+      re-issued 2026-09-02 as a 312K vector export (new prices, Brownie replaces the mousse, soft
+      drinks block) and is live at `/menus/lobster-lab-menu-sky-deck.pdf`.
 - [ ] **HTML menu rendered from structured data.** Solves three problems at once: mobile
       conversion, SEO (PDF menu content ranks poorly for "lobster roll near me"), and accessibility
       (the PDFs are almost certainly untagged, and a PDF-only menu is a common ADA complaint).
@@ -305,8 +314,8 @@ Carried forward until answered. Raise these whenever there is contact.
 3. Total annual gross revenue for Tiger Hospitality Group *(P3, decides CCPA scope)*
 4. Written copyright assignment for the 2023 photography *(P3)*
 5. Permission position on the named Google/Yelp reviews *(P3)*
-6. The three value icons as SVG *(P2)*
-7. Web-optimized menu PDF exports *(P5)*
+6. ~~The three value icons as SVG~~ *(P2)*, delivered 3 Aug, confirmed final 2026-09-02
+7. ~~Web-optimized menu PDF exports~~ *(P5)*, delivered 3 Aug; Sky Deck re-issued 2026-09-02
 8. **Our Story copy, and a decision on a team/founder photo** *(new, from the ideas deck)*. The
    deck asks for "Our story" and "Team intro (chef / founders / team)". Neither reached the final
    mockup, so this needs a client decision as well as a build. Origin story is the one content type
