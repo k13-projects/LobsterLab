@@ -11,7 +11,21 @@
 ## Project
 - **What:** rebuild of lobsterlab.us for Lobster Lab, a Tiger Hospitality Group concept, after migrating off SpotHopper.
 - **For:** client (Tiger Hospitality Group).
-- **Shortcode:** `lobster`   ·   **Deploy:** Vercel (planned)   ·   **Repo:** https://github.com/k13-projects/LobsterLab.git
+- **Shortcode:** `lobster`   ·   **Deploy:** Vercel, **live at https://lobsterlab.us**   ·   **Repo:** https://github.com/k13-projects/LobsterLab.git
+
+## Deploy (Vercel, wired and live)
+- **Vercel project `lobster-lab`** on team `katalizor-kazims-projects`, GitHub-linked, production
+  branch `main`. **A merge to `main` is a production deploy**, nothing to run by hand; every PR
+  also gets a preview build. Domains on it: `lobsterlab.us`, `www.lobsterlab.us`, and the studio's
+  preview address `lobster.k13projects.com` (same deployment, same content).
+- The project name is `lobster-lab`, not the shortcode `lobster`. `Deploy Preview lobster` adopts
+  it by the GitHub link (engine fixed 2026-09-02 after it created a duplicate `lobster` project).
+- `NEXT_PUBLIC_SITE_URL` in Production is `https://lobsterlab.us` and **must stay that**:
+  `lib/content.ts` compares it to `PRODUCTION_URL` to decide `isProduction`, and anything else
+  flips robots.txt to `Disallow: /` and the canonical to the wrong host (it happened for ten minutes
+  on 2026-09-02 when the deploy engine wrote the preview origin there). Preview builds carry the
+  preview origin on purpose, so they stay `noindex`.
+- `.vercel/` (the local link) is gitignored; `vercel env pull` writes `.env.local`, also ignored.
 - **Sibling:** `TigerHospitality_Website_01` is the parent group's site. Lobster Lab has its **own** brand (navy/orange, Sofia Pro Narrow), do **not** inherit Tiger's black/gold, Bebas Neue identity.
 
 ## Run locally
