@@ -202,6 +202,29 @@ menu() {
   echo "  menus/$2  ($(du -h "$out" | cut -f1))"
 }
 menu "LOBSTER  WEBSITE MENU_compressed.pdf"          lobster-lab-menu-food-halls.pdf
+
+# Sky Deck's Happy Hour, added 2026-09-18 (Lorena, email attachment
+# "HAPP HOUR -  LOBSTER LAB.png", Canva export, portrait). It is the one menu
+# the client sent as an image rather than a PDF, so it is converted here rather
+# than copied: all three menu buttons then behave the same way when a guest taps
+# them, instead of two opening a PDF viewer and the third opening a picture.
+# sips ships with macOS; if this ever runs elsewhere, swap in ImageMagick.
+menu_png_to_pdf() {
+  local src="$SRC/MENU/$1" out="$PUB/menus/$2"
+  if [ ! -f "$src" ]; then
+    echo "  ERROR: menu source not found: MENU/$1" >&2
+    echo "         (the client renames these on re-upload, check MENU/ and update this script)" >&2
+    exit 1
+  fi
+  sips -s format pdf "$src" --out "$out" >/dev/null || {
+    echo "  ERROR: could not convert MENU/$1 to PDF" >&2
+    exit 1
+  }
+  echo "  menus/$2  ($(du -h "$out" | cut -f1))"
+}
+menu_png_to_pdf "HAPP HOUR -  LOBSTER LAB (Sky Deck, 2026-09-18).png" \
+                lobster-lab-menu-sky-deck-happy-hour.pdf
+
 # Sky Deck was re-issued by the client on 2 Sep 2026 (Lorena, email attachment
 # "A4 Lobster Lab Menu.pdf", Canva export, A4, 2 pages: food + drinks). The
 # kitchen changed it the week before: Lobster Mac $21 -> $24, Lobster Flight
