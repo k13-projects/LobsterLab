@@ -75,7 +75,10 @@ function structuredData() {
       email: site.email,
       sameAs: [site.instagram],
       address: { "@type": "PostalAddress", streetAddress: l.address },
-      openingHours: "Mo-Su 11:00-21:00",
+      // Per location, not one blanket line: Sky Deck trades to 10 PM on Friday
+      // and Saturday, and markup that says otherwise is wrong in the one place
+      // a guest cannot see it to correct it.
+      openingHours: l.schemaHours ?? ["Mo-Su 11:00-21:00"],
       parentOrganization: { "@type": "Organization", name: site.operator },
     })),
   };

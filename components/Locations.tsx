@@ -1,7 +1,19 @@
 "use client";
 
+import { Fragment } from "react";
+
 import { track } from "@/lib/analytics";
-import { locations, telHref } from "@/lib/content";
+import { locations, telHref, type HoursLine, type Location } from "@/lib/content";
+
+/** One shape for the renderer, whether the location splits its week or not. */
+function hoursLines(hours: Location["hours"]): readonly HoursLine[] {
+  return typeof hours === "string" ? [{ time: hours }] : hours;
+}
+
+/** True only for a location whose week splits, which is the two-column case. */
+function hoursSplit(hours: Location["hours"]) {
+  return hoursLines(hours).some((h) => h.days);
+}
 
 function mapsHref(query: string) {
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
@@ -63,8 +75,18 @@ export default function Locations() {
                 </h3>
                 <p className="mt-3 text-[15px] leading-snug text-navy/75">{l.address}</p>
 
-                <p className="mt-4 flex items-center gap-2 text-[15px] font-semibold text-navy">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                {/* items-start, not items-center: a location with two hours
+                    lines would otherwise float the clock against the middle of
+                    the block instead of the first line. */}
+                <div className="mt-4 flex items-start gap-2 text-[15px] font-semibold text-navy">
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    aria-hidden="true"
+                    className="mt-[3px] shrink-0"
+                  >
                     <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="2" />
                     <path
                       d="M12 7v5.2l3.2 1.9"
@@ -73,10 +95,25 @@ export default function Locations() {
                       strokeLinecap="round"
                     />
                   </svg>
-                  {/* Bare opening times beside a Coming Soon badge read as
-                      "open now". Qualify them so nobody drives out early. */}
-                  {l.status ? `Opening soon, ${l.hours}` : l.hours}
-                </p>
+                  {hoursSplit(l.hours) ? (
+                    /* Two columns, so the times sit in a straight line instead
+                       of stepping with the width of each day label. */
+                    <div className="grid grid-cols-[auto_auto] gap-x-2 leading-snug">
+                      {hoursLines(l.hours).map((h) => (
+                        <Fragment key={h.time + (h.days ?? "")}>
+                          <span className="text-navy/70">{h.days}</span>
+                          <span>{h.time}</span>
+                        </Fragment>
+                      ))}
+                    </div>
+                  ) : (
+                    /* Bare opening times beside a Coming Soon badge read as
+                       "open now". Qualify them so nobody drives out early. */
+                    <span>
+                      {l.status ? `Opening soon, ${hoursLines(l.hours)[0].time}` : hoursLines(l.hours)[0].time}
+                    </span>
+                  )}
+                </div>
 
                 {l.phone && (
                   /* Above the stretched directions link, or tapping the number

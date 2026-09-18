@@ -145,11 +145,31 @@ export const catering = {
 /* Hours come from the docx; addresses cross-checked against data/locations.json */
 /* -------------------------------------------------------------------------- */
 
+/**
+ * One opening-hours line. `days` is omitted when a location keeps the same
+ * hours all week, so the common case still reads as a single bare time range
+ * and only a location that actually differs by day pays for the extra label.
+ */
+export type HoursLine = { days?: string; time: string };
+
 export type Location = {
   area: string;
   name: string;
   address: string;
-  hours: string;
+  /**
+   * Display hours. A string for a location open the same hours every day; an
+   * array of lines when the week splits (Sky Deck trades an hour later on
+   * Friday and Saturday, client instruction 17 Sep 2026).
+   */
+  hours: string | HoursLine[];
+  /**
+   * The same hours in schema.org's opening-hours grammar (`Mo-Su 11:00-21:00`),
+   * for the Restaurant markup in app/layout.tsx. Kept beside the display string
+   * rather than parsed out of it: a parser over prose is a silent SEO bug the
+   * first time someone writes "Noon". Omit it to inherit the house default,
+   * which is what every location but Sky Deck runs.
+   */
+  schemaHours?: string[];
   mapsQuery: string;
   /**
    * Trading status, carried through from data/locations.json (captured
@@ -199,7 +219,13 @@ export const locations: Location[] = [
     area: "Del Mar",
     name: "Sky Deck at Del Mar Highlands Town Center",
     address: "12841 El Camino Real Ste 206, San Diego, CA 92130",
-    hours: "11:00 AM – 10:00 PM",
+    // Sky Deck is the one location that stays open later at the weekend
+    // (client instruction, 17 Sep 2026). Opening time is unchanged at 11:00 AM.
+    hours: [
+      { days: "Sun – Thu", time: "11:00 AM – 9:00 PM" },
+      { days: "Fri – Sat", time: "11:00 AM – 10:00 PM" },
+    ],
+    schemaHours: ["Su-Th 11:00-21:00", "Fr-Sa 11:00-22:00"],
     mapsQuery: "Lobster Lab, Sky Deck, 12841 El Camino Real, San Diego, CA 92130",
     phone: "(858) 687-5862",
     ordering: {
