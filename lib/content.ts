@@ -117,15 +117,26 @@ export const values = [
 
 export const menu = {
   body: "Discover a menu full of coastal comfort and bold flavor. From our signature lobster, crab, and shrimp rolls to seafood sandwiches, creamy bisques, fresh salads, melts, and more. Every item is crafted to satisfy cravings and elevate classic favorites.",
-  // Two PDFs, split by location group, see CLAUDE.md
+  // Three PDFs: one per location group, and Sky Deck splits again into its food
+  // and drinks menu and its happy hour (Lorena, 2026-09-18, "two buttons: one
+  // for the Food & Drinks menu and another for the Happy Hour menu"). Sky Deck
+  // is named on both of its buttons rather than grouped under one heading,
+  // because the buttons sit in one row and a guest reads them one at a time.
+  //
+  // The happy hour arrived as a PNG and is converted to PDF by
+  // scripts/build-assets.sh, so all three behave the same way when tapped.
   pdfs: [
     {
       label: "Miramar | Windmill | Global Fork",
       href: "/menus/lobster-lab-menu-food-halls.pdf",
     },
     {
-      label: "Sky Deck at Del Mar Highlands Town Center",
+      label: "Sky Deck: Food & Drinks",
       href: "/menus/lobster-lab-menu-sky-deck.pdf",
+    },
+    {
+      label: "Sky Deck: Happy Hour",
+      href: "/menus/lobster-lab-menu-sky-deck-happy-hour.pdf",
     },
   ],
   photos: [
@@ -266,9 +277,15 @@ export const locations: Location[] = [
   {
     area: "UCSD Campus",
     name: "Station 8 Public Market",
-    address: "9165 Theatre District Drive, La Jolla, CA 92037",
+    // Lorena, 2026-09-18: "yesterday I sent you an address, but today they
+    // confirmed that it would be better to use this one". Third version in two
+    // days, and the same correction went to the hall's own site and to the
+    // Cosmos card for this hall on the same day.
+    address: "Scholars Dr S & Revelle College Dr, La Jolla, CA 92037",
     hours: "11:00 AM – 9:00 PM",
-    mapsQuery: "Lobster Lab, 9165 Theatre District Dr, La Jolla, CA 92037",
+    // Her own paste from Google Maps, verbatim: it is the string Google handed
+    // her, so it is the one known to drop the pin in the right place.
+    mapsQuery: "Lobster Lab, Scholars Dr, South &, Revelle College Drive, La Jolla, CA 92037",
     status: "Coming Soon",
     // No phone on purpose: the site is not open yet and an unanswered number is
     // worse than none. Add it when the Coming Soon badge comes off.
